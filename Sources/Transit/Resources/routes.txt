@@ -1,0 +1,100 @@
+route_id,route_short_name,route_long_name,route_type,route_url,route_color,route_text_color
+1,"1","Bronzeville/Union Station",3,http://www.transitchicago.com/bus/1/,565a5c,ffffff
+2,"2","Hyde Park Express",3,http://www.transitchicago.com/bus/2/,b71234,ffffff
+3,"3","King Drive",3,http://www.transitchicago.com/bus/3/,565a5c,ffffff
+4,"4","Cottage Grove",3,http://www.transitchicago.com/bus/4/,565a5c,ffffff
+5,"5","South Shore Night Bus",3,http://www.transitchicago.com/bus/5/,565a5c,ffffff
+6,"6","Jackson Park Express",3,http://www.transitchicago.com/bus/6/,b71234,ffffff
+7,"7","Harrison",3,http://www.transitchicago.com/bus/7/,565a5c,ffffff
+8,"8","Halsted",3,http://www.transitchicago.com/bus/8/,565a5c,ffffff
+8A,"8A","South Halsted",3,http://www.transitchicago.com/bus/8A/,565a5c,ffffff
+9,"9","Ashland",3,http://www.transitchicago.com/bus/9/,565a5c,ffffff
+X9,"X9","Ashland Express",3,http://www.transitchicago.com/bus/X9/,b71234,ffffff
+10,"10","Museum of Science and Industry",3,http://www.transitchicago.com/bus/10/,565a5c,ffffff
+11,"11","Lincoln",3,http://www.transitchicago.com/bus/11/,565a5c,ffffff
+12,"12","Roosevelt",3,http://www.transitchicago.com/bus/12/,565a5c,ffffff
+J14,"J14","Jeffery Jump",3,http://www.transitchicago.com/bus/J14/,0065bd,ffffff
+15,"15","Jeffery Local",3,http://www.transitchicago.com/bus/15/,565a5c,ffffff
+18,"18","16th-18th",3,http://www.transitchicago.com/bus/18/,565a5c,ffffff
+19,"19","United Center Express",3,http://www.transitchicago.com/bus/19/,b71234,ffffff
+20,"20","Madison",3,http://www.transitchicago.com/bus/20/,565a5c,ffffff
+21,"21","Cermak",3,http://www.transitchicago.com/bus/21/,565a5c,ffffff
+22,"22","Clark",3,http://www.transitchicago.com/bus/22/,565a5c,ffffff
+24,"24","Wentworth",3,http://www.transitchicago.com/bus/24/,565a5c,ffffff
+26,"26","South Shore Express",3,http://www.transitchicago.com/bus/26/,b71234,ffffff
+28,"28","Stony Island",3,http://www.transitchicago.com/bus/28/,565a5c,ffffff
+29,"29","State",3,http://www.transitchicago.com/bus/29/,565a5c,ffffff
+31,"31","31st",3,http://www.transitchicago.com/bus/31/,565a5c,ffffff
+30,"30","South Chicago",3,http://www.transitchicago.com/bus/30/,565a5c,ffffff
+34,"34","South Michigan",3,http://www.transitchicago.com/bus/34/,565a5c,ffffff
+35,"35","35th",3,http://www.transitchicago.com/bus/35/,565a5c,ffffff
+36,"36","Broadway",3,http://www.transitchicago.com/bus/36/,565a5c,ffffff
+37,"37","Sedgwick",3,http://www.transitchicago.com/bus/37/,565a5c,ffffff
+39,"39","Pershing",3,http://www.transitchicago.com/bus/39/,565a5c,ffffff
+43,"43","43rd",3,http://www.transitchicago.com/bus/43/,565a5c,ffffff
+44,"44","Wallace-Racine",3,http://www.transitchicago.com/bus/44/,565a5c,ffffff
+47,"47","47th",3,http://www.transitchicago.com/bus/47/,565a5c,ffffff
+48,"48","South Damen",3,http://www.transitchicago.com/bus/48/,565a5c,ffffff
+49,"49","Western",3,http://www.transitchicago.com/bus/49/,565a5c,ffffff
+49B,"49B","North Western",3,http://www.transitchicago.com/bus/49B/,565a5c,ffffff
+X49,"X49","Western Express",3,http://www.transitchicago.com/bus/X49/,b71234,ffffff
+50,"50","Damen",3,http://www.transitchicago.com/bus/50/,565a5c,ffffff
+51,"51","51st",3,http://www.transitchicago.com/bus/51/,565a5c,ffffff
+52,"52","Kedzie/California",3,http://www.transitchicago.com/bus/52/,565a5c,ffffff
+52A,"52A","South Kedzie",3,http://www.transitchicago.com/bus/52A/,565a5c,ffffff
+53,"53","Pulaski",3,http://www.transitchicago.com/bus/53/,565a5c,ffffff
+53A,"53A","South Pulaski",3,http://www.transitchicago.com/bus/53A/,565a5c,ffffff
+54,"54","Cicero",3,http://www.transitchicago.com/bus/54/,565a5c,ffffff
+54A,"54A","North Cicero/Skokie Blvd.",3,http://www.transitchicago.com/bus/54A/,565a5c,ffffff
+54B,"54B","South Cicero",3,http://www.transitchicago.com/bus/54B/,565a5c,ffffff
+55,"55","Garfield",3,http://www.transitchicago.com/bus/55/,565a5c,ffffff
+55A,"55A","55th/Austin",3,http://www.transitchicago.com/bus/55A/,565a5c,ffffff
+55N,"55N","55th/Narragansett",3,http://www.transitchicago.com/bus/55N/,565a5c,ffffff
+56,"56","Milwaukee",3,http://www.transitchicago.com/bus/56/,565a5c,ffffff
+57,"57","Laramie",3,http://www.transitchicago.com/bus/57/,565a5c,ffffff
+59,"59","59th/61st",3,http://www.transitchicago.com/bus/59/,565a5c,ffffff
+60,"60","Blue Island/26th",3,http://www.transitchicago.com/bus/60/,565a5c,ffffff
+62,"62","Archer",3,http://www.transitchicago.com/bus/62/,565a5c,ffffff
+62H,"62H","Archer/Harlem",3,http://www.transitchicago.com/bus/62H/,565a5c,ffffff
+63,"63","63rd",3,http://www.transitchicago.com/bus/63/,565a5c,ffffff
+63W,"63W","West 63rd",3,http://www.transitchicago.com/bus/63W/,565a5c,ffffff
+65,"65","Grand",3,http://www.transitchicago.com/bus/65/,565a5c,ffffff
+66,"66","Chicago",3,http://www.transitchicago.com/bus/66/,565a5c,ffffff
+67,"67","67th-69th-71st",3,http://www.transitchicago.com/bus/67/,565a5c,ffffff
+68,"68","Northwest Highway",3,http://www.transitchicago.com/bus/68/,565a5c,ffffff
+70,"70","Division",3,http://www.transitchicago.com/bus/70/,565a5c,ffffff
+71,"71","71st South Shore",3,http://www.transitchicago.com/bus/71/,565a5c,ffffff
+72,"72","North",3,http://www.transitchicago.com/bus/72/,565a5c,ffffff
+73,"73","Armitage",3,http://www.transitchicago.com/bus/73/,565a5c,ffffff
+74,"74","Fullerton",3,http://www.transitchicago.com/bus/74/,565a5c,ffffff
+75,"75","74th-75th",3,http://www.transitchicago.com/bus/75/,565a5c,ffffff
+76,"76","Diversey",3,http://www.transitchicago.com/bus/76/,565a5c,ffffff
+77,"77","Belmont",3,http://www.transitchicago.com/bus/77/,565a5c,ffffff
+78,"78","Montrose",3,http://www.transitchicago.com/bus/78/,565a5c,ffffff
+79,"79","79th",3,http://www.transitchicago.com/bus/79/,565a5c,ffffff
+80,"80","Irving Park",3,http://www.transitchicago.com/bus/80/,565a5c,ffffff
+81,"81","Lawrence",3,http://www.transitchicago.com/bus/81/,565a5c,ffffff
+81W,"81W","West Lawrence",3,http://www.transitchicago.com/bus/81W/,565a5c,ffffff
+82,"82","Kimball-Homan",3,http://www.transitchicago.com/bus/82/,565a5c,ffffff
+84,"84","Peterson",3,http://www.transitchicago.com/bus/84/,565a5c,ffffff
+95,"95","95th",3,http://www.transitchicago.com/bus/95/,565a5c,ffffff
+85,"85","Central",3,http://www.transitchicago.com/bus/85/,565a5c,ffffff
+85A,"85A","North Central",3,http://www.transitchicago.com/bus/85A/,565a5c,ffffff
+86,"86","Narragansett/Ridgeland",3,http://www.transitchicago.com/bus/86/,565a5c,ffffff
+87,"87","87th",3,http://www.transitchicago.com/bus/87/,565a5c,ffffff
+88,"88","Higgins",3,http://www.transitchicago.com/bus/88/,565a5c,ffffff
+90,"90","Harlem",3,http://www.transitchicago.com/bus/90/,565a5c,ffffff
+91,"91","Austin",3,http://www.transitchicago.com/bus/91/,565a5c,ffffff
+92,"92","Foster",3,http://www.transitchicago.com/bus/92/,565a5c,ffffff
+93,"93","California/Dodge",3,http://www.transitchicago.com/bus/93/,565a5c,ffffff
+94,"94","South California",3,http://www.transitchicago.com/bus/94/,565a5c,ffffff
+96,"96","Lunt",3,http://www.transitchicago.com/bus/96/,565a5c,ffffff
+97,"97","Skokie",3,http://www.transitchicago.com/bus/97/,565a5c,ffffff
+X98,"X98","Avon Express",3,http://www.transitchicago.com/bus/X98/,b71234,ffffff
+100,"100","Jeffery Manor Express",3,http://www.transitchicago.com/bus/100/,b71234,ffffff
+103,"103","West 103rd",3,http://www.transitchicago.com/bus/103/,565a5c,ffffff
+106,"106","East 103rd",3,http://www.transitchicago.com/bus/106/,565a5c,ffffff
+108,"108","Halsted/95th",3,http://www.transitchicago.com/bus/108/,565a5c,ffffff
+111,"111","111th/King Drive",3,http://www.transitchicago.com/bus/111/,565a5c,ffffff
+111A,"111A","Pullman Shuttle",3,http://www.transitchicago.com/bus/111A/,565a5c,ffffff
+112,"112","Vincennes/111th",3,http://www.transitchicago.com/bus/112/,565a5c,ffffff

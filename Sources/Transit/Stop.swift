@@ -1,0 +1,250 @@
+//
+//  File.swift
+//
+
+import Foundation
+import CoreLocation
+
+// MARK: Stop
+
+/// - Tag: StopField
+public enum StopField: String, Hashable, KeyPathVending {
+  case stopID = "stop_id"
+  case code = "stop_code"
+  case name = "stop_name"
+  case details = "stop_desc"
+  case latitude = "stop_lat"
+  case longitude = "stop_lon"
+  case zoneID = "zone_id"
+  case url = "stop_url"
+  case locationType = "location_type"
+  case parentStationID = "parent_station"
+  case timeZone = "stop_timezone"
+  case accessibilty = "wheelchair_boarding"
+  case levelID = "level_id"
+  case platformCode = "platform_code"
+  
+  public var path: AnyKeyPath {
+    switch self {
+    case .stopID: return \Stop.stopID
+    case .code: return \Stop.code
+    case .name: return \Stop.name
+    case .details: return \Stop.details
+    case .latitude: return \Stop.latitude
+    case .longitude: return \Stop.longitude
+    case .zoneID: return \Stop.zoneID
+    case .url: return \Stop.url
+    case .locationType: return \Stop.locationType
+    case .parentStationID: return \Stop.parentStationID
+    case .timeZone: return \Stop.timeZone
+    case .accessibilty: return \Stop.accessibilty
+    case .levelID: return \Stop.levelID
+    case .platformCode: return \Stop.platformCode
+    }
+  }
+}
+
+/// - Tag: StopCode
+public typealias StopCode = String
+
+/// - Tag: StopLocationType
+public enum StopLocationType: UInt, Hashable {
+  case stopOrPlatform = 0
+  case station = 1
+  case entranceOrExit = 2
+  case genericNode = 3
+  case boardingArea = 4
+}
+
+/// - Tag: Accessibility
+public enum Accessibility: UInt, Hashable {
+  case unknownOrInherits = 0
+  case partialOrFull = 1
+  case none = 2
+}
+
+/// - Tag: Stop
+public struct Stop: Identifiable {
+  public let id = UUID()
+  public var stopID: TransitID = ""
+  public var code: StopCode?
+  public var name: String?
+  public var details: String?
+  public var latitude: CLLocationDegrees?
+  public var longitude: CLLocationDegrees?
+  public var zoneID: TransitID?
+  public var url: URL?
+  public var locationType: StopLocationType?
+  public var parentStationID: TransitID?
+  public var timeZone: TimeZone?
+  public var accessibilty: Accessibility?
+  public var levelID: TransitID?
+  public var platformCode: String?
+  
+  public init(stopID: TransitID = "Unidentified stop",
+       code: StopCode? = nil,
+       name: String? = nil,
+       details: String? = nil,
+       latitude: CLLocationDegrees? = nil,
+       longitude: CLLocationDegrees? = nil,
+       zoneID: TransitID? = nil,
+       url: URL? = nil,
+       locationType: StopLocationType? = nil,
+       parentStationID: TransitID? = nil,
+       timeZone: TimeZone? = nil,
+       accessibilty: Accessibility? = nil,
+       levelID: TransitID? = nil,
+       platformCode: String?) {
+    self.stopID = stopID
+    self.code = code
+    self.name = name
+    self.details = details
+    self.latitude = latitude
+    self.longitude = longitude
+    self.zoneID = zoneID
+    self.url = url
+    self.locationType = locationType
+    self.parentStationID = parentStationID
+    self.timeZone = timeZone
+    self.accessibilty = accessibilty
+    self.levelID = levelID
+    self.platformCode = platformCode
+  }
+  
+  public static let requiredFields: Set =
+    [StopField.stopID]
+  
+  init(from record: String, using headers: [StopField]) throws {
+    do {
+      let fields = try record.readRecord()
+      if fields.count != headers.count {
+        throw TransitError.headerRecordMismatch
+      }
+      for (index, header) in headers.enumerated() {
+        let field = fields[index]
+        switch header {
+        case .stopID:
+          try field.assignStringTo(&self, for: header)
+        case .code, .name, .details, .zoneID, .parentStationID, .levelID, .platformCode:
+          try field.assignOptionalStringTo(&self, for: header)
+        case .url:
+          try field.assignOptionalURLTo(&self, for: header)
+        case .timeZone:
+          try field.assignOptionalTimeZoneTo(&self, for: header)
+        case .latitude, .longitude:
+          try field.assignOptionalCLLocationDegreesTo(&self, for: header)
+        case .locationType:
+          break
+        case .accessibilty:
+          break
+        }
+      }
+    } catch let error {
+      throw error
+    }
+  }
+  
+  public static func stopLocationTypeFrom(string: String) -> StopLocationType? {
+    if let rawValue = UInt(string) {
+      return StopLocationType(rawValue: rawValue)
+    } else {
+      return nil
+    }
+  }
+  
+  public static func accessibilityFrom(string: String) -> Accessibility? {
+    if let rawValue = UInt(string) {
+      return Accessibility(rawValue: rawValue)
+    } else {
+      return nil
+    }
+  }
+  
+  private static let requiredHeaders: Set =
+    [StopField.stopID]
+}
+
+extension Stop: Equatable {
+  public static func ==(lhs: Stop, rhs: Stop) -> Bool {
+    return
+      lhs.stopID == rhs.stopID &&
+      lhs.code == rhs.code &&
+      lhs.name == rhs.name &&
+      lhs.details == rhs.details &&
+      lhs.latitude == rhs.longitude &&
+      lhs.longitude == rhs.longitude &&
+      lhs.zoneID == rhs.zoneID &&
+      lhs.url == rhs.url &&
+      lhs.locationType == rhs.locationType &&
+      lhs.parentStationID == rhs.parentStationID &&
+      lhs.timeZone == rhs.timeZone &&
+      lhs.accessibilty == rhs.accessibilty &&
+      lhs.levelID == rhs.levelID &&
+      lhs.platformCode == rhs.platformCode
+  }
+}
+
+extension Stop: CustomStringConvertible {
+  public var description: String {
+    return "Stop: \(self.stopID)"
+  }
+}
+
+// MARK: - Stops
+
+/// - Tag: Stops
+public struct Stops: Identifiable {
+  public let id = UUID()
+  public var headerFields = [StopField]()
+  fileprivate var stops = [Stop]()
+  
+  subscript(index: Int) -> Stop {
+    get {
+      return stops[index]
+    }
+    set(newValue) {
+      stops[index] = newValue
+    }
+  }
+  
+  mutating func add(_ stop: Stop) {
+    // TODO: Add to header fields supported by this colleciton
+    self.stops.append(stop)
+  }
+  
+  mutating func remove(_ stop: Stop) {
+  }
+  
+  init<S: Sequence>(_ sequence: S)
+  where S.Iterator.Element == Stop {
+    for stop in sequence {
+      self.add(stop)
+    }
+  }
+  
+  init(from url: URL) throws {
+    do {
+      let records = try String(contentsOf: url).splitRecords()
+      
+      if records.count < 1 { return }
+      let headerRecord = String(records[0])
+      self.headerFields = try headerRecord.readHeader()
+      
+      self.stops.reserveCapacity(records.count - 1)
+      for stopRecord in records[1 ..< records.count] {
+        let stop = try Stop(from: String(stopRecord), using: headerFields)
+        self.add(stop)
+      }
+    } catch let error {
+      throw error
+    }
+  }
+}
+
+extension Stops: Sequence {
+  public typealias Iterator = IndexingIterator<Array<Stop>>
+  
+  public func makeIterator() -> Iterator {
+    return stops.makeIterator()
+  }
+}

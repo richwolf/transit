@@ -1,0 +1,2 @@
+agency_name,agency_url,agency_timezone,agency_lang,agency_phone,agency_fare_url
+Chicago Transit Authority,http://transitchicago.com,America/Chicago,en,1-888-YOURCTA,http://www.transitchicago.com/travel_information/fares/default.aspx

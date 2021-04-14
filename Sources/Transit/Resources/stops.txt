@@ -1,0 +1,100 @@
+stop_id,stop_code,stop_name,stop_desc,stop_lat,stop_lon,location_type,parent_station,wheelchair_boarding
+1,1,"Jackson & Austin Terminal","Jackson & Austin Terminal, Northeastbound, Bus Terminal",41.87632184,-87.77410482,0,,1
+2,2,"5900 W Jackson","5900 W Jackson, Eastbound, Southside of the Street",41.87706679,-87.77131794,0,,1
+3,3,"Jackson & Menard","Jackson & Menard, Eastbound, Southside of the Street",41.87695725,-87.76975039,0,,1
+4,4,"5700 W Jackson","5700 W Jackson, Eastbound, Southside of the Street",41.87702418,-87.76745055,0,,1
+6,6,"Jackson & Lotus","Jackson & Lotus, Eastbound, Southeast Corner",41.876513,-87.761446,0,,1
+7,7,"5351 W Jackson","5351 W Jackson, Eastbound, Southside of the Street",41.87655197,-87.75892544,0,,1
+8,8,"Jackson & Lockwood","Jackson & Lockwood, Eastbound, Southeast Corner",41.876564,-87.757313,0,,1
+9,9,"Jackson & Laramie","Jackson & Laramie, Eastbound, Southeast Corner",41.87659463,-87.75461526,0,,1
+10,10,"Jackson & Leamington","Jackson & Leamington, Eastbound, Southeast Corner",41.87662635,-87.7531684,0,,1
+11,11,"5047 W Jackson","5047 W Jackson, Eastbound, Southside of the Street",41.8766513,-87.75128256,0,,1
+12,12,"Jackson & Lavergne","Jackson & Lavergne, Eastbound, Southeast Corner",41.87662062,-87.74912362,0,,1
+13,13,"4849 W Jackson","4849 W Jackson, Eastbound, Southside of the Street",41.87668892,-87.74701737,0,,1
+14,14,"Jackson & Cicero","Jackson & Cicero, Eastbound, Southeast Corner",41.87676314,-87.74483066,0,,1
+15,15,"Jackson & Kilpatrick","Jackson & Kilpatrick, Eastbound, Southeast Corner",41.87682975,-87.74254901,0,,1
+16,16,"Jackson & Kenton","Jackson & Kenton, Eastbound, Southside of the Street",41.87683358,-87.74058525,0,,1
+18,18,"Jackson & Kilbourn","Jackson & Kilbourn, Eastbound, Southeast Corner",41.87688572,-87.73761421,0,,1
+19,19,"Jackson & Kostner","Jackson & Kostner, Eastbound, Southeast Corner",41.87691497,-87.73515882,0,,1
+20,20,"Jackson & Kildare","Jackson & Kildare, Eastbound, Southeast Corner",41.876933,-87.73265,0,,1
+21,21,"Jackson & Keeler","Jackson & Keeler, Eastbound, Southeast Corner",41.876963,-87.7302,0,,1
+22,22,"Jackson & Karlov","Jackson & Karlov, Eastbound, Southeast Corner",41.8770066,-87.72780787,0,,1
+23,23,"Jackson & Pulaski","Jackson & Pulaski, Eastbound, Southeast Corner",41.87704003,-87.72532923,0,,1
+24,24,"Jackson & Springfield","Jackson & Springfield, Eastbound, Southeast Corner",41.87706855,-87.72295441,0,,1
+25,25,"Jackson & Hamlin","Jackson & Hamlin, Eastbound, Southwest Corner",41.87708065,-87.72082664,0,,1
+26,26,"Jackson & Central Park","Jackson & Central Park, Eastbound, Southeast Corner",41.87714182,-87.7154772,0,,1
+27,27,"Jackson & St. Louis","Jackson & St. Louis, Eastbound, Southeast Corner",41.877181,-87.713241,0,,1
+29,29,"Jackson & Spaulding","Jackson & Spaulding, Eastbound, Southeast Corner",41.87723116,-87.70827664,0,,1
+30,30,"Jackson & Kedzie","Jackson & Kedzie, Eastbound, Southeast Corner",41.87725804,-87.70577393,0,,1
+31,31,"Jackson & Albany","Jackson & Albany, Eastbound, Southeast Corner",41.877288,-87.703323,0,,1
+32,32,"Jackson & Sacramento","Jackson & Sacramento, Eastbound, Southeast Corner",41.877318,-87.700867,0,,1
+34,34,"Jackson & California","Jackson & California, Eastbound, Southeast Corner",41.87737082,-87.69595515,0,,1
+36,36,"2609 W Jackson","2609 W Jackson, Eastbound, Southwest Corner",41.8774236,-87.69165753,0,,1
+38,38,"Jackson & Western","Jackson & Western, Eastbound, Southeast Corner",41.87748942,-87.68602572,0,,1
+39,39,"Jackson & Oakley","Jackson & Oakley, Eastbound, Southeast Corner",41.877496,-87.683652,0,,1
+40,40,"Jackson & Leavitt","Jackson & Leavitt, Eastbound, Southeast Corner",41.87754396,-87.68127094,0,,1
+41,41,"Jackson & Hoyne","Jackson & Hoyne, Eastbound, Southeast Corner",41.87739502,-87.67873587,0,,1
+42,42,"Jackson & Damen","Jackson & Damen, Eastbound, Southwest Corner",41.877421,-87.67667235,0,,1
+44,44,"Damen & Congress","Damen & Congress, Southbound, Northwest Corner",41.87513747,-87.67664239,0,,1
+48,48,"Harrison & Wood","Harrison & Wood, Eastbound, Southeast Corner",41.874059,-87.671334,0,,1
+51,51,"Ashland & Van Buren","Ashland & Van Buren, Northbound, Northeast Corner",41.87655158,-87.66651521,0,,1
+52,52,"Malcolm X College","Malcolm X College, Eastbound, Southside of the Street",41.87743988,-87.67402389,0,,1
+53,53,"Jackson & Ogden","Jackson & Ogden, Eastbound, Southwest Corner",41.87748733,-87.67103731,0,,1
+54,54,"Jackson & Paulina","Jackson & Paulina, Eastbound, Southeast Corner",41.8775244,-87.66899047,0,,1
+55,55,"Jackson & Ashland","Jackson & Ashland, Eastbound, Southwest Corner",41.87755467,-87.66689065,0,,1
+56,56,"Jackson & Laflin","Jackson & Laflin, Eastbound, Southeast Corner",41.87759,-87.664068,0,,1
+57,57,"Jackson & Loomis","Jackson & Loomis, Eastbound, Southeast Corner",41.877634,-87.661652,0,,1
+59,59,"Jackson & Racine","Jackson & Racine, Eastbound, Southeast Corner",41.87772931,-87.65677916,0,,1
+60,60,"Jackson & Aberdeen","Jackson & Aberdeen, Eastbound, Southeast Corner",41.877751,-87.654338,0,,1
+61,61,"Jackson & Morgan","Jackson & Morgan, Eastbound, Southeast Corner",41.87780698,-87.65169869,0,,1
+63,63,"Jackson & Peoria","Jackson & Peoria, Eastbound, Southeast Corner",41.87784819,-87.64946073,0,,1
+67,67,"Jackson & Canal","Jackson & Canal, Eastbound, Southwest Corner",41.877997,-87.639776,0,,1
+68,68,"Jackson & Franklin","Jackson & Franklin, Eastbound, Southwest Corner",41.878051,-87.635401,0,,1
+69,69,"Jackson & Financial Place","Jackson & Financial Place, Eastbound, Southwest Corner",41.878081,-87.632868,0,,1
+70,70,"Jackson & Dearborn","Jackson & Dearborn, Eastbound, Southwest Corner",41.878121,-87.629467,0,,1
+71,71,"Jackson & State","Jackson & State, Eastbound, Southwest Corner",41.878141,-87.627899,0,,1
+72,72,"Jackson & Wabash","Jackson & Wabash, Eastbound, Southeast Corner",41.878208,-87.625752,0,,1
+73,73,"Michigan & Van Buren/Congress","Michigan & Van Buren/Congress, Southbound, Westside of the Street",41.876271,-87.624396,0,,1
+74,74,"Congress Plaza & Michigan","Congress Plaza & Michigan, Northeastbound, Southeast Corner",41.87485809,-87.62355113,0,,1
+75,75,"Michigan & Van Buren","Michigan & Van Buren, Northbound, Southeast Corner",41.87669,-87.62416,0,,1
+76,76,"Michigan & Jackson","Michigan & Jackson, Northbound, Southeast Corner",41.878135,-87.624193,0,,1
+77,77,"Adams & Wabash","Adams & Wabash, Westbound, Northeast Corner",41.879575,-87.625884,0,,1
+80,80,"Adams & Wells","Adams & Wells, Westbound, Northwest Corner",41.879426,-87.634024,0,,1
+84,84,"Van Buren & Canal","Van Buren & Canal, Westbound, Northeast Corner",41.87682748,-87.63938046,0,,1
+86,86,"Van Buren & Jefferson","Van Buren & Jefferson, Westbound, Northeast Corner",41.876778,-87.642319,0,,1
+88,88,"Van Buren & Halsted","Van Buren & Halsted, Westbound, Northeast Corner",41.876726,-87.647048,0,,1
+89,89,"Van Buren & Peoria","Van Buren & Peoria, Westbound, Northeast Corner",41.876682,-87.649401,0,,1
+92,92,"Van Buren & Aberdeen","Van Buren & Aberdeen, Westbound, Northeast Corner",41.87661688,-87.6544072,0,,1
+93,93,"Van Buren & Racine","Van Buren & Racine, Westbound, Northeast Corner",41.87657583,-87.65680352,0,,1
+96,96,"Van Buren & Laflin","Van Buren & Laflin, Westbound, Northeast Corner",41.87644665,-87.66410017,0,,1
+97,97,"Van Buren & Ashland","Van Buren & Ashland, Westbound, Northeast Corner",41.87640948,-87.66647087,0,,1
+99,99,"Van Buren & Ogden","Van Buren & Ogden, Westbound, Northeast Corner",41.87632903,-87.67187647,0,,1
+100,100,"1900 W Van Buren","1900 W Van Buren, Westbound, Northside of the Street",41.876242,-87.674057,0,,1
+101,101,"Van Buren & Damen","Van Buren & Damen, Westbound, Northeast Corner",41.87624,-87.676072,0,,1
+103,103,"Harrison & Paulina","Harrison & Paulina, Westbound, Northside of the Street",41.87421,-87.66897,0,,1
+107,107,"Harrison & Ogden","Harrison & Ogden, Westbound, Northeast Corner",41.8741415,-87.67454701,0,,1
+108,108,"Harrison & Damen","Harrison & Damen, Westbound, Northeast Corner",41.87410934,-87.67632053,0,,1
+111,111,"Damen & Jackson","Damen & Jackson, Northbound, Southeast Corner",41.87740942,-87.67635136,0,,1
+118,118,"Jackson & Rockwell","Jackson & Rockwell, Westbound, Northeast Corner",41.87755894,-87.69097077,0,,1
+119,119,"Jackson & Washtenaw","Jackson & Washtenaw, Westbound, Northwest Corner",41.87752503,-87.69403232,0,,1
+120,120,"Jackson & California","Jackson & California, Westbound, Northwest Corner",41.87749585,-87.69648347,0,,1
+122,122,"Jackson & Sacramento","Jackson & Sacramento, Westbound, Northwest Corner",41.87744329,-87.70133446,0,,1
+123,123,"Jackson & Albany","Jackson & Albany, Westbound, Northwest Corner",41.87740982,-87.70378269,0,,1
+124,124,"Jackson & Kedzie","Jackson & Kedzie, Westbound, Northwest Corner",41.87739519,-87.70627812,0,,1
+126,126,"Jackson & Homan","Jackson & Homan, Westbound, Northwest Corner",41.87735315,-87.71111733,0,,1
+127,127,"Jackson & St. Louis","Jackson & St. Louis, Westbound, Northwest Corner",41.87730566,-87.71365567,0,,1
+128,128,"Central Park & Jackson","Central Park & Jackson, Southbound, Southwest Corner",41.87701673,-87.7158695,0,,1
+129,129,"Jackson & Hamlin","Jackson & Hamlin, Westbound, Northwest Corner",41.8772105,-87.72104802,0,,1
+130,130,"Jackson & Springfield","Jackson & Springfield, Westbound, Northwest Corner",41.8771684,-87.72332492,0,,1
+131,131,"Jackson & Pulaski","Jackson & Pulaski, Westbound, Northwest Corner",41.87713666,-87.72579473,0,,1
+132,132,"Jackson & Karlov","Jackson & Karlov, Westbound, Northwest Corner",41.87710765,-87.72819551,0,,1
+133,133,"Jackson & Keeler","Jackson & Keeler, Westbound, Northwest Corner",41.87707727,-87.73064873,0,,1
+134,134,"Jackson & Kildare","Jackson & Kildare, Westbound, Northwest Corner",41.8770945,-87.73310614,0,,1
+135,135,"Jackson & Kostner","Jackson & Kostner, Westbound, Northwest Corner",41.87701751,-87.73555571,0,,1
+136,136,"Jackson & Kilbourn","Jackson & Kilbourn, Westbound, Northwest Corner",41.87698719,-87.737991,0,,1
+138,138,"Jackson & Kenton","Jackson & Kenton, Westbound, Northwest Corner",41.87696546,-87.74069588,0,,1
+139,139,"Jackson & Kilpatrick","Jackson & Kilpatrick, Westbound, Northwest Corner",41.87692666,-87.74280741,0,,1
+140,140,"Jackson & Cicero","Jackson & Cicero, Westbound, Northwest Corner",41.87685893,-87.74541898,0,,1
+141,141,"4900 W Jackson","4900 W Jackson, Westbound, Northside of the Street",41.87682102,-87.74713903,0,,1
+142,142,"Jackson & Lavergne","Jackson & Lavergne, Westbound, Northwest Corner",41.87680393,-87.74934028,0,,1
+143,143,"5056 W Jackson","5056 W Jackson, Westbound, Northside of the Street",41.87675729,-87.75161217,0,,1
