@@ -5,24 +5,36 @@
 import Foundation
 import CoreGraphics
 
-// MARK: Route
+// MARK: RouteField
 
-/// - Tag: RouteField
+///  All possible fields contained within a ``Route`` record.
 public enum RouteField: String, Hashable, KeyPathVending {
+  ///  Route ID field.
   case routeID = "route_id"
+  ///  Agency ID field.
   case agencyID = "agency_id"
+  ///  Route name field.
   case name = "route_long_name"
+  ///  Route short name field.
   case shortName = "route_short_name"
+  ///  Route details field.
   case details = "route_desc"
+  ///  Route type field.
   case type = "route_type"
+  ///  Route URL field.
   case url = "route_url"
+  ///  Route color field.
   case color = "route_color"
+  ///  Route text color field.
   case textColor = "route_text_color"
+  ///  Route sort order field.
   case sortOrder = "route_sort_order"
+  ///  Route pickup policy field.
   case pickupPolicy = "continuous_pickup"
+  ///  Route dropoff policy field.
   case dropoffPolicy = "continuous_drop_off"
   
-  public var path: AnyKeyPath {
+  internal var path: AnyKeyPath {
     switch self {
     case .routeID: return \Route.routeID
     case .agencyID: return \Route.agencyID
@@ -40,7 +52,6 @@ public enum RouteField: String, Hashable, KeyPathVending {
   }
 }
 
-/// - Tag: RouteType
 public enum RouteType: UInt, Hashable {
   case tram = 0
   case subway = 1
@@ -54,7 +65,6 @@ public enum RouteType: UInt, Hashable {
   case monorail = 12
 }
 
-/// - Tag: PickupDropffPolicy
 public enum PickupDropffPolicy: UInt, Hashable {
   case continuous = 0
   case none = 1
@@ -62,7 +72,14 @@ public enum PickupDropffPolicy: UInt, Hashable {
   case coordinateWithDriver = 3
 }
 
-/// - Tag: Route
+// MARK: Route
+
+// TODO: Routes method to test for required and conditionally required fields.
+// TODO: Routes method to ensure that feed with mutiple agencies does not omit agencyIDs
+// TODO:   if routes refer to both agencies.
+// TODO: Routes method to ensure that either name or shortName provided for all routes.
+
+///  A representation of a single Route record.
 public struct Route: Identifiable {
   public let id = UUID()
   public var routeID: TransitID = ""
@@ -78,8 +95,13 @@ public struct Route: Identifiable {
   public var pickupPolicy: PickupDropffPolicy?
   public var dropoffPolicy: PickupDropffPolicy?
   
-  public static let requiredFields: Set =
-    [RouteField.routeID, RouteField.type]
+  public static let requiredFields: Set<RouteField>
+    = [.routeID, .type]
+  public static let conditionallyRequiredFields: Set<RouteField>
+    = [.agencyID, .name, .shortName]
+  public static let optionalFields: Set<RouteField>
+    = [.details, .url, .color, .textColor, .sortOrder,
+       .pickupPolicy, .dropoffPolicy]
   
   public init(routeID: TransitID = "Unidentified route",
        agencyID: TransitID? = nil,
@@ -183,7 +205,7 @@ extension Route: CustomStringConvertible {
 
 // MARK: - Routes
 
-/// - Tag: Routes
+///  A representation of a complete Route dataset.
 public struct Routes: Identifiable {
   public let id = UUID()
   public var headerFields = [RouteField]()

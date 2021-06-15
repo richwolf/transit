@@ -4,26 +4,34 @@
 
 import Foundation
 
-// MARK: Agency
+// MARK: AgencyField
 
-/// - Tag: AgencyField
+///  All possible fields contained within an ``Agency`` record.
 public enum AgencyField: String, Hashable, KeyPathVending {
+  ///  Agency ID field.
   case agencyID = "agency_id"
+  ///  Agency name field.
   case name = "agency_name"
+  ///  Agency URL field.
   case url = "agency_url"
+  ///  Agency time zone field.
   case timeZone = "agency_timezone"
-  case language = "agency_lang"
+  ///  Agency locale field.
+  case locale = "agency_lang"
+  ///  Agency phone number field.
   case phone = "agency_phone"
+  ///  Agency fare URL field.
   case fareURL = "agency_fare_url"
+  ///  Agency email address field.
   case email = "agency_email"
   
-  public var path: AnyKeyPath {
+  internal var path: AnyKeyPath {
     switch self {
     case .agencyID: return \Agency.agencyID
     case .name: return \Agency.name
     case .url: return \Agency.url
     case .timeZone: return \Agency.timeZone
-    case .language: return \Agency.language
+    case .locale: return \Agency.locale
     case .phone: return \Agency.phone
     case .fareURL: return \Agency.fareURL
     case .email: return \Agency.email
@@ -31,26 +39,45 @@ public enum AgencyField: String, Hashable, KeyPathVending {
   }
 }
 
-/// - Tag: Agency
+// MARK: Agency
+
+///  A representation of a single Agency record.
 public struct Agency: Identifiable {
+  ///  A globally unique identifier.
   public let id = UUID()
-  public var agencyID: TransitID?
-  public var name: String = "Unnamed Agency"
+  ///  Agency ID.
+  public var agencyID: String?
+  ///  Agency name.
+  public var name: String = ""
+  ///  Agency URL.
   public var url: URL = URL(string: "https://unnamed.com")!
+  ///  Agency time zone.
   public var timeZone: TimeZone = TimeZone(identifier: "UTC")!
-  public var language: String?
+  ///  Agency locale.
+  public var locale: Locale?
+  ///  Agency phone number.
   public var phone: String?
+  ///  Agency fare URL.
   public var fareURL: URL?
+  ///  Agency email address.
   public var email: String?
   
-  public static let requiredFields: Set =
-    [AgencyField.name, AgencyField.url, AgencyField.timeZone]
+  ///  A set enumerating the required fields in an ``Agency`` record.
+  public static let requiredFields: Set<AgencyField>
+    = [.name, .url, .timeZone]
+  ///  A set enumerating the conditionally required fields in an ``Agency`` record.
+  public static let conditionallyRequiredFields: Set<AgencyField>
+    = [.agencyID]
+  ///  A set enumerating the optional fields in an ``Agency`` record.
+  public static let optionalFields: Set<AgencyField>
+    = [.locale, .phone, .fareURL, .email]
   
-  public init(agencyID: TransitID? = nil,
-       name: String = "Unnamed Agency",
+  ///  Basic init.
+  public init(agencyID: String? = nil,
+       name: String = "",
        url: URL = URL(string: "https://unnamed.com")!,
        timeZone: TimeZone = TimeZone(identifier: "UTC")!,
-       language: String? = nil,
+       locale: Locale? = nil,
        phone: String? = nil,
        fareURL: URL? = nil,
        email: String? = nil) {
@@ -58,12 +85,13 @@ public struct Agency: Identifiable {
     self.name = name
     self.url = url
     self.timeZone = timeZone
-    self.language = language
+    self.locale = locale
     self.phone = phone
     self.fareURL = fareURL
     self.email = email
   }
   
+  ///  Init from a record.
   public init(from record: String, using headerFields: [AgencyField]) throws {
     do {
       let recordFields = try record.readRecord()
@@ -75,12 +103,14 @@ public struct Agency: Identifiable {
         switch header {
         case .name:
           try field.assignStringTo(&self, for: header)
-        case .agencyID, .language, .phone, .email:
+        case .agencyID, .phone, .email:
           try field.assignOptionalStringTo(&self, for: header)
         case .url:
           try field.assignURLValueTo(&self, for: header)
         case .fareURL:
           try field.assignOptionalURLTo(&self, for: header)
+        case .locale:
+          try field.assignLocaleTo(&self, for: header)
         case .timeZone:
           try field.assignTimeZoneTo(&self, for: header)
         }
@@ -89,13 +119,6 @@ public struct Agency: Identifiable {
       throw error
     }
   }
-  
-  /*
-   public static func containsRequiredFields(_ fields: [AgencyField]) -> Bool {
-    let fieldSet = Set(fields)
-    return Self.requiredFields.isSubset(of: fieldSet)
-   }
-   */
 }
 
 extension Agency: Equatable {
@@ -105,7 +128,7 @@ extension Agency: Equatable {
       lhs.name == rhs.name &&
       lhs.url == rhs.url &&
       lhs.timeZone == rhs.timeZone &&
-      lhs.language == rhs.language &&
+      lhs.locale == rhs.locale &&
       lhs.phone == rhs.phone &&
       lhs.fareURL == rhs.fareURL &&
       lhs.email == rhs.email
@@ -120,9 +143,15 @@ extension Agency: CustomStringConvertible {
 
 // MARK: - Agencies
 
-/// - Tag: Agencies
+// TODO: Method to test for required and conditionally required fields.
+// TODO: Method to ensure that feed with mutiple agencies does not omit agencyIDs.
+// TODO: Method to ensure that all contained agencies have the same timezone.
+
+///  A representation of a complete Agency dataset.
 public struct Agencies: Identifiable {
+  ///  A globally unique identifier.
   public let id = UUID()
+  ///  Header fields.
   public var headerFields = [AgencyField]()
   fileprivate var agencies = [Agency]()
   
@@ -136,7 +165,6 @@ public struct Agencies: Identifiable {
   }
   
   mutating func add(_ agency: Agency) {
-    // TODO: Add to header fields supported by this colleciton
     self.agencies.append(agency)
   }
   
@@ -150,6 +178,7 @@ public struct Agencies: Identifiable {
     }
   }
   
+  ///  Grab agency dataset from file.
   public init(from url: URL) throws {
     do {
       let records = try String(contentsOf: url).splitRecords()
@@ -174,11 +203,3 @@ extension Agencies: ExpressibleByArrayLiteral {
     self.init(elements)
   }
 }
-
-/*  This needs to go into a -> Bool checker
-if !Agency.containsRequiredFields(headers) {
-  throw TransitError.missingRequiredFields
-} */
-// TODO: setup a boolean for transit agency with multiple ids
-//   in this case, agencyID is required.
-// TODO: A public function that ensures that all agencies have the same timezone

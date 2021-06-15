@@ -8,7 +8,7 @@ import Foundation
 public typealias TransitID = String
 
 /// - Tag: KeyPathVending
-public protocol KeyPathVending {
+internal protocol KeyPathVending {
   var path: AnyKeyPath { get }
 }
 

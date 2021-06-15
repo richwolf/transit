@@ -254,7 +254,7 @@ final class StringAndSubstringTests: XCTestCase {
       agency_phone,\
       agency_fare_url
       """.readHeader()
-    XCTAssertEqual(fields, [.name, .url, .timeZone, .language, .phone, .fareURL])
+    XCTAssertEqual(fields, [.name, .url, .timeZone, .locale, .phone, .fareURL])
   }
   
   func test_fieldsFromAgencyWithAllFields() {
@@ -269,7 +269,7 @@ final class StringAndSubstringTests: XCTestCase {
       agency_fare_url,\
       agency_email
       """.readHeader()
-    XCTAssertEqual(fields, [.agencyID, .name, .url, .timeZone, .language,
+    XCTAssertEqual(fields, [.agencyID, .name, .url, .timeZone, .locale,
                             .phone, .fareURL, .email])
   }
 }

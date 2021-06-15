@@ -1,30 +1,44 @@
 //
-//  File.swift
+//  Stop.swift
 //
 
 import Foundation
 import CoreLocation
 
-// MARK: Stop
+// MARK: StopField
 
-/// - Tag: StopField
+///  All possible fields contained within a ``Stop`` record.
 public enum StopField: String, Hashable, KeyPathVending {
+  ///  Stop ID field.
   case stopID = "stop_id"
+  ///  Stop code field.
   case code = "stop_code"
+  ///  Stop name field.
   case name = "stop_name"
+  ///  Stop details field.
   case details = "stop_desc"
+  ///  Stop latitude field.
   case latitude = "stop_lat"
+  ///  Stop longitude field.
   case longitude = "stop_lon"
+  ///  Stop zone ID field.
   case zoneID = "zone_id"
+  ///  Stop URL field.
   case url = "stop_url"
+  ///  Stop location type field.
   case locationType = "location_type"
+  ///  Stop parent station ID field.
   case parentStationID = "parent_station"
+  ///  Stop timezone field.
   case timeZone = "stop_timezone"
+  ///  Stop accessibility field.
   case accessibilty = "wheelchair_boarding"
+  ///  Stop level ID field.
   case levelID = "level_id"
+  ///  Stop platform code field.
   case platformCode = "platform_code"
   
-  public var path: AnyKeyPath {
+  internal var path: AnyKeyPath {
     switch self {
     case .stopID: return \Stop.stopID
     case .code: return \Stop.code
@@ -63,7 +77,7 @@ public enum Accessibility: UInt, Hashable {
   case none = 2
 }
 
-/// - Tag: Stop
+///  A representation of a single Stop record.
 public struct Stop: Identifiable {
   public let id = UUID()
   public var stopID: TransitID = ""
@@ -192,7 +206,7 @@ extension Stop: CustomStringConvertible {
 
 // MARK: - Stops
 
-/// - Tag: Stops
+///  A representation of a complete Stops dataset.
 public struct Stops: Identifiable {
   public let id = UUID()
   public var headerFields = [StopField]()

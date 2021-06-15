@@ -4,24 +4,36 @@
 
 import Foundation
 
-// MARK: StopTime
+// MARK: StopTimeField
 
-/// - Tag: StopTimeField
+///  All possible fields contained within a ``StopTime`` record.
 public enum StopTimeField: String, Hashable, KeyPathVending {
+  ///  Trip ID field.
   case tripID = "trip_id"
+  ///  Trip arrival field.
   case arrival = "arrival_time"
+  ///  Trip departure field.
   case departure = "departure_time"
+  ///  Stop ID field.
   case stopID = "stop_id"
+  ///  Stop sequence number field.
   case stopSequenceNumber = "stop_sequence"
+  ///  Stop heading sign field.
   case stopHeadingSign = "stop_headsign"
+  ///  Stop pickup type field.
   case pickupType = "pickup_type"
+  ///  Stop dropoff type field.
   case dropoffType = "drop_off_type"
+  ///  Stop continuous pickup field.
   case continuousPickup = "continuous_pickup"
+  ///  Stop continuous dropoff field.
   case continuousDropoff = "continuous_drop_off"
+  ///  Stop distance traveled for shape field.
   case distanceTraveledForShape = "shape_dist_traveled"
+  ///  Stop timepoint type field.
   case timepointType = "timepoint"
   
-  public var path: AnyKeyPath {
+  internal var path: AnyKeyPath {
     switch self {
     case .tripID: return \StopTime.tripID
     case .arrival: return \StopTime.arrival
@@ -39,7 +51,7 @@ public enum StopTimeField: String, Hashable, KeyPathVending {
   }
 }
 
-/// - Tag: StopTime
+///  A representation of a single StopTime record.
 public struct StopTime: Identifiable {
   public var id = UUID()
   public var tripID: TransitID = ""

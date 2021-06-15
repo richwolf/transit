@@ -1,12 +1,12 @@
 //
-//  Agency.swift
+//  Trip.swift
 //
 
 import Foundation
 
-// MARK: Trip
+// MARK: TripField
 
-/// - Tag: TripField
+///  All possible fields contained within a ``Trip`` record.
 public enum TripField: String, Hashable, KeyPathVending {
   case routeID = "route_id"
   case serviceID = "service_id"
@@ -18,10 +18,10 @@ public enum TripField: String, Hashable, KeyPathVending {
   case shapeID = "shape_id"
   case isAccessible = "wheelchair_accessible"
   case bikesAllowed = "bikes_allowed"
-  case scheduledTripID = "schd_trip_id" // This is not in GTFS??
-  case dir = "direction" // This is not in GTFS??
+  //case scheduledTripID = "schd_trip_id" // This is not in GTFS??
+  //case dir = "direction" // This is not in GTFS??
   
-  public var path: AnyKeyPath {
+  internal var path: AnyKeyPath {
     switch self {
     case .routeID: return \Trip.routeID
     case .serviceID: return \Trip.serviceID
@@ -33,8 +33,8 @@ public enum TripField: String, Hashable, KeyPathVending {
     case .shapeID: return \Trip.shapeID
     case .isAccessible: return \Trip.isAccessible
     case .bikesAllowed: return \Trip.bikesAllowed
-    case .scheduledTripID: return \Trip.scheduledTripID  // This is not in GTFS??
-    case .dir: return \Trip.dir  // This is not in GTFS??
+    //case .scheduledTripID: return \Trip.scheduledTripID  // This is not in GTFS??
+    //case .dir: return \Trip.dir  // This is not in GTFS??
 
     }
   }
@@ -46,7 +46,7 @@ public enum Direction: UInt, Hashable {
   case outbound = 1
 }
 
-/// - Tag: Trip
+///  A representation of a single Trip record.
 public struct Trip: Identifiable {
   public let id = UUID()
   public var routeID: TransitID = ""
@@ -59,8 +59,8 @@ public struct Trip: Identifiable {
   public var shapeID: TransitID?
   public var isAccessible: String? // Fix!
   public var bikesAllowed: String? // Fix!
-  public var scheduledTripID: TransitID? // This is not in GTFS??
-  public var dir: String? // This is not in GTFS??
+  //public var scheduledTripID: TransitID? // This is not in GTFS??
+  //public var dir: String? // This is not in GTFS??
   
   public static let requiredFields: Set =
     [TripField.routeID, TripField.serviceID, TripField.tripID]
@@ -90,8 +90,8 @@ public struct Trip: Identifiable {
         switch header {
         case .routeID, .serviceID, .tripID:
           try field.assignStringTo(&self, for: header)
-        case .headsign, .shortName, .direction, .blockID, .dir,
-             .shapeID, .isAccessible, .bikesAllowed, .scheduledTripID:
+        case .headsign, .shortName, .direction, .blockID, /*.dir,*/
+             .shapeID, .isAccessible, .bikesAllowed /*, .scheduledTripID */:
           try field.assignOptionalStringTo(&self, for: header)
         }
       }

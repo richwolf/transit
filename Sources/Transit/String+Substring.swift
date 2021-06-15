@@ -2,8 +2,10 @@
 //  String+Substring.swift
 //
 
-// TODO: Write "writeRecord"
-// TODO: Write "writeHeader"
+/**
+  - TODO: Write "writeRecord".
+  - TODO: Write "writeHeader".
+*/
 
 import Foundation
 import CoreGraphics
@@ -167,9 +169,11 @@ extension String {
       } else {
         return nil
       }
-      let components = [red, green, blue, alpha]
-      return CGColor(colorSpace: CGColorSpace(name: CGColorSpace.sRGB)!,
-                     components: components)
+      // Might need to fix this?
+      //let components = [red, green, blue, alpha]
+      //return CGColor(colorSpace: CGColorSpace(name: CGColorSpace.sRGB)!,
+      //               components: components)
+      return CGColor(red: red, green: green, blue: blue, alpha: alpha)
     }
     return nil
   }
@@ -326,6 +330,16 @@ extension String {
       throw TransitAssignError.invalidValue
     }
     instance[keyPath: path] = locationDegrees
+  }
+  
+  func assignLocaleTo<InstanceType, FieldType>(
+    _ instance: inout InstanceType, for field: FieldType)
+  throws where FieldType: KeyPathVending {
+    guard let path = field.path as? WritableKeyPath<InstanceType, Locale?> else {
+      throw TransitAssignError.invalidPath
+    }
+    let locale: Locale? = Locale(identifier: "en")
+    instance[keyPath: path] = locale
   }
   
   // Remember to test passing an optional to a non-optional value assign.
