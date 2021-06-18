@@ -43,11 +43,15 @@ public enum AgencyField: String, Hashable, KeyPathVending {
 
 ///  A representation of a single Agency record.
 public struct Agency: Identifiable {
-  ///  A globally unique identifier.
+  ///  A globally unique identifier. Because GTFS does not guarantee
+  ///  that IDs will be unique
   public let id = UUID()
-  ///  Agency ID.
+  ///  The agency brand ID. This ID is usually synonymous with the
+  ///  agency itself. But in the event that multiple services are contained
+  ///  within the same dataset, this ID can be used to uniquely identify
+  ///  each.
   public var agencyID: String?
-  ///  Agency name.
+  ///  The full name of the agency.
   public var name: String = ""
   ///  Agency URL.
   public var url: URL = URL(string: "https://unnamed.com")!
