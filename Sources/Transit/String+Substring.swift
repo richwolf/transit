@@ -16,7 +16,7 @@ import CoreLocation
 extension Substring {
   
   /**
-   Returns the next GTFS field found whithin `self`.
+   Returns the next GTFS field found within `self`.
    
    `nextField` scans characters within `self` for a GTFS field until either a delimiting
    comma is found or there are no more characters available to scan. If a comma is contained
@@ -66,13 +66,13 @@ extension Substring {
 extension String {
   
   /**
-   Returns all GTFS fields contained whithin `self`.
+   Returns all GTFS fields contained within `self`.
    
    `readRecord` scans `self` for contained GTFS fields and returns them as an
    array of `String`s. Fields are delimited by commas. If a comma is contained
    within a field, then the field must be escaped by enclosing it within quotation
    marks (`"`).
-   - Returns: An arry of `String`s containing all GTFS fields found within `self`.
+   - Returns: An array of `String`s containing all GTFS fields found within `self`.
    - Throws: `TransitError.quoteExpected` will be thrown if a quoted field is not
    terminated correctly. `TransitError.commaExpected` will be thrown if a comma
    delimiter does not immediately follow a quoted field (except for the final field).
@@ -92,14 +92,14 @@ extension String {
   }
   
   /**
-   Returns all GTFS header fields contained whithin `self`.
+   Returns all GTFS header fields contained within `self`.
    
    `readHeader` scans `self` for contained GTFS header fields and returns them as an
    array of header `FieldType`s. Header fields are delimited by commas. If a comma is
    contained within a header field, then the field must be escaped by enclosing it within
    quotation marks (`"`). If `readHeader` cannot find a `FieldType` that corresponds to a
    known GTFS field, it will discard the errant field and continue scanning.
-   - Returns: An arry of `String`s containing all GTFS header fields found within `self`.
+   - Returns: An array of `String`s containing all GTFS header fields found within `self`.
    - Throws: `TransitError.quoteExpected` will be thrown if a quoted field is not
    terminated correctly. `TransitError.commaExpected` will be thrown if a comma
    delimiter does not immediately follow a quoted field (except for the final field).
@@ -120,7 +120,7 @@ extension String {
    Return all GTFS records contained within `self`.
    
    `splitRecords()` scans `self` for GTFS records and returns them as an array
-   of `Substring`s. GTFS records must be delimeted by a line feed, carriage return,
+   of `Substring`s. GTFS records must be delimited by a line feed, carriage return,
    or a carriage return followed by line feed. Each GTFS record should then be processed
    to extract the GTFS fields contained within it.
    - Returns: An array of `Substring`s containing all GTFS records found within `self`.
@@ -140,8 +140,8 @@ extension String {
    a `CGColor`.
    
    `color` returns a `CGColor` representation of `self` whenever `self` consists of
-   either six or eight hexidecimal characters, optionally preceded by the octothorpe
-   (`#`) charcter; it returns `nil` otherwise. The color encoding should be RGB (for
+   either six or eight hexadecimal characters, optionally preceded by the octothorp
+   (`#`) character; it returns `nil` otherwise. The color encoding should be RGB (for
    six characters) or RGBA (for eight characters). If the encoding is six characters,
    then a value of 1.0 will be used as an alpha value.
    - Tag: String-color
@@ -359,17 +359,17 @@ extension String {
   }
   
   /**
-   - Tag: String-assignOptionalPickupDropoffPolicyTo
+   - Tag: String-assignOptionalPickupDropOffPolicyTo
    */
-  func assignOptionalPickupDropoffPolicyTo<InstanceType, FieldType>(
+  func assignOptionalPickupDropOffPolicyTo<InstanceType, FieldType>(
     _ instance: inout InstanceType, for field: FieldType)
   throws where FieldType: KeyPathVending {
-    guard let path = field.path as? WritableKeyPath<InstanceType, PickupDropffPolicy?> else {
+    guard let path = field.path as? WritableKeyPath<InstanceType, PickupDropOffPolicy?> else {
       throw TransitAssignError.invalidPath
     }
-    guard let pickupDropoffPolicy = Route.pickupDropoffPolicyFrom(string: self) else {
+    guard let pickupDropOffPolicy = Route.pickupDropOffPolicyFrom(string: self) else {
       throw TransitAssignError.invalidValue
     }
-    instance[keyPath: path] = pickupDropoffPolicy
+    instance[keyPath: path] = pickupDropOffPolicy
   }
 }

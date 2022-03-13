@@ -15,7 +15,7 @@ public enum TripField: String, Hashable, KeyPathVending {
   ///  Trip ID field.
   case tripID = "trip_id"
   ///  Head sign field.
-  case headsign = "trip_headsign"
+  case headSign = "trip_headsign"
   ///  Short name field.
   case shortName = "trip_short_name"
   ///  Direction ID field.
@@ -36,7 +36,7 @@ public enum TripField: String, Hashable, KeyPathVending {
     case .routeID: return \Trip.routeID
     case .serviceID: return \Trip.serviceID
     case .tripID: return \Trip.tripID
-    case .headsign: return \Trip.headsign
+    case .headSign: return \Trip.headSign
     case .shortName: return \Trip.shortName
     case .direction: return \Trip.direction
     case .blockID: return \Trip.blockID
@@ -62,7 +62,7 @@ public struct Trip: Identifiable {
   public var routeID: TransitID = ""
   public var serviceID: TransitID = ""
   public var tripID: TransitID = ""
-  public var headsign: String?
+  public var headSign: String?
   public var shortName: String?
   public var direction: String? // Fix!
   public var blockID: TransitID?
@@ -78,13 +78,13 @@ public struct Trip: Identifiable {
   public init(routeID: TransitID = "",
        serviceID: TransitID = "",
        tripID: TransitID = "",
-       headsign: String? = nil,
+       headSign: String? = nil,
        shortName: String? = nil,
        shapeID: String? = nil) {
     self.routeID = routeID
     self.serviceID = serviceID
     self.tripID = tripID
-    self.headsign = headsign
+    self.headSign = headSign
     self.shortName = shortName
     self.shapeID = shapeID
   }
@@ -100,7 +100,7 @@ public struct Trip: Identifiable {
         switch header {
         case .routeID, .serviceID, .tripID:
           try field.assignStringTo(&self, for: header)
-        case .headsign, .shortName, .direction, .blockID, /*.dir,*/
+        case .headSign, .shortName, .direction, .blockID, /*.dir,*/
              .shapeID, .isAccessible, .bikesAllowed /*, .scheduledTripID */:
           try field.assignOptionalStringTo(&self, for: header)
         }
@@ -117,7 +117,7 @@ extension Trip: Equatable {
       lhs.routeID == rhs.routeID &&
       lhs.serviceID == rhs.serviceID &&
       lhs.tripID == rhs.tripID &&
-      lhs.headsign == rhs.headsign &&
+      lhs.headSign == rhs.headSign &&
       lhs.shortName == rhs.shortName &&
       lhs.shapeID == rhs.shapeID
   }
@@ -147,7 +147,7 @@ public struct Trips: Identifiable {
   }
   
   mutating func add(_ trip: Trip) {
-    // TODO: Add to header fields supported by this colleciton
+    // TODO: Add to header fields supported by this collection
     self.trips.append(trip)
   }
   

@@ -160,7 +160,7 @@ extension Agency: CustomStringConvertible {
 // MARK: - Agencies
 
 // TODO: Method to test for required and conditionally required fields.
-// TODO: Method to ensure that feed with mutiple agencies does not omit agencyIDs.
+// TODO: Method to ensure that feed with multiple agencies does not omit agencyIDs.
 // TODO: Method to ensure that all contained agencies have the same timezone.
 
 ///  A representation of a complete Agency dataset.

@@ -22,16 +22,16 @@ public enum StopTimeField: String, Hashable, KeyPathVending {
   case stopHeadingSign = "stop_headsign"
   ///  Stop pickup type field.
   case pickupType = "pickup_type"
-  ///  Stop dropoff type field.
-  case dropoffType = "drop_off_type"
+  ///  Stop drop off type field.
+  case dropOffType = "drop_off_type"
   ///  Stop continuous pickup field.
   case continuousPickup = "continuous_pickup"
-  ///  Stop continuous dropoff field.
-  case continuousDropoff = "continuous_drop_off"
+  ///  Stop continuous drop off field.
+  case continuousDropOff = "continuous_drop_off"
   ///  Stop distance traveled for shape field.
   case distanceTraveledForShape = "shape_dist_traveled"
-  ///  Stop timepoint type field.
-  case timepointType = "timepoint"
+  ///  Stop time point type field.
+  case timePointType = "timepoint"
   
   internal var path: AnyKeyPath {
     switch self {
@@ -42,11 +42,11 @@ public enum StopTimeField: String, Hashable, KeyPathVending {
     case .stopSequenceNumber: return \StopTime.stopSequenceNumber
     case .stopHeadingSign: return \StopTime.stopHeadingSign
     case .pickupType: return \StopTime.pickupType
-    case .dropoffType: return \StopTime.dropoffType
+    case .dropOffType: return \StopTime.dropOffType
     case .continuousPickup: return \StopTime.continuousPickup
-    case .continuousDropoff: return \StopTime.continuousDropoff
+    case .continuousDropOff: return \StopTime.continuousDropOff
     case .distanceTraveledForShape: return \StopTime.distanceTraveledForShape
-    case .timepointType: return \StopTime.timepointType
+    case .timePointType: return \StopTime.timePointType
     }
   }
 }
@@ -61,11 +61,11 @@ public struct StopTime: Identifiable {
   public var stopSequenceNumber: UInt = 0
   public var stopHeadingSign: String?
   public var pickupType: Int?
-  public var dropoffType: Int?
+  public var dropOffType: Int?
   public var continuousPickup: Int?
-  public var continuousDropoff: Int?
+  public var continuousDropOff: Int?
   public var distanceTraveledForShape: Double?
-  public var timepointType: Int?
+  public var timePointType: Int?
   
   public init(tripID: TransitID = "",
        arrival: Date? = nil,
@@ -74,11 +74,11 @@ public struct StopTime: Identifiable {
        stopSequenceNumber: UInt = 0,
        stopHeadingSign: String? = nil,
        pickupType: Int? = nil,
-       dropoffType: Int? = nil,
+       dropOffType: Int? = nil,
        continuousPickup: Int? = nil,
-       continuousDropoff: Int? = nil,
+       continuousDropOff: Int? = nil,
        distanceTraveledForShape: Double? = nil,
-       timepointType: Int? = nil) {
+       timePointType: Int? = nil) {
     self.tripID = tripID
     self.arrival = arrival
     self.departure = departure
@@ -86,11 +86,11 @@ public struct StopTime: Identifiable {
     self.stopSequenceNumber = stopSequenceNumber
     self.stopHeadingSign = stopHeadingSign
     self.pickupType = pickupType
-    self.dropoffType = dropoffType
+    self.dropOffType = dropOffType
     self.continuousPickup = continuousPickup
-    self.continuousDropoff = continuousDropoff
+    self.continuousDropOff = continuousDropOff
     self.distanceTraveledForShape = distanceTraveledForShape
-    self.timepointType = timepointType
+    self.timePointType = timePointType
   }
   
   init(from record: String, using headers: [StopTimeField]) throws {
@@ -108,9 +108,9 @@ public struct StopTime: Identifiable {
           try field.assignOptionalStringTo(&self, for: header)
         case .stopSequenceNumber:
           try field.assignUIntTo(&self, for: header)
-        case .arrival, .departure, .pickupType, .dropoffType,
-             .continuousPickup, .continuousDropoff,
-             .distanceTraveledForShape, .timepointType:
+        case .arrival, .departure, .pickupType, .dropOffType,
+             .continuousPickup, .continuousDropOff,
+             .distanceTraveledForShape, .timePointType:
           break
         }
       }
@@ -152,7 +152,7 @@ public struct StopTimes: Identifiable {
   }
   
   mutating func add(_ stopTime: StopTime) {
-    // TODO: Add to header fields supported by this colleciton
+    // TODO: Add to header fields supported by this collection
     self.stopTimes.append(stopTime)
   }
   

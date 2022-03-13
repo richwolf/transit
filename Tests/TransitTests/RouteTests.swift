@@ -25,6 +25,6 @@ final class RouteTests: XCTestCase {
     XCTAssertEqual(RouteField.textColor.path, \Route.textColor)
     XCTAssertEqual(RouteField.sortOrder.path, \Route.sortOrder)
     XCTAssertEqual(RouteField.pickupPolicy.path, \Route.pickupPolicy)
-    XCTAssertEqual(RouteField.dropoffPolicy.path, \Route.dropoffPolicy)
+    XCTAssertEqual(RouteField.dropOffPolicy.path, \Route.dropOffPolicy)
   }
 }

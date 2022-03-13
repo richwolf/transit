@@ -32,7 +32,7 @@ public enum StopField: String, Hashable, KeyPathVending {
   ///  Stop timezone field.
   case timeZone = "stop_timezone"
   ///  Stop accessibility field.
-  case accessibilty = "wheelchair_boarding"
+  case accessibility = "wheelchair_boarding"
   ///  Stop level ID field.
   case levelID = "level_id"
   ///  Stop platform code field.
@@ -51,7 +51,7 @@ public enum StopField: String, Hashable, KeyPathVending {
     case .locationType: return \Stop.locationType
     case .parentStationID: return \Stop.parentStationID
     case .timeZone: return \Stop.timeZone
-    case .accessibilty: return \Stop.accessibilty
+    case .accessibility: return \Stop.accessibility
     case .levelID: return \Stop.levelID
     case .platformCode: return \Stop.platformCode
     }
@@ -91,7 +91,7 @@ public struct Stop: Identifiable {
   public var locationType: StopLocationType?
   public var parentStationID: TransitID?
   public var timeZone: TimeZone?
-  public var accessibilty: Accessibility?
+  public var accessibility: Accessibility?
   public var levelID: TransitID?
   public var platformCode: String?
   
@@ -106,7 +106,7 @@ public struct Stop: Identifiable {
        locationType: StopLocationType? = nil,
        parentStationID: TransitID? = nil,
        timeZone: TimeZone? = nil,
-       accessibilty: Accessibility? = nil,
+       accessibility: Accessibility? = nil,
        levelID: TransitID? = nil,
        platformCode: String?) {
     self.stopID = stopID
@@ -120,7 +120,7 @@ public struct Stop: Identifiable {
     self.locationType = locationType
     self.parentStationID = parentStationID
     self.timeZone = timeZone
-    self.accessibilty = accessibilty
+    self.accessibility = accessibility
     self.levelID = levelID
     self.platformCode = platformCode
   }
@@ -149,7 +149,7 @@ public struct Stop: Identifiable {
           try field.assignOptionalCLLocationDegreesTo(&self, for: header)
         case .locationType:
           break
-        case .accessibilty:
+        case .accessibility:
           break
         }
       }
@@ -192,7 +192,7 @@ extension Stop: Equatable {
       lhs.locationType == rhs.locationType &&
       lhs.parentStationID == rhs.parentStationID &&
       lhs.timeZone == rhs.timeZone &&
-      lhs.accessibilty == rhs.accessibilty &&
+      lhs.accessibility == rhs.accessibility &&
       lhs.levelID == rhs.levelID &&
       lhs.platformCode == rhs.platformCode
   }
@@ -222,7 +222,7 @@ public struct Stops: Identifiable {
   }
   
   mutating func add(_ stop: Stop) {
-    // TODO: Add to header fields supported by this colleciton
+    // TODO: Add to header fields supported by this collection
     self.stops.append(stop)
   }
   

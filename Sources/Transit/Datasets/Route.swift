@@ -31,8 +31,8 @@ public enum RouteField: String, Hashable, KeyPathVending {
   case sortOrder = "route_sort_order"
   ///  Route pickup policy field.
   case pickupPolicy = "continuous_pickup"
-  ///  Route dropoff policy field.
-  case dropoffPolicy = "continuous_drop_off"
+  ///  Route drop off policy field.
+  case dropOffPolicy = "continuous_drop_off"
   
   internal var path: AnyKeyPath {
     switch self {
@@ -47,7 +47,7 @@ public enum RouteField: String, Hashable, KeyPathVending {
     case .textColor: return \Route.textColor
     case .sortOrder: return \Route.sortOrder
     case .pickupPolicy: return \Route.pickupPolicy
-    case .dropoffPolicy: return \Route.dropoffPolicy
+    case .dropOffPolicy: return \Route.dropOffPolicy
     }
   }
 }
@@ -65,7 +65,7 @@ public enum RouteType: UInt, Hashable {
   case monorail = 12
 }
 
-public enum PickupDropffPolicy: UInt, Hashable {
+public enum PickupDropOffPolicy: UInt, Hashable {
   case continuous = 0
   case none = 1
   case coordinateWithAgency = 2
@@ -92,8 +92,8 @@ public struct Route: Identifiable {
   public var color: CGColor?
   public var textColor: CGColor?
   public var sortOrder: UInt?
-  public var pickupPolicy: PickupDropffPolicy?
-  public var dropoffPolicy: PickupDropffPolicy?
+  public var pickupPolicy: PickupDropOffPolicy?
+  public var dropOffPolicy: PickupDropOffPolicy?
   
   public static let requiredFields: Set<RouteField>
     = [.routeID, .type]
@@ -101,7 +101,7 @@ public struct Route: Identifiable {
     = [.agencyID, .name, .shortName]
   public static let optionalFields: Set<RouteField>
     = [.details, .url, .color, .textColor, .sortOrder,
-       .pickupPolicy, .dropoffPolicy]
+       .pickupPolicy, .dropOffPolicy]
   
   public init(routeID: TransitID = "Unidentified route",
        agencyID: TransitID? = nil,
@@ -113,8 +113,8 @@ public struct Route: Identifiable {
        color: CGColor? = nil,
        textColor: CGColor? = nil,
        sortOrder: UInt? = nil,
-       pickupPolicy: PickupDropffPolicy? = nil,
-       dropoffPolicy: PickupDropffPolicy? = nil) {
+       pickupPolicy: PickupDropOffPolicy? = nil,
+       dropOffPolicy: PickupDropOffPolicy? = nil) {
     self.routeID = routeID
     self.agencyID = agencyID
     self.name = name
@@ -126,7 +126,7 @@ public struct Route: Identifiable {
     self.textColor = textColor
     self.sortOrder = sortOrder
     self.pickupPolicy = pickupPolicy
-    self.dropoffPolicy = dropoffPolicy
+    self.dropOffPolicy = dropOffPolicy
   }
   
   public init(from record: String, using headers: [RouteField]) throws {
@@ -150,8 +150,8 @@ public struct Route: Identifiable {
           try field.assignOptionalCGColorTo(&self, for: header)
         case .type:
           try field.assignRouteTypeTo(&self, for: header)
-        case .pickupPolicy, .dropoffPolicy:
-          try field.assignOptionalPickupDropoffPolicyTo(&self, for: header)
+        case .pickupPolicy, .dropOffPolicy:
+          try field.assignOptionalPickupDropOffPolicyTo(&self, for: header)
         }
       }
     } catch let error {
@@ -167,9 +167,9 @@ public struct Route: Identifiable {
     }
   }
   
-  public static func pickupDropoffPolicyFrom(string: String) -> PickupDropffPolicy? {
+  public static func pickupDropOffPolicyFrom(string: String) -> PickupDropOffPolicy? {
     if let rawValue = UInt(string) {
-      return PickupDropffPolicy(rawValue: rawValue)
+      return PickupDropOffPolicy(rawValue: rawValue)
     } else {
       return nil
     }
@@ -193,7 +193,7 @@ extension Route: Equatable {
       lhs.textColor == rhs.textColor &&
       lhs.sortOrder == rhs.sortOrder &&
       lhs.pickupPolicy == rhs.pickupPolicy &&
-      lhs.dropoffPolicy == rhs.dropoffPolicy
+      lhs.dropOffPolicy == rhs.dropOffPolicy
   }
 }
 
@@ -221,7 +221,7 @@ public struct Routes: Identifiable {
   }
   
   mutating func add(_ route: Route) {
-    // TODO: Add to header fields supported by this colleciton
+    // TODO: Add to header fields supported by this collection
     self.routes.append(route)
   }
   
