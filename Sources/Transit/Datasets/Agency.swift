@@ -6,7 +6,19 @@ import Foundation
 
 // MARK: AgencyField
 
-///  All possible fields contained within an ``Agency`` record.
+///  All possible fields that may appear within an `Agency` record.
+///
+///  `AgencyField`s are often found in `Set`s enumerating fields found
+///  within an ``Agencies`` feed:
+///  ```swift
+///    let fields = myAgencies.headerFields  // Returns a Set of AgencyFields
+///  ```
+///
+///  Should you need it, you can use `rawValue` to obtain the GTFS field name
+///  for this enumeration:
+///  ```swift
+///    let gtfsField = AgencyField.locale.rawValue  //  Returns "agency_lang"
+///  ```
 public enum AgencyField: String, Hashable, KeyPathVending {
   ///  Agency ID field.
   case agencyID = "agency_id"
@@ -24,7 +36,7 @@ public enum AgencyField: String, Hashable, KeyPathVending {
   case fareURL = "agency_fare_url"
   ///  Agency email address field.
   case email = "agency_email"
-  
+
   internal var path: AnyKeyPath {
     switch self {
     case .agencyID: return \Agency.agencyID
@@ -65,7 +77,7 @@ public struct Agency: Identifiable {
   public var fareURL: URL?
   ///  Agency email address.
   public var email: String?
-  
+
   ///  A set enumerating the required fields in an ``Agency`` record.
   public static let requiredFields: Set<AgencyField>
     = [.name, .url, .timeZone]
@@ -75,7 +87,7 @@ public struct Agency: Identifiable {
   ///  A set enumerating the optional fields in an ``Agency`` record.
   public static let optionalFields: Set<AgencyField>
     = [.locale, .phone, .fareURL, .email]
-  
+
   ///  Basic init.
   public init(agencyID: String? = nil,
        name: String = "",
@@ -94,7 +106,7 @@ public struct Agency: Identifiable {
     self.fareURL = fareURL
     self.email = email
   }
-  
+
   ///  Init from a record.
   public init(from record: String, using headerFields: [AgencyField]) throws {
     do {
@@ -158,7 +170,7 @@ public struct Agencies: Identifiable {
   ///  Header fields.
   public var headerFields = [AgencyField]()
   fileprivate var agencies = [Agency]()
-  
+
   public subscript(index: Int) -> Agency {
     get {
       return agencies[index]
@@ -167,30 +179,30 @@ public struct Agencies: Identifiable {
       agencies[index] = newValue
     }
   }
-  
+
   mutating func add(_ agency: Agency) {
     self.agencies.append(agency)
   }
-  
+
   mutating func remove(_ agency: Agency) {
   }
-  
+
   public init<S: Sequence>(_ sequence: S)
   where S.Iterator.Element == Agency {
     for agency in sequence {
       self.add(agency)
     }
   }
-  
+
   ///  Grab agency dataset from file.
   public init(from url: URL) throws {
     do {
       let records = try String(contentsOf: url).splitRecords()
-      
+
       if records.count < 1 { return }
       let headerRecord = String(records[0])
       self.headerFields = try headerRecord.readHeader()
-      
+
       self.agencies.reserveCapacity(records.count - 1)
       for agencyRecord in records[1 ..< records.count] {
         let agency = try Agency(from: String(agencyRecord), using: headerFields)

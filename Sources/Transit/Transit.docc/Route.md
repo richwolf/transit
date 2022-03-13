@@ -1,5 +1,9 @@
 # ``Transit/Route``
 
+@Metadata {
+  @DocumentationExtension(mergeBehavior: append)
+}
+
 ## Overview
 
 The table below shows the mapping between the possible GTFS fields found within an `Route` dataset record and Transit ``Route`` property names. In addition, it shows the Swift types associated with each of those properties.

@@ -6,7 +6,7 @@ import Foundation
 
 // MARK: StopTimeField
 
-///  All possible fields contained within a ``StopTime`` record.
+///  All possible fields that may appear within a `StopTime` record.
 public enum StopTimeField: String, Hashable, KeyPathVending {
   ///  Trip ID field.
   case tripID = "trip_id"

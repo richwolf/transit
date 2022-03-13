@@ -6,17 +6,27 @@ import Foundation
 
 // MARK: TripField
 
-///  All possible fields contained within a ``Trip`` record.
+///  All possible fields that may appear within a `Trip` record.
 public enum TripField: String, Hashable, KeyPathVending {
+  ///  Route ID field.
   case routeID = "route_id"
+  ///  Service ID field.
   case serviceID = "service_id"
+  ///  Trip ID field.
   case tripID = "trip_id"
+  ///  Head sign field.
   case headsign = "trip_headsign"
+  ///  Short name field.
   case shortName = "trip_short_name"
+  ///  Direction ID field.
   case direction = "direction_id"
+  ///  Block ID field.
   case blockID = "block_id"
+  ///  Shape ID field.
   case shapeID = "shape_id"
+  ///  Is accessible field.
   case isAccessible = "wheelchair_accessible"
+  ///  Bikes allowed field.
   case bikesAllowed = "bikes_allowed"
   //case scheduledTripID = "schd_trip_id" // This is not in GTFS??
   //case dir = "direction" // This is not in GTFS??

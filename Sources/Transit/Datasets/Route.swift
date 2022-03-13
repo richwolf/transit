@@ -7,7 +7,7 @@ import CoreGraphics
 
 // MARK: RouteField
 
-///  All possible fields contained within a ``Route`` record.
+///  All possible fields that may appear within a `Route` record.
 public enum RouteField: String, Hashable, KeyPathVending {
   ///  Route ID field.
   case routeID = "route_id"

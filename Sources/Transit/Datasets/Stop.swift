@@ -7,7 +7,7 @@ import CoreLocation
 
 // MARK: StopField
 
-///  All possible fields contained within a ``Stop`` record.
+///  All possible fields that may appear within a `Stop` record.
 public enum StopField: String, Hashable, KeyPathVending {
   ///  Stop ID field.
   case stopID = "stop_id"

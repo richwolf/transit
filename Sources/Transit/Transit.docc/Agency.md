@@ -1,5 +1,9 @@
 # ``Transit/Agency``
 
+@Metadata {
+  @DocumentationExtension(mergeBehavior: append)
+}
+
 ## Overview
 
 The table below shows the mapping between the possible GTFS fields found within an `Agency` dataset record and Transit ``Agency`` property names. In addition, it shows the Swift types associated with each of those properties.

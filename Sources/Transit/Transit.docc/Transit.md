@@ -1,5 +1,9 @@
 # ``Transit``
 
+@Metadata {
+  @TechnologyRoot
+}
+
 Transit strives to be the Swiftiest way to interact with a GTFS static dataset feed.
 
 ## Overview
