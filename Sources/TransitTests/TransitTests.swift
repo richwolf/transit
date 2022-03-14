@@ -45,7 +45,8 @@ func test_initWithURL() {
       XCTAssertEqual(agency.phone, "1-888-YOURCTA")
       XCTAssertEqual(
         agency.fareURL,
-        URL(string: "http://www.transitchicago.com/travel_information/fares/default.aspx"))
+        URL(string:
+			"http://www.transitchicago.com/travel_information/fares/default.aspx"))
       XCTAssertNil(agency.email, "CTA email address should be nil")
     }
   }
