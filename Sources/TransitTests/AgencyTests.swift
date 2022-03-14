@@ -53,7 +53,8 @@ final class AgencyTests: XCTestCase {
     XCTAssertEqual(agency.timeZone, TimeZone(identifier: "America/Chicago")!)
     XCTAssertEqual(agency.locale, Locale(identifier: "en"))
     XCTAssertEqual(agency.phone, "1-888-YOURCTA")
-    XCTAssertEqual(agency.fareURL, URL(string: "http://www.transitchicago.com/fares")!)
+    XCTAssertEqual(agency.fareURL,
+									 URL(string: "http://www.transitchicago.com/fares")!)
     XCTAssertNil(agency.email)
   }
   
