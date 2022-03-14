@@ -45,7 +45,6 @@ public enum TripField: String, Hashable, KeyPathVending {
     case .bikesAllowed: return \Trip.bikesAllowed
     //case .scheduledTripID: return \Trip.scheduledTripID  // This is not in GTFS??
     //case .dir: return \Trip.dir  // This is not in GTFS??
-
     }
   }
 }

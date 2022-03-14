@@ -199,7 +199,7 @@ extension Stop: Equatable {
 }
 
 extension Stop: CustomStringConvertible {
-  public var description: String {
+	public var description: String {
     return "Stop: \(self.stopID)"
   }
 }

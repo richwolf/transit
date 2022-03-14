@@ -10,10 +10,12 @@ let package = Package(
   targets: [
     .target(
       name: "Transit",
-      resources: [.process("Resources")]),
+      resources: []
+		),
     .testTarget(
       name: "TransitTests",
       dependencies: ["Transit"],
-      resources: [.process("Resources")])
+      resources: [.process("Test Data")]
+		)
   ]
 )

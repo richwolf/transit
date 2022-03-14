@@ -23,7 +23,7 @@ final class TransitTests: XCTestCase {
     }
     if let stops = feed.stops {
       for stop in stops {
-        print(stop.name ?? "Wha?" )
+				print(stop)
       }
     }
   }
@@ -49,4 +49,5 @@ func test_initWithURL() {
       XCTAssertNil(agency.email, "CTA email address should be nil")
     }
   }
-}*/
+}
+*/
