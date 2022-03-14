@@ -68,17 +68,18 @@ public struct StopTime: Identifiable {
   public var timePointType: Int?
   
   public init(tripID: TransitID = "",
-       arrival: Date? = nil,
-       departure: Date? = nil,
-       stopID: TransitID = "",
-       stopSequenceNumber: UInt = 0,
-       stopHeadingSign: String? = nil,
-       pickupType: Int? = nil,
-       dropOffType: Int? = nil,
-       continuousPickup: Int? = nil,
-       continuousDropOff: Int? = nil,
-       distanceTraveledForShape: Double? = nil,
-       timePointType: Int? = nil) {
+		arrival: Date? = nil,
+		departure: Date? = nil,
+		stopID: TransitID = "",
+		stopSequenceNumber: UInt = 0,
+		stopHeadingSign: String? = nil,
+		pickupType: Int? = nil,
+		dropOffType: Int? = nil,
+		continuousPickup: Int? = nil,
+		continuousDropOff: Int? = nil,
+		distanceTraveledForShape: Double? = nil,
+		timePointType: Int? = nil)
+	{
     self.tripID = tripID
     self.arrival = arrival
     self.departure = departure
@@ -121,7 +122,7 @@ public struct StopTime: Identifiable {
 }
 
 extension StopTime: Equatable {
-  public static func ==(lhs: StopTime, rhs: StopTime) -> Bool {
+  public static func == (lhs: StopTime, rhs: StopTime) -> Bool {
     return
       lhs.tripID == rhs.tripID &&
       lhs.stopID == rhs.stopID
@@ -176,7 +177,8 @@ public struct StopTimes: Identifiable {
       
       self.stopTimes.reserveCapacity(records.count - 1)
       for stopTimeRecord in records[1 ..< records.count] {
-        let stopTime = try StopTime(from: String(stopTimeRecord), using: headerFields)
+        let stopTime = try StopTime(from: String(stopTimeRecord),
+																		using: headerFields)
         self.add(stopTime)
       }
     } catch let error {
