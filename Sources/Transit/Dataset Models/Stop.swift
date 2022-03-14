@@ -96,19 +96,20 @@ public struct Stop: Identifiable {
   public var platformCode: String?
   
   public init(stopID: TransitID = "Unidentified stop",
-       code: StopCode? = nil,
-       name: String? = nil,
-       details: String? = nil,
-       latitude: CLLocationDegrees? = nil,
-       longitude: CLLocationDegrees? = nil,
-       zoneID: TransitID? = nil,
-       url: URL? = nil,
-       locationType: StopLocationType? = nil,
-       parentStationID: TransitID? = nil,
-       timeZone: TimeZone? = nil,
-       accessibility: Accessibility? = nil,
-       levelID: TransitID? = nil,
-       platformCode: String?) {
+		code: StopCode? = nil,
+		name: String? = nil,
+		details: String? = nil,
+		latitude: CLLocationDegrees? = nil,
+		longitude: CLLocationDegrees? = nil,
+		zoneID: TransitID? = nil,
+		url: URL? = nil,
+		locationType: StopLocationType? = nil,
+		parentStationID: TransitID? = nil,
+		timeZone: TimeZone? = nil,
+		accessibility: Accessibility? = nil,
+		levelID: TransitID? = nil,
+		platformCode: String?)
+	{
     self.stopID = stopID
     self.code = code
     self.name = name
@@ -139,7 +140,8 @@ public struct Stop: Identifiable {
         switch header {
         case .stopID:
           try field.assignStringTo(&self, for: header)
-        case .code, .name, .details, .zoneID, .parentStationID, .levelID, .platformCode:
+        case .code, .name, .details, .zoneID, .parentStationID,
+						.levelID, .platformCode:
           try field.assignOptionalStringTo(&self, for: header)
         case .url:
           try field.assignOptionalURLTo(&self, for: header)
@@ -158,7 +160,9 @@ public struct Stop: Identifiable {
     }
   }
   
-  public static func stopLocationTypeFrom(string: String) -> StopLocationType? {
+  public static func stopLocationTypeFrom(string: String)
+		-> StopLocationType?
+	{
     if let rawValue = UInt(string) {
       return StopLocationType(rawValue: rawValue)
     } else {
@@ -179,7 +183,7 @@ public struct Stop: Identifiable {
 }
 
 extension Stop: Equatable {
-  public static func ==(lhs: Stop, rhs: Stop) -> Bool {
+  public static func == (lhs: Stop, rhs: Stop) -> Bool {
     return
       lhs.stopID == rhs.stopID &&
       lhs.code == rhs.code &&
