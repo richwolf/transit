@@ -2,10 +2,8 @@
 //  String+Substring.swift
 //
 
-/**
-  - TODO: Write "writeRecord".
-  - TODO: Write "writeHeader".
-*/
+// TODO: Write "writeRecord".
+// TODO: Write "writeHeader".
 
 import Foundation
 import CoreGraphics
@@ -18,22 +16,23 @@ extension Substring {
   /**
    Returns the next GTFS field found within `self`.
    
-   `nextField` scans characters within `self` for a GTFS field until either a delimiting
-   comma is found or there are no more characters available to scan. If a comma is contained
-   within the field, then the field must be escaped by enclosing it within quotation marks
-   (`"`). `nextfield` mutates `self` upon return so that `self` will begin at the character
-   immediately following the extracted field (excluding the comma delimiter).
+   `nextField` scans characters within `self` for a GTFS field until either a
+	 delimiting comma is found or there are no more characters available to
+	 scan. If a comma is contained within the field, then the field must be
+	 escaped by enclosing it within quotation marks (`"`). `nextfield` mutates
+	 `self` upon return so that `self` will begin at the character immediately
+	 following the extracted field (excluding the comma delimiter).
    - Precondition: `self` must not be empty.
    - Returns: A `String` containing the next GTFS field found within `self`.
    - Throws: `TransitParseError.emptySubstring` will be thrown if `self`
    contains no characters.`TransitParseError.quoteExpected` will be thrown
-   if a quoted field is not terminated correctly. `TransitParseError.commaExpected`
-   will be thrown if a comma delimiter does not immediately follow a quoted field (except
-   for the final field).
+   if a quoted field is not terminated correctly.
+	 `TransitParseError.commaExpected` will be thrown if a comma delimiter does
+	 not immediately follow a quoted field (except for the final field).
    - Tag: Substring-nextField
    */
   mutating func nextField() throws -> String {
-    if self.isEmpty { throw TransitError.emptySubstring }
+    guard !self.isEmpty else { throw TransitError.emptySubstring }
     switch self[startIndex] {
     case "\"":
       removeFirst()
@@ -70,12 +69,14 @@ extension String {
    
    `readRecord` scans `self` for contained GTFS fields and returns them as an
    array of `String`s. Fields are delimited by commas. If a comma is contained
-   within a field, then the field must be escaped by enclosing it within quotation
-   marks (`"`).
-   - Returns: An array of `String`s containing all GTFS fields found within `self`.
-   - Throws: `TransitError.quoteExpected` will be thrown if a quoted field is not
-   terminated correctly. `TransitError.commaExpected` will be thrown if a comma
-   delimiter does not immediately follow a quoted field (except for the final field).
+   within a field, then the field must be escaped by enclosing it within
+	 quotation marks (`"`).
+   - Returns: An array of `String`s containing all GTFS fields found within
+	 `self`.
+   - Throws: `TransitError.quoteExpected` will be thrown if a quoted field is
+	 not terminated correctly. `TransitError.commaExpected` will be thrown if a
+	 comma delimiter does not immediately follow a quoted field (except for the
+	 final field).
    - Tag: String-readRecord
    */
   public func readRecord() throws -> [String] {
@@ -94,19 +95,22 @@ extension String {
   /**
    Returns all GTFS header fields contained within `self`.
    
-   `readHeader` scans `self` for contained GTFS header fields and returns them as an
-   array of header `FieldType`s. Header fields are delimited by commas. If a comma is
-   contained within a header field, then the field must be escaped by enclosing it within
-   quotation marks (`"`). If `readHeader` cannot find a `FieldType` that corresponds to a
-   known GTFS field, it will discard the errant field and continue scanning.
-   - Returns: An array of `String`s containing all GTFS header fields found within `self`.
-   - Throws: `TransitError.quoteExpected` will be thrown if a quoted field is not
-   terminated correctly. `TransitError.commaExpected` will be thrown if a comma
-   delimiter does not immediately follow a quoted field (except for the final field).
+   `readHeader` scans `self` for contained GTFS header fields and returns them
+	 as an array of header `FieldType`s. Header fields are delimited by commas.
+	 If a comma is contained within a header field, then the field must be
+	 escaped by enclosing it within quotation marks (`"`). If `readHeader` cannot
+	 find a `FieldType` that corresponds to a known GTFS field, it will discard
+	 the errant field and continue scanning.
+   - Returns: An array of `String`s containing all GTFS header fields found
+	 within `self`.
+   - Throws: `TransitError.quoteExpected` will be thrown if a quoted field is
+	 not terminated correctly. `TransitError.commaExpected` will be thrown if a
+	 comma delimiter does not immediately follow a quoted field (except for the
+	 final field).
    - Tag: String-readHeader
    */
   public func readHeader<FieldType: RawRepresentable>() throws -> [FieldType]
-  where FieldType.RawValue == String {
+	where FieldType.RawValue == String {
     let components = try self.readRecord()
     return try components.map {
       guard let headerField = FieldType(rawValue: $0) else {
@@ -120,10 +124,11 @@ extension String {
    Return all GTFS records contained within `self`.
    
    `splitRecords()` scans `self` for GTFS records and returns them as an array
-   of `Substring`s. GTFS records must be delimited by a line feed, carriage return,
-   or a carriage return followed by line feed. Each GTFS record should then be processed
-   to extract the GTFS fields contained within it.
-   - Returns: An array of `Substring`s containing all GTFS records found within `self`.
+   of `Substring`s. GTFS records must be delimited by a line feed, carriage
+	 return, or a carriage return followed by line feed. Each GTFS record should
+	 then be processed to extract the GTFS fields contained within it.
+   - Returns: An array of `Substring`s containing all GTFS records found
+	 within `self`.
    - Tag: String-splitRecords
    */
   func splitRecords() -> [Substring] {
@@ -136,14 +141,15 @@ extension String {
   }
   
   /**
-   The `CGColor` representation of `self` or `nil` if `self` cannot be represented as
-   a `CGColor`.
+   The `CGColor` representation of `self` or `nil` if `self` cannot be
+	 represented as a `CGColor`.
    
-   `color` returns a `CGColor` representation of `self` whenever `self` consists of
-   either six or eight hexadecimal characters, optionally preceded by the octothorp
-   (`#`) character; it returns `nil` otherwise. The color encoding should be RGB (for
-   six characters) or RGBA (for eight characters). If the encoding is six characters,
-   then a value of 1.0 will be used as an alpha value.
+   `color` returns a `CGColor` representation of `self` whenever `self`
+	 consists of either six or eight hexadecimal characters, optionally preceded
+	 by the octothorp (`#`) character; it returns `nil` otherwise. The color
+	 encoding should be RGB (for six characters) or RGBA (for eight characters).
+	 If the encoding is six characters, then a value of 1.0 will be used as an
+	 alpha value.
    - Tag: String-color
    */
   var color: CGColor? {
@@ -188,10 +194,12 @@ extension String {
    associated with `field`.
    - Tag: String-assignStringTo
    */
-  func assignStringTo<InstanceType, FieldType>(_ instance: inout InstanceType,
-                                               for field: FieldType)
-  throws where FieldType: KeyPathVending {
-    guard let path = field.path as? WritableKeyPath<InstanceType, String> else {
+  func assignStringTo<InstanceType, FieldType>(
+		_ instance: inout InstanceType,
+		for field: FieldType)
+	throws where FieldType: KeyPathVending {
+    guard let path = field.path as? WritableKeyPath<InstanceType, String>
+		else {
       throw TransitAssignError.invalidPath
     }
     instance[keyPath: path] = self
@@ -201,22 +209,27 @@ extension String {
    Set `self` as a value for an optional `String` field in `instance`.
    - Tag: String-assignOptionalStringTo
    */
-  func assignOptionalStringTo<InstanceType, FieldType>(_ instance: inout InstanceType,
-                                                       for field: FieldType)
-  throws where FieldType: KeyPathVending {
-    guard let path = field.path as? WritableKeyPath<InstanceType, String?> else {
+  func assignOptionalStringTo<InstanceType, FieldType>(
+		_ instance: inout InstanceType,
+		for field: FieldType)
+	throws where FieldType: KeyPathVending {
+    guard let path = field.path as? WritableKeyPath<InstanceType, String?>
+		else {
       throw TransitAssignError.invalidPath
     }
     instance[keyPath: path] = self
   }
   
-  func assignUIntTo<InstanceType, FieldType>(_ instance: inout InstanceType,
-                                               for field: FieldType)
-  throws where FieldType: KeyPathVending {
-    guard let path = field.path as? WritableKeyPath<InstanceType, UInt> else {
+  func assignUIntTo<InstanceType, FieldType>(
+		_ instance: inout InstanceType,
+		for field: FieldType)
+	throws where FieldType: KeyPathVending {
+    guard let path = field.path as? WritableKeyPath<InstanceType, UInt>
+		else {
       throw TransitAssignError.invalidPath
     }
-    guard let uInt = UInt(self) else {
+    guard let uInt = UInt(self)
+		else {
       throw TransitAssignError.invalidValue
     }
     instance[keyPath: path] = uInt
@@ -226,13 +239,16 @@ extension String {
    Set `self` as a value for an optional `UInt` field in `instance`.
    - Tag: String-assignOptionalUIntTo
    */
-  func assignOptionalUIntTo<InstanceType, FieldType>(_ instance: inout InstanceType,
-                                                     for field: FieldType)
-  throws where FieldType: KeyPathVending {
-    guard let path = field.path as? WritableKeyPath<InstanceType, UInt?> else {
+  func assignOptionalUIntTo<InstanceType, FieldType>(
+		_ instance: inout InstanceType,
+		for field: FieldType)
+	throws where FieldType: KeyPathVending {
+    guard let path = field.path as? WritableKeyPath<InstanceType, UInt?>
+		else {
       throw TransitAssignError.invalidPath
     }
-    guard let uInt = UInt(self) else {
+    guard let uInt = UInt(self)
+		else {
       throw TransitAssignError.invalidValue
     }
     instance[keyPath: path] = uInt
@@ -242,13 +258,16 @@ extension String {
    Set `self` as a value for a `URL` field in `instance`.
    - Tag: String-assignURLValueTo
    */
-  func assignURLValueTo<InstanceType, FieldType>(_ instance: inout InstanceType,
-                                                 for field: FieldType)
+  func assignURLValueTo<InstanceType, FieldType>(
+		_ instance: inout InstanceType,
+		for field: FieldType)
   throws where FieldType: KeyPathVending {
-    guard let path = field.path as? WritableKeyPath<InstanceType, URL> else {
+    guard let path = field.path as? WritableKeyPath<InstanceType, URL>
+		else {
       throw TransitAssignError.invalidPath
     }
-    guard let url = URL(string: self) else {
+    guard let url = URL(string: self)
+		else {
       throw TransitAssignError.invalidValue
     }
     instance[keyPath: path] = url
@@ -258,13 +277,16 @@ extension String {
    Set `self` as a value for an optional `URL` field in `instance`.
    - Tag: String-assignOptionalURLTo
    */
-  func assignOptionalURLTo<InstanceType, FieldType>(_ instance: inout InstanceType,
-                                                    for field: FieldType)
+  func assignOptionalURLTo<InstanceType, FieldType>(
+		_ instance: inout InstanceType,
+		for field: FieldType)
   throws where FieldType: KeyPathVending {
-    guard let path = field.path as? WritableKeyPath<InstanceType, URL?> else {
+    guard let path = field.path as? WritableKeyPath<InstanceType, URL?>
+		else {
       throw TransitAssignError.invalidPath
     }
-    guard let url = URL(string: self) else {
+    guard let url = URL(string: self)
+		else {
       throw TransitAssignError.invalidValue
     }
     instance[keyPath: path] = url
@@ -274,13 +296,16 @@ extension String {
    Set `self` as a value for an optional `TimeZone` field in `instance`.
    - Tag: String-assignTimeZoneTo
    */
-  func assignTimeZoneTo<InstanceType, FieldType>(_ instance: inout InstanceType,
-                                                 for field: FieldType)
+  func assignTimeZoneTo<InstanceType, FieldType>(
+		_ instance: inout InstanceType,
+		for field: FieldType)
   throws where FieldType: KeyPathVending {
-    guard let path = field.path as? WritableKeyPath<InstanceType, TimeZone> else {
+    guard let path = field.path as? WritableKeyPath<InstanceType, TimeZone>
+		else {
       throw TransitAssignError.invalidPath
     }
-    guard let timeZone = TimeZone(identifier: self) else {
+    guard let timeZone = TimeZone(identifier: self)
+		else {
       throw TransitAssignError.invalidValue
     }
     instance[keyPath: path] = timeZone
@@ -289,13 +314,16 @@ extension String {
   /**
    - Tag: String-assignOptionalTimeZoneTo
    */
-  func assignOptionalTimeZoneTo<InstanceType, FieldType>(_ instance: inout InstanceType,
-                                                 for field: FieldType)
+  func assignOptionalTimeZoneTo<InstanceType, FieldType>(
+		_ instance: inout InstanceType,
+		for field: FieldType)
   throws where FieldType: KeyPathVending {
-    guard let path = field.path as? WritableKeyPath<InstanceType, TimeZone?> else {
+    guard let path = field.path as? WritableKeyPath<InstanceType, TimeZone?>
+		else {
       throw TransitAssignError.invalidPath
     }
-    guard let timeZone = TimeZone(identifier: self) else {
+    guard let timeZone = TimeZone(identifier: self)
+		else {
       throw TransitAssignError.invalidValue
     }
     instance[keyPath: path] = timeZone
@@ -305,13 +333,16 @@ extension String {
    Set `self` as a value for an optional `URL` field in `instance`.
    - Tag: String-assignOptionalCGColorTo
    */
-  func assignOptionalCGColorTo<InstanceType, FieldType>(_ instance: inout InstanceType,
-                                                        for field: FieldType)
+  func assignOptionalCGColorTo<InstanceType, FieldType>(
+		_ instance: inout InstanceType,
+		for field: FieldType)
   throws where FieldType: KeyPathVending {
-    guard let path = field.path as? WritableKeyPath<InstanceType, CGColor?> else {
+    guard let path = field.path as? WritableKeyPath<InstanceType, CGColor?>
+		else {
       throw TransitAssignError.invalidPath
     }
-    guard let color = self.color else {
+    guard let color = self.color
+		else {
       throw TransitAssignError.invalidValue
     }
     instance[keyPath: path] = color
@@ -321,21 +352,27 @@ extension String {
    - Tag: String-assignOptionalCLLocationDegreesTo
    */
   func assignOptionalCLLocationDegreesTo<InstanceType, FieldType>(
-    _ instance: inout InstanceType, for field: FieldType)
+    _ instance: inout InstanceType,
+		for field: FieldType)
   throws where FieldType: KeyPathVending {
-    guard let path = field.path as? WritableKeyPath<InstanceType, CLLocationDegrees?> else {
+    guard let path = field.path
+						as? WritableKeyPath<InstanceType, CLLocationDegrees?>
+		else {
       throw TransitAssignError.invalidPath
     }
-    guard let locationDegrees = Double(self) else {
+    guard let locationDegrees = Double(self)
+		else {
       throw TransitAssignError.invalidValue
     }
     instance[keyPath: path] = locationDegrees
   }
   
   func assignLocaleTo<InstanceType, FieldType>(
-    _ instance: inout InstanceType, for field: FieldType)
+    _ instance: inout InstanceType,
+		for field: FieldType)
   throws where FieldType: KeyPathVending {
-    guard let path = field.path as? WritableKeyPath<InstanceType, Locale?> else {
+    guard let path = field.path as? WritableKeyPath<InstanceType, Locale?>
+		else {
       throw TransitAssignError.invalidPath
     }
     let locale: Locale? = Locale(identifier: "en")
@@ -346,13 +383,16 @@ extension String {
   /**
    - Tag: String-assignRouteTypeTo
    */
-  func assignRouteTypeTo<InstanceType, FieldType>(_ instance: inout InstanceType,
-                                                  for field: FieldType)
+  func assignRouteTypeTo<InstanceType, FieldType>(
+		_ instance: inout InstanceType,
+		for field: FieldType)
   throws where FieldType: KeyPathVending {
-    guard let path = field.path as? WritableKeyPath<InstanceType, RouteType> else {
+    guard let path = field.path as? WritableKeyPath<InstanceType, RouteType>
+		else {
       throw TransitAssignError.invalidPath
     }
-    guard let routeType = Route.routeTypeFrom(string: self) else {
+    guard let routeType = Route.routeTypeFrom(string: self)
+		else {
       throw TransitAssignError.invalidValue
     }
     instance[keyPath: path] = routeType
@@ -362,12 +402,17 @@ extension String {
    - Tag: String-assignOptionalPickupDropOffPolicyTo
    */
   func assignOptionalPickupDropOffPolicyTo<InstanceType, FieldType>(
-    _ instance: inout InstanceType, for field: FieldType)
+    _ instance: inout InstanceType,
+		for field: FieldType)
   throws where FieldType: KeyPathVending {
-    guard let path = field.path as? WritableKeyPath<InstanceType, PickupDropOffPolicy?> else {
+    guard let path = field.path
+						as? WritableKeyPath<InstanceType, PickupDropOffPolicy?>
+		else {
       throw TransitAssignError.invalidPath
     }
-    guard let pickupDropOffPolicy = Route.pickupDropOffPolicyFrom(string: self) else {
+    guard let pickupDropOffPolicy =
+						Route.pickupDropOffPolicyFrom(string: self)
+		else {
       throw TransitAssignError.invalidValue
     }
     instance[keyPath: path] = pickupDropOffPolicy
