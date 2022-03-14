@@ -81,7 +81,8 @@ public struct Agency: Identifiable {
   ///  A set enumerating the required fields in an ``Agency`` record.
   public static let requiredFields: Set<AgencyField>
     = [.name, .url, .timeZone]
-  ///  A set enumerating the conditionally required fields in an ``Agency`` record.
+  ///  A set enumerating the conditionally required fields in an ``Agency``
+	///  record.
   public static let conditionallyRequiredFields: Set<AgencyField>
     = [.agencyID]
   ///  A set enumerating the optional fields in an ``Agency`` record.
@@ -90,13 +91,14 @@ public struct Agency: Identifiable {
 
   ///  Basic init.
   public init(agencyID: String? = nil,
-       name: String = "",
-       url: URL = URL(string: "https://unnamed.com")!,
-       timeZone: TimeZone = TimeZone(identifier: "UTC")!,
-       locale: Locale? = nil,
-       phone: String? = nil,
-       fareURL: URL? = nil,
-       email: String? = nil) {
+		name: String = "",
+		url: URL = URL(string: "https://unnamed.com")!,
+		timeZone: TimeZone = TimeZone(identifier: "UTC")!,
+		locale: Locale? = nil,
+		phone: String? = nil,
+		fareURL: URL? = nil,
+		email: String? = nil)
+	{
     self.agencyID = agencyID
     self.name = name
     self.url = url
@@ -108,7 +110,9 @@ public struct Agency: Identifiable {
   }
 
   ///  Init from a record.
-  public init(from record: String, using headerFields: [AgencyField]) throws {
+  public init(from record: String,
+							using headerFields: [AgencyField]) throws
+	{
     do {
       let recordFields = try record.readRecord()
       if recordFields.count != headerFields.count {
@@ -138,7 +142,7 @@ public struct Agency: Identifiable {
 }
 
 extension Agency: Equatable {
-  public static func ==(lhs: Agency, rhs: Agency) -> Bool {
+  public static func == (lhs: Agency, rhs: Agency) -> Bool {
     return
       lhs.agencyID == rhs.agencyID &&
       lhs.name == rhs.name &&
@@ -160,7 +164,8 @@ extension Agency: CustomStringConvertible {
 // MARK: - Agencies
 
 // TODO: Method to test for required and conditionally required fields.
-// TODO: Method to ensure that feed with multiple agencies does not omit agencyIDs.
+// TODO: Method to ensure that feed with multiple agencies does not omit
+// TODO:   agencyIDs.
 // TODO: Method to ensure that all contained agencies have the same timezone.
 
 ///  A representation of a complete Agency dataset.
@@ -188,7 +193,8 @@ public struct Agencies: Identifiable {
   }
 
   public init<S: Sequence>(_ sequence: S)
-  where S.Iterator.Element == Agency {
+		where S.Iterator.Element == Agency
+	{
     for agency in sequence {
       self.add(agency)
     }
@@ -205,7 +211,8 @@ public struct Agencies: Identifiable {
 
       self.agencies.reserveCapacity(records.count - 1)
       for agencyRecord in records[1 ..< records.count] {
-        let agency = try Agency(from: String(agencyRecord), using: headerFields)
+        let agency = try Agency(from: String(agencyRecord),
+																using: headerFields)
         self.add(agency)
       }
     } catch let error {
