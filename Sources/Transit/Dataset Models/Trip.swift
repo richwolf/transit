@@ -43,8 +43,9 @@ public enum TripField: String, Hashable, KeyPathVending {
     case .shapeID: return \Trip.shapeID
     case .isAccessible: return \Trip.isAccessible
     case .bikesAllowed: return \Trip.bikesAllowed
-    //case .scheduledTripID: return \Trip.scheduledTripID  // This is not in GTFS??
-    //case .dir: return \Trip.dir  // This is not in GTFS??
+		// This is not in GTFS??
+    //case .scheduledTripID: return \Trip.scheduledTripID
+    //case .dir: return \Trip.dir
     }
   }
 }
@@ -75,11 +76,12 @@ public struct Trip: Identifiable {
     [TripField.routeID, TripField.serviceID, TripField.tripID]
   
   public init(routeID: TransitID = "",
-       serviceID: TransitID = "",
-       tripID: TransitID = "",
-       headSign: String? = nil,
-       shortName: String? = nil,
-       shapeID: String? = nil) {
+		serviceID: TransitID = "",
+		tripID: TransitID = "",
+		headSign: String? = nil,
+		shortName: String? = nil,
+		shapeID: String? = nil)
+	{
     self.routeID = routeID
     self.serviceID = serviceID
     self.tripID = tripID
@@ -111,7 +113,7 @@ public struct Trip: Identifiable {
 }
 
 extension Trip: Equatable {
-  public static func ==(lhs: Trip, rhs: Trip) -> Bool {
+  public static func == (lhs: Trip, rhs: Trip) -> Bool {
     return
       lhs.routeID == rhs.routeID &&
       lhs.serviceID == rhs.serviceID &&
