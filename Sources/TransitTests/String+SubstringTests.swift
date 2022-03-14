@@ -50,7 +50,8 @@ final class Substring_nextField_Tests: XCTestCase {
     XCTAssertThrowsError(try record.nextField())
     { error in
       XCTAssertEqual(error as? TransitError, TransitError.quoteExpected)
-      XCTAssertEqual(error.localizedDescription, "A quote was expected, but not found")
+      XCTAssertEqual(error.localizedDescription,
+										 "A quote was expected, but not found")
     }
   }
   
@@ -64,7 +65,8 @@ final class Substring_nextField_Tests: XCTestCase {
     XCTAssertThrowsError(try record.nextField())
     { error in
       XCTAssertEqual(error as? TransitError, TransitError.commaExpected)
-      XCTAssertEqual(error.localizedDescription, "A comma was expected, but not found")
+      XCTAssertEqual(error.localizedDescription,
+										 "A comma was expected, but not found")
     }
   }
 }
@@ -105,7 +107,8 @@ final class String_readRecord_Tests: XCTestCase {
     XCTAssertThrowsError(try record.readRecord())
     { error in
       XCTAssertEqual(error as? TransitError, TransitError.quoteExpected)
-      XCTAssertEqual(error.localizedDescription, "A quote was expected, but not found")
+      XCTAssertEqual(error.localizedDescription,
+										 "A quote was expected, but not found")
     }
   }
   
@@ -114,7 +117,8 @@ final class String_readRecord_Tests: XCTestCase {
     XCTAssertThrowsError(try record.readRecord())
     { error in
       XCTAssertEqual(error as? TransitError, TransitError.commaExpected)
-      XCTAssertEqual(error.localizedDescription, "A comma was expected, but not found")
+      XCTAssertEqual(error.localizedDescription,
+										 "A comma was expected, but not found")
     }
   }
 }
@@ -140,7 +144,8 @@ final class StringReadHeaderTests: XCTestCase {
     XCTAssertThrowsError(try header.readHeader() as [AgencyField])
     { error in
       XCTAssertEqual(error as? TransitError, TransitError.invalidFieldType)
-      XCTAssertEqual(error.localizedDescription, "An invalid field type was found")
+      XCTAssertEqual(error.localizedDescription,
+										 "An invalid field type was found")
     }
   }
 
@@ -173,7 +178,8 @@ final class StringColorTests: XCTestCase {
   
   func test_basic() {
     let colorString = "ffffffff"
-    XCTAssertEqual(colorString.color, CGColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0))
+    XCTAssertEqual(colorString.color, CGColor(red: 1.0, green: 1.0,
+																							blue: 1.0, alpha: 1.0))
   }
   
   func test_nonHexString() {
@@ -183,7 +189,8 @@ final class StringColorTests: XCTestCase {
   
   func test_basicPrecededByOctothorp() {
     let colorString = "#ffffffff"
-    XCTAssertEqual(colorString.color, CGColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0))
+    XCTAssertEqual(colorString.color, CGColor(red: 1.0, green: 1.0,
+																							blue: 1.0, alpha: 1.0))
   }
   
   func test_basicPrecededByPercentSign() {
@@ -193,7 +200,8 @@ final class StringColorTests: XCTestCase {
   
   func test_sixCharacters() {
     let colorString = "#ffffff"
-    XCTAssertEqual(colorString.color, CGColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0))
+    XCTAssertEqual(colorString.color, CGColor(red: 1.0, green: 1.0,
+																							blue: 1.0, alpha: 1.0))
   }
   
   func test_fiveCharacters() {
@@ -222,7 +230,8 @@ final class Blah: XCTestCase {
     let header = RouteField.name
     XCTAssertThrowsError(try w.assignStringTo(&instance, for: header))
     { error in
-      XCTAssertEqual(error as? TransitAssignError, TransitAssignError.invalidPath)
+      XCTAssertEqual(error as? TransitAssignError,
+										 TransitAssignError.invalidPath)
     }
   }
   
@@ -233,7 +242,8 @@ final class Blah: XCTestCase {
     let header = AgencyField.url
     XCTAssertThrowsError(try w.assignStringTo(&instance, for: header))
     { error in
-      XCTAssertEqual(error as? TransitAssignError, TransitAssignError.invalidPath)
+      XCTAssertEqual(error as? TransitAssignError,
+										 TransitAssignError.invalidPath)
     }
   }
   
@@ -254,7 +264,8 @@ final class StringAndSubstringTests: XCTestCase {
       agency_phone,\
       agency_fare_url
       """.readHeader()
-    XCTAssertEqual(fields, [.name, .url, .timeZone, .locale, .phone, .fareURL])
+    XCTAssertEqual(fields, [.name, .url, .timeZone, .locale,
+														.phone, .fareURL])
   }
   
   func test_fieldsFromAgencyWithAllFields() {
