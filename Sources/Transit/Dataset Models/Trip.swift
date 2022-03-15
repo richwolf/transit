@@ -2,35 +2,37 @@
 //  Trip.swift
 //
 
+// swiftlint:disable todo
+
 import Foundation
 
 // MARK: TripField
 
-///  All possible fields that may appear within a `Trip` record.
+/// All possible fields that may appear within a `Trip` record.
 public enum TripField: String, Hashable, KeyPathVending {
-  ///  Route ID field.
+  /// Route ID field.
   case routeID = "route_id"
-  ///  Service ID field.
+  /// Service ID field.
   case serviceID = "service_id"
-  ///  Trip ID field.
+  /// Trip ID field.
   case tripID = "trip_id"
-  ///  Head sign field.
+  /// Head sign field.
   case headSign = "trip_headsign"
-  ///  Short name field.
+  /// Short name field.
   case shortName = "trip_short_name"
-  ///  Direction ID field.
+  /// Direction ID field.
   case direction = "direction_id"
-  ///  Block ID field.
+  /// Block ID field.
   case blockID = "block_id"
-  ///  Shape ID field.
+  /// Shape ID field.
   case shapeID = "shape_id"
-  ///  Is accessible field.
+  /// Is accessible field.
   case isAccessible = "wheelchair_accessible"
-  ///  Bikes allowed field.
+  /// Bikes allowed field.
   case bikesAllowed = "bikes_allowed"
-  //case scheduledTripID = "schd_trip_id" // This is not in GTFS??
-  //case dir = "direction" // This is not in GTFS??
-  
+  // case scheduledTripID = "schd_trip_id" // This is not in GTFS??
+  // case dir = "direction" // This is not in GTFS??
+
   internal var path: AnyKeyPath {
     switch self {
     case .routeID: return \Trip.routeID
@@ -44,11 +46,13 @@ public enum TripField: String, Hashable, KeyPathVending {
     case .isAccessible: return \Trip.isAccessible
     case .bikesAllowed: return \Trip.bikesAllowed
 		// This is not in GTFS??
-    //case .scheduledTripID: return \Trip.scheduledTripID
-    //case .dir: return \Trip.dir
+    // case .scheduledTripID: return \Trip.scheduledTripID
+    // case .dir: return \Trip.dir
     }
   }
 }
+
+// MARK: - Direction
 
 /// - Tag: Direction
 public enum Direction: UInt, Hashable {
@@ -56,7 +60,9 @@ public enum Direction: UInt, Hashable {
   case outbound = 1
 }
 
-///  A representation of a single Trip record.
+// MARK: - Trip
+
+/// A representation of a single Trip record.
 public struct Trip: Identifiable {
   public let id = UUID()
   public var routeID: TransitID = ""
@@ -69,19 +75,20 @@ public struct Trip: Identifiable {
   public var shapeID: TransitID?
   public var isAccessible: String? // Fix!
   public var bikesAllowed: String? // Fix!
-  //public var scheduledTripID: TransitID? // This is not in GTFS??
-  //public var dir: String? // This is not in GTFS??
-  
+  // public var scheduledTripID: TransitID? // This is not in GTFS??
+  // public var dir: String? // This is not in GTFS??
+
   public static let requiredFields: Set =
     [TripField.routeID, TripField.serviceID, TripField.tripID]
-  
-  public init(routeID: TransitID = "",
+
+  public init(
+		routeID: TransitID = "",
 		serviceID: TransitID = "",
 		tripID: TransitID = "",
 		headSign: String? = nil,
 		shortName: String? = nil,
-		shapeID: String? = nil)
-	{
+		shapeID: String? = nil
+	) {
     self.routeID = routeID
     self.serviceID = serviceID
     self.tripID = tripID
@@ -89,8 +96,11 @@ public struct Trip: Identifiable {
     self.shortName = shortName
     self.shapeID = shapeID
   }
-  
-  public init(from record: String, using headers: [TripField]) throws {
+
+  public init(
+		from record: String,
+		using headers: [TripField]
+	) throws {
     do {
       let fields = try record.readRecord()
       if fields.count != headers.count {
@@ -137,7 +147,7 @@ public struct Trips: Identifiable {
   public let id = UUID()
   public var headerFields = [TripField]()
   fileprivate var trips = [Trip]()
-  
+
   subscript(index: Int) -> Trip {
     get {
       return trips[index]
@@ -146,30 +156,30 @@ public struct Trips: Identifiable {
       trips[index] = newValue
     }
   }
-  
+
   mutating func add(_ trip: Trip) {
     // TODO: Add to header fields supported by this collection
     self.trips.append(trip)
   }
-  
+
   mutating func remove(_ trip: Trip) {
   }
-  
+
   init<S: Sequence>(_ sequence: S)
   where S.Iterator.Element == Trip {
     for trip in sequence {
       self.add(trip)
     }
   }
-  
+
   init(from url: URL) throws {
     do {
       let records = try String(contentsOf: url).splitRecords()
-      
+
       if records.count < 1 { return }
       let headerRecord = String(records[0])
       self.headerFields = try headerRecord.readHeader()
-      
+
       self.trips.reserveCapacity(records.count - 1)
       for tripRecord in records[1 ..< records.count] {
         let trip = try Trip(from: String(tripRecord), using: headerFields)
@@ -182,8 +192,8 @@ public struct Trips: Identifiable {
 }
 
 extension Trips: Sequence {
-  public typealias Iterator = IndexingIterator<Array<Trip>>
-  
+  public typealias Iterator = IndexingIterator<[Trip]>
+
   public func makeIterator() -> Iterator {
     return trips.makeIterator()
   }

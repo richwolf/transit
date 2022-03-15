@@ -1,39 +1,41 @@
 //
-//  Route.swift
+// Route.swift
 //
+
+// swiftlint:disable todo
 
 import Foundation
 import CoreGraphics
 
 // MARK: RouteField
 
-///  All possible fields that may appear within a `Route` record.
+/// All possible fields that may appear within a `Route` record.
 public enum RouteField: String, Hashable, KeyPathVending {
-  ///  Route ID field.
+  /// Route ID field.
   case routeID = "route_id"
-  ///  Agency ID field.
+  /// Agency ID field.
   case agencyID = "agency_id"
-  ///  Route name field.
+  /// Route name field.
   case name = "route_long_name"
-  ///  Route short name field.
+  /// Route short name field.
   case shortName = "route_short_name"
-  ///  Route details field.
+  /// Route details field.
   case details = "route_desc"
-  ///  Route type field.
+  /// Route type field.
   case type = "route_type"
-  ///  Route URL field.
+  /// Route URL field.
   case url = "route_url"
-  ///  Route color field.
+  /// Route color field.
   case color = "route_color"
-  ///  Route text color field.
+  /// Route text color field.
   case textColor = "route_text_color"
-  ///  Route sort order field.
+  /// Route sort order field.
   case sortOrder = "route_sort_order"
-  ///  Route pickup policy field.
+  /// Route pickup policy field.
   case pickupPolicy = "continuous_pickup"
-  ///  Route drop off policy field.
+  /// Route drop off policy field.
   case dropOffPolicy = "continuous_drop_off"
-  
+
   internal var path: AnyKeyPath {
     switch self {
     case .routeID: return \Route.routeID
@@ -51,6 +53,8 @@ public enum RouteField: String, Hashable, KeyPathVending {
     }
   }
 }
+
+// MARK: - RouteField
 
 public enum RouteType: UInt, Hashable {
   case tram = 0
@@ -72,7 +76,7 @@ public enum PickupDropOffPolicy: UInt, Hashable {
   case coordinateWithDriver = 3
 }
 
-// MARK: Route
+// MARK: - Route
 
 // TODO: Routes method to test for required and conditionally required fields.
 // TODO: Routes method to ensure that feed with mutiple agencies does not omit
@@ -80,7 +84,7 @@ public enum PickupDropOffPolicy: UInt, Hashable {
 // TODO: Routes method to ensure that either name or shortName provided for all
 // TODO:   routes.
 
-///  A representation of a single Route record.
+/// A representation of a single Route record.
 public struct Route: Identifiable {
   public let id = UUID()
   public var routeID: TransitID = ""
@@ -95,7 +99,7 @@ public struct Route: Identifiable {
   public var sortOrder: UInt?
   public var pickupPolicy: PickupDropOffPolicy?
   public var dropOffPolicy: PickupDropOffPolicy?
-  
+
   public static let requiredFields: Set<RouteField>
     = [.routeID, .type]
   public static let conditionallyRequiredFields: Set<RouteField>
@@ -103,19 +107,21 @@ public struct Route: Identifiable {
   public static let optionalFields: Set<RouteField>
     = [.details, .url, .color, .textColor, .sortOrder,
        .pickupPolicy, .dropOffPolicy]
-  
-  public init(routeID: TransitID = "Unidentified route",
-       agencyID: TransitID? = nil,
-       name: String? = nil,
-       shortName: String? = nil,
-       details: String? = nil,
-       type: RouteType = .bus,
-       url: URL? = nil,
-       color: CGColor? = nil,
-       textColor: CGColor? = nil,
-       sortOrder: UInt? = nil,
-       pickupPolicy: PickupDropOffPolicy? = nil,
-       dropOffPolicy: PickupDropOffPolicy? = nil) {
+
+  public init(
+		routeID: TransitID = "Unidentified route",
+		agencyID: TransitID? = nil,
+		name: String? = nil,
+		shortName: String? = nil,
+		details: String? = nil,
+		type: RouteType = .bus,
+		url: URL? = nil,
+		color: CGColor? = nil,
+		textColor: CGColor? = nil,
+		sortOrder: UInt? = nil,
+		pickupPolicy: PickupDropOffPolicy? = nil,
+		dropOffPolicy: PickupDropOffPolicy? = nil
+	) {
     self.routeID = routeID
     self.agencyID = agencyID
     self.name = name
@@ -129,7 +135,7 @@ public struct Route: Identifiable {
     self.pickupPolicy = pickupPolicy
     self.dropOffPolicy = dropOffPolicy
   }
-  
+
   public init(from record: String, using headers: [RouteField]) throws {
     do {
       let fields = try record.readRecord()
@@ -159,7 +165,7 @@ public struct Route: Identifiable {
       throw error
     }
   }
-  
+
   public static func routeTypeFrom(string: String) -> RouteType? {
     if let rawValue = UInt(string) {
       return RouteType(rawValue: rawValue)
@@ -167,17 +173,16 @@ public struct Route: Identifiable {
       return nil
     }
   }
-  
+
   public static func pickupDropOffPolicyFrom(string: String)
-		-> PickupDropOffPolicy?
-	{
+		-> PickupDropOffPolicy? {
     if let rawValue = UInt(string) {
       return PickupDropOffPolicy(rawValue: rawValue)
     } else {
       return nil
     }
   }
-  
+
   private static let requiredHeaders: Set =
     [RouteField.routeID, RouteField.type]
 }
@@ -208,12 +213,12 @@ extension Route: CustomStringConvertible {
 
 // MARK: - Routes
 
-///  A representation of a complete Route dataset.
+/// A representation of a complete Route dataset.
 public struct Routes: Identifiable {
   public let id = UUID()
   public var headerFields = [RouteField]()
   fileprivate var routes = [Route]()
-  
+
   subscript(index: Int) -> Route {
     get {
       return routes[index]
@@ -222,30 +227,30 @@ public struct Routes: Identifiable {
       routes[index] = newValue
     }
   }
-  
+
   mutating func add(_ route: Route) {
     // TODO: Add to header fields supported by this collection
     self.routes.append(route)
   }
-  
+
   mutating func remove(_ route: Route) {
   }
-  
+
   init<S: Sequence>(_ sequence: S)
   where S.Iterator.Element == Route {
     for route in sequence {
       self.add(route)
     }
   }
-  
+
   init(from url: URL) throws {
     do {
       let records = try String(contentsOf: url).splitRecords()
-      
+
       if records.count < 1 { return }
       let headerRecord = String(records[0])
       self.headerFields = try headerRecord.readHeader()
-      
+
       self.routes.reserveCapacity(records.count - 1)
       for routeRecord in records[1 ..< records.count] {
         let route = try Route(from: String(routeRecord), using: headerFields)
@@ -258,8 +263,8 @@ public struct Routes: Identifiable {
 }
 
 extension Routes: Sequence {
-  public typealias Iterator = IndexingIterator<Array<Route>>
-  
+  public typealias Iterator = IndexingIterator<[Route]>
+
   public func makeIterator() -> Iterator {
     return routes.makeIterator()
   }

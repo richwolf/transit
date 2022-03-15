@@ -1,18 +1,18 @@
 //
-//  RouteTests.swift
+// RouteTests.swift
 //
 
 import XCTest
 @testable import Transit
 
 final class RouteTests: XCTestCase {
-  
-  var routesURL: URL? = nil;
-  
+
+  var routesURL: URL?
+
   override func setUp() {
     super.setUp()
   }
-  
+
   func test_keyPath() {
     XCTAssertEqual(RouteField.routeID.path, \Route.routeID)
     XCTAssertEqual(RouteField.agencyID.path, \Route.agencyID)

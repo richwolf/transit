@@ -1,13 +1,13 @@
 //
-//  TransitTests.swift
+// TransitTests.swift
 //
 
 import XCTest
 @testable import Transit
 
 final class TransitTests: XCTestCase {
-  var agencyFileURL: URL? = nil;
-  
+  var agencyFileURL: URL?
+
   override func setUp() {
     super.setUp()
     let resourcePath = Bundle.module.resourcePath
@@ -27,7 +27,7 @@ final class TransitTests: XCTestCase {
       }
     }
   }
-  
+
   func test_Wazzis() {
     XCTAssert(true)
   }

@@ -1,40 +1,42 @@
 //
-//  Agency.swift
+// Agency.swift
 //
+
+// swiftlint:disable todo
 
 import Foundation
 
 // MARK: AgencyField
 
-///  All possible fields that may appear within an `Agency` record.
+/// All possible fields that may appear within an `Agency` record.
 ///
-///  `AgencyField`s are often found in `Set`s enumerating fields found
-///  within an ``Agencies`` feed:
-///  ```swift
-///    let fields = myAgencies.headerFields  // Returns a Set of AgencyFields
-///  ```
+/// `AgencyField`s are often found in `Set`s enumerating fields found
+/// within an ``Agencies`` feed:
+/// ```swift
+///   let fields = myAgencies.headerFields  // Returns a Set of AgencyFields
+/// ```
 ///
-///  Should you need it, you can use `rawValue` to obtain the GTFS field name
-///  for this enumeration:
-///  ```swift
-///    let gtfsField = AgencyField.locale.rawValue  //  Returns "agency_lang"
-///  ```
+/// Should you need it, you can use `rawValue` to obtain the GTFS field name
+/// for this enumeration:
+/// ```swift
+///   let gtfsField = AgencyField.locale.rawValue  //  Returns "agency_lang"
+/// ```
 public enum AgencyField: String, Hashable, KeyPathVending {
-  ///  Agency ID field.
+  /// Agency ID field.
   case agencyID = "agency_id"
-  ///  Agency name field.
+  /// Agency name field.
   case name = "agency_name"
-  ///  Agency URL field.
+  /// Agency URL field.
   case url = "agency_url"
-  ///  Agency time zone field.
+  /// Agency time zone field.
   case timeZone = "agency_timezone"
-  ///  Agency locale field.
+  /// Agency locale field.
   case locale = "agency_lang"
-  ///  Agency phone number field.
+  /// Agency phone number field.
   case phone = "agency_phone"
-  ///  Agency fare URL field.
+  /// Agency fare URL field.
   case fareURL = "agency_fare_url"
-  ///  Agency email address field.
+  /// Agency email address field.
   case email = "agency_email"
 
   internal var path: AnyKeyPath {
@@ -51,54 +53,55 @@ public enum AgencyField: String, Hashable, KeyPathVending {
   }
 }
 
-// MARK: Agency
+// MARK: - Agency
 
-///  A representation of a single Agency record.
+/// A representation of a single Agency record.
 public struct Agency: Identifiable {
-  ///  A globally unique identifier. Because GTFS does not guarantee
-  ///  that IDs will be unique
+  /// A globally unique identifier. Because GTFS does not guarantee
+  /// that IDs will be unique
   public let id = UUID()
-  ///  The agency brand ID. This ID is usually synonymous with the
-  ///  agency itself. But in the event that multiple services are contained
-  ///  within the same dataset, this ID can be used to uniquely identify
-  ///  each.
+  /// The agency brand ID. This ID is usually synonymous with the
+  /// agency itself. But in the event that multiple services are contained
+  /// within the same dataset, this ID can be used to uniquely identify
+  /// each.
   public var agencyID: String?
-  ///  The full name of the agency.
+  /// The full name of the agency.
   public var name: String = ""
-  ///  Agency URL.
+  /// Agency URL.
   public var url: URL = URL(string: "https://unnamed.com")!
-  ///  Agency time zone.
+  /// Agency time zone.
   public var timeZone: TimeZone = TimeZone(identifier: "UTC")!
-  ///  Agency locale.
+  /// Agency locale.
   public var locale: Locale?
-  ///  Agency phone number.
+  /// Agency phone number.
   public var phone: String?
-  ///  Agency fare URL.
+  /// Agency fare URL.
   public var fareURL: URL?
-  ///  Agency email address.
+  /// Agency email address.
   public var email: String?
 
-  ///  A set enumerating the required fields in an ``Agency`` record.
+  /// A set enumerating the required fields in an ``Agency`` record.
   public static let requiredFields: Set<AgencyField>
     = [.name, .url, .timeZone]
-  ///  A set enumerating the conditionally required fields in an ``Agency``
-	///  record.
+  /// A set enumerating the conditionally required fields in an ``Agency``
+	/// record.
   public static let conditionallyRequiredFields: Set<AgencyField>
     = [.agencyID]
-  ///  A set enumerating the optional fields in an ``Agency`` record.
+  /// A set enumerating the optional fields in an ``Agency`` record.
   public static let optionalFields: Set<AgencyField>
     = [.locale, .phone, .fareURL, .email]
 
-  ///  Basic init.
-  public init(agencyID: String? = nil,
+  /// Basic init.
+  public init(
+		agencyID: String? = nil,
 		name: String = "",
 		url: URL = URL(string: "https://unnamed.com")!,
 		timeZone: TimeZone = TimeZone(identifier: "UTC")!,
 		locale: Locale? = nil,
 		phone: String? = nil,
 		fareURL: URL? = nil,
-		email: String? = nil)
-	{
+		email: String? = nil
+	) {
     self.agencyID = agencyID
     self.name = name
     self.url = url
@@ -109,10 +112,11 @@ public struct Agency: Identifiable {
     self.email = email
   }
 
-  ///  Init from a record.
-  public init(from record: String,
-							using headerFields: [AgencyField]) throws
-	{
+  /// Init from a record.
+  public init(
+		from record: String,
+		using headerFields: [AgencyField]
+	) throws {
     do {
       let recordFields = try record.readRecord()
       if recordFields.count != headerFields.count {
@@ -168,11 +172,11 @@ extension Agency: CustomStringConvertible {
 // TODO:   agencyIDs.
 // TODO: Method to ensure that all contained agencies have the same timezone.
 
-///  A representation of a complete Agency dataset.
+/// A representation of a complete Agency dataset.
 public struct Agencies: Identifiable {
-  ///  A globally unique identifier.
+  /// A globally unique identifier.
   public let id = UUID()
-  ///  Header fields.
+  /// Header fields.
   public var headerFields = [AgencyField]()
   fileprivate var agencies = [Agency]()
 
@@ -192,15 +196,13 @@ public struct Agencies: Identifiable {
   mutating func remove(_ agency: Agency) {
   }
 
-  public init<S: Sequence>(_ sequence: S)
-		where S.Iterator.Element == Agency
-	{
+  public init<S: Sequence>(_ sequence: S) where S.Iterator.Element == Agency {
     for agency in sequence {
       self.add(agency)
     }
   }
 
-  ///  Grab agency dataset from file.
+  /// Grab agency dataset from file.
   public init(from url: URL) throws {
     do {
       let records = try String(contentsOf: url).splitRecords()

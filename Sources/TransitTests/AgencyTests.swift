@@ -2,15 +2,15 @@ import XCTest
 @testable import Transit
 
 final class AgencyTests: XCTestCase {
-  
-  var agencyFileURL: URL? = nil;
-  
+
+  var agencyFileURL: URL?
+
   override func setUp() {
     super.setUp()
     self.agencyFileURL =
       Bundle.module.url(forResource: "agency", withExtension: "txt")
   }
-  
+
   func test_keyPath() {
     XCTAssertEqual(AgencyField.agencyID.path, \Agency.agencyID)
     XCTAssertEqual(AgencyField.name.path, \Agency.name)
@@ -21,13 +21,13 @@ final class AgencyTests: XCTestCase {
     XCTAssertEqual(AgencyField.fareURL.path, \Agency.fareURL)
     XCTAssertEqual(AgencyField.email.path, \Agency.email)
   }
-  
+
   // Init tests yet to implement:
-  //  Test when passed some arguments
-  //  Test when passed all arguments
-  //  Init with a string that is not a URL
-  //  Init with a crazy timezone
-  
+  // Test when passed some arguments
+  // Test when passed all arguments
+  // Init with a string that is not a URL
+  // Init with a crazy timezone
+
   func test_initWithNoArguments() {
     let agency = Agency()
     XCTAssertNil(agency.agencyID)
@@ -39,7 +39,7 @@ final class AgencyTests: XCTestCase {
     XCTAssertNil(agency.fareURL)
     XCTAssertNil(agency.email)
   }
-  
+
   func test_initWithSomeArguments() {
     let agency = Agency(name: "Chicago Transit Authority",
       url: URL(string: "http://transitchicago.com")!,
@@ -57,8 +57,8 @@ final class AgencyTests: XCTestCase {
 									 URL(string: "http://www.transitchicago.com/fares")!)
     XCTAssertNil(agency.email)
   }
-  
-  //  Need to finish ...
+
+  // Need to finish ...
   func test_initWithAllArguments() {
     let agency = Agency(agencyID: "Chicago Transit Authority",
       name: "Chicago Transit Authority",
@@ -71,16 +71,17 @@ final class AgencyTests: XCTestCase {
     XCTAssertEqual(agency.agencyID, "Chicago Transit Authority")
     XCTAssertEqual(agency.name, "Chicago Transit Authority")
   }
-  
-  //  Should return nil
+
+  // Should return nil
   /*
   func test_initFromRecordWithNoHeaders() {
     let headers: [AgencyField] = []
     let record = ""
     let agency = try? Agency(from: record, using: headers)
     XCTAssertNil(agency)
-  }*/
-  
+  }
+	*/
+
   func test_initFromRecordWithSomeHeaders() {
     let headers: [AgencyField] = [
       .name, .url, .timeZone, .locale, .phone, .fareURL]
@@ -105,14 +106,14 @@ final class AgencyTests: XCTestCase {
     print(agency2 ?? "nil result")
     XCTAssertEqual(agency1, agency2)
   }
-  
-  //  Should return nil ... must check headers
+
+  // Should return nil ... must check headers
   func test_initFromRecordWithMissingHeaders() {
   }
-  
+
   func test_initFromRecordWithAllHeaders() {
   }
-  
+
   func test_customStringConvertible() {
     let agency = Agency(name: "Chicago Transit Authority",
       url: URL(string: "http://transitchicago.com")!,

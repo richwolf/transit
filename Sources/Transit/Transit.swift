@@ -1,5 +1,5 @@
 //
-//  Transit.swift
+// Transit.swift
 //
 
 import Foundation
@@ -74,11 +74,11 @@ public struct Feed: Identifiable {
   public var stops: Stops?
   public var trips: Trips?
   public var stopTimes: StopTimes?
-  
+
   public var agency: Agency? {
     return agencies?[ 0 ]
   }
-  
+
   public init(contentsOfURL url: URL) {
     do {
       let agencyFileURL = url.appendingPathComponent("agency.txt")

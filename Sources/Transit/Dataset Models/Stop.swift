@@ -1,43 +1,45 @@
 //
-//  Stop.swift
+// Stop.swift
 //
+
+// swiftlint:disable todo
 
 import Foundation
 import CoreLocation
 
 // MARK: StopField
 
-///  All possible fields that may appear within a `Stop` record.
+/// All possible fields that may appear within a `Stop` record.
 public enum StopField: String, Hashable, KeyPathVending {
-  ///  Stop ID field.
+  /// Stop ID field.
   case stopID = "stop_id"
-  ///  Stop code field.
+  /// Stop code field.
   case code = "stop_code"
-  ///  Stop name field.
+  /// Stop name field.
   case name = "stop_name"
-  ///  Stop details field.
+  /// Stop details field.
   case details = "stop_desc"
-  ///  Stop latitude field.
+  /// Stop latitude field.
   case latitude = "stop_lat"
-  ///  Stop longitude field.
+  /// Stop longitude field.
   case longitude = "stop_lon"
-  ///  Stop zone ID field.
+  /// Stop zone ID field.
   case zoneID = "zone_id"
-  ///  Stop URL field.
+  /// Stop URL field.
   case url = "stop_url"
-  ///  Stop location type field.
+  /// Stop location type field.
   case locationType = "location_type"
-  ///  Stop parent station ID field.
+  /// Stop parent station ID field.
   case parentStationID = "parent_station"
-  ///  Stop timezone field.
+  /// Stop timezone field.
   case timeZone = "stop_timezone"
-  ///  Stop accessibility field.
+  /// Stop accessibility field.
   case accessibility = "wheelchair_boarding"
-  ///  Stop level ID field.
+  /// Stop level ID field.
   case levelID = "level_id"
-  ///  Stop platform code field.
+  /// Stop platform code field.
   case platformCode = "platform_code"
-  
+
   internal var path: AnyKeyPath {
     switch self {
     case .stopID: return \Stop.stopID
@@ -77,7 +79,7 @@ public enum Accessibility: UInt, Hashable {
   case none = 2
 }
 
-///  A representation of a single Stop record.
+/// A representation of a single Stop record.
 public struct Stop: Identifiable {
   public let id = UUID()
   public var stopID: TransitID = ""
@@ -94,8 +96,9 @@ public struct Stop: Identifiable {
   public var accessibility: Accessibility?
   public var levelID: TransitID?
   public var platformCode: String?
-  
-  public init(stopID: TransitID = "Unidentified stop",
+
+  public init(
+		stopID: TransitID = "Unidentified stop",
 		code: StopCode? = nil,
 		name: String? = nil,
 		details: String? = nil,
@@ -108,8 +111,8 @@ public struct Stop: Identifiable {
 		timeZone: TimeZone? = nil,
 		accessibility: Accessibility? = nil,
 		levelID: TransitID? = nil,
-		platformCode: String?)
-	{
+		platformCode: String?
+	) {
     self.stopID = stopID
     self.code = code
     self.name = name
@@ -125,10 +128,10 @@ public struct Stop: Identifiable {
     self.levelID = levelID
     self.platformCode = platformCode
   }
-  
+
   public static let requiredFields: Set =
     [StopField.stopID]
-  
+
   init(from record: String, using headers: [StopField]) throws {
     do {
       let fields = try record.readRecord()
@@ -159,17 +162,16 @@ public struct Stop: Identifiable {
       throw error
     }
   }
-  
+
   public static func stopLocationTypeFrom(string: String)
-		-> StopLocationType?
-	{
+		-> StopLocationType? {
     if let rawValue = UInt(string) {
       return StopLocationType(rawValue: rawValue)
     } else {
       return nil
     }
   }
-  
+
   public static func accessibilityFrom(string: String) -> Accessibility? {
     if let rawValue = UInt(string) {
       return Accessibility(rawValue: rawValue)
@@ -177,7 +179,7 @@ public struct Stop: Identifiable {
       return nil
     }
   }
-  
+
   private static let requiredHeaders: Set =
     [StopField.stopID]
 }
@@ -210,12 +212,12 @@ extension Stop: CustomStringConvertible {
 
 // MARK: - Stops
 
-///  A representation of a complete Stops dataset.
+/// A representation of a complete Stops dataset.
 public struct Stops: Identifiable {
   public let id = UUID()
   public var headerFields = [StopField]()
   fileprivate var stops = [Stop]()
-  
+
   subscript(index: Int) -> Stop {
     get {
       return stops[index]
@@ -224,30 +226,30 @@ public struct Stops: Identifiable {
       stops[index] = newValue
     }
   }
-  
+
   mutating func add(_ stop: Stop) {
     // TODO: Add to header fields supported by this collection
     self.stops.append(stop)
   }
-  
+
   mutating func remove(_ stop: Stop) {
   }
-  
+
   init<S: Sequence>(_ sequence: S)
   where S.Iterator.Element == Stop {
     for stop in sequence {
       self.add(stop)
     }
   }
-  
+
   init(from url: URL) throws {
     do {
       let records = try String(contentsOf: url).splitRecords()
-      
+
       if records.count < 1 { return }
       let headerRecord = String(records[0])
       self.headerFields = try headerRecord.readHeader()
-      
+
       self.stops.reserveCapacity(records.count - 1)
       for stopRecord in records[1 ..< records.count] {
         let stop = try Stop(from: String(stopRecord), using: headerFields)
@@ -260,8 +262,8 @@ public struct Stops: Identifiable {
 }
 
 extension Stops: Sequence {
-  public typealias Iterator = IndexingIterator<Array<Stop>>
-  
+  public typealias Iterator = IndexingIterator<[Stop]>
+
   public func makeIterator() -> Iterator {
     return stops.makeIterator()
   }

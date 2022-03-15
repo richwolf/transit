@@ -1,6 +1,9 @@
 //
-//  String+Substring.swift
+// String+Substring.swift
 //
+
+// swiftlint:disable todo
+// swiftlint:disable file_length
 
 // TODO: Write "writeRecord".
 // TODO: Write "writeHeader".
@@ -8,11 +11,12 @@
 import Foundation
 import CoreGraphics
 import CoreLocation
+// import UIKit
 
 // MARK: Substring
 
 extension Substring {
-  
+
   /**
    Returns the next GTFS field found within `self`.
    
@@ -63,7 +67,7 @@ extension Substring {
 // MARK: - String
 
 extension String {
-  
+
   /**
    Returns all GTFS fields contained within `self`.
    
@@ -91,7 +95,7 @@ extension String {
     }
     return result
   }
-  
+
   /**
    Returns all GTFS header fields contained within `self`.
    
@@ -119,7 +123,7 @@ extension String {
       return headerField
     }
   }
-    
+
   /**
    Return all GTFS records contained within `self`.
    
@@ -139,7 +143,7 @@ extension String {
       }
     })
   }
-  
+
   /**
    The `CGColor` representation of `self` or `nil` if `self` cannot be
 	 represented as a `CGColor`.
@@ -165,25 +169,31 @@ extension String {
       if hexString.count == 8 {
         red   = CGFloat((hexNumber & 0xff000000) >> 24) / 255
         green = CGFloat((hexNumber & 0x00ff0000) >> 16) / 255
-        blue  = CGFloat((hexNumber & 0x0000ff00) >> 8)  / 255
-        alpha = CGFloat( hexNumber & 0x000000ff)        / 255
+        blue  = CGFloat((hexNumber & 0x0000ff00) >> 8) / 255
+        alpha = CGFloat( hexNumber & 0x000000ff) / 255
       } else if hexString.count == 6 {
         red   = CGFloat((hexNumber & 0x00ff0000) >> 16) / 255
-        green = CGFloat((hexNumber & 0x0000ff00) >> 8)  / 255
-        blue  = CGFloat( hexNumber & 0x000000ff)        / 255
+        green = CGFloat((hexNumber & 0x0000ff00) >> 8) / 255
+        blue  = CGFloat( hexNumber & 0x000000ff) / 255
         alpha = 1.0
       } else {
         return nil
       }
       // Might need to fix this?
-      //let components = [red, green, blue, alpha]
-      //return CGColor(colorSpace: CGColorSpace(name: CGColorSpace.sRGB)!,
+      // let components = [red, green, blue, alpha]
+      // return CGColor(colorSpace: CGColorSpace(name: CGColorSpace.sRGB)!,
       //               components: components)
-      return CGColor(red: red, green: green, blue: blue, alpha: alpha)
+			// if #available(iOS 13.0, *) {
+				return
+					CGColor(red: red, green: green, blue: blue, alpha: alpha)
+			// } else {
+			//	return
+			//		UIColor(red: red, green: green, blue: blue, alpha: alpha).cgColor
+			// }
     }
     return nil
   }
-  
+
   /**
    Set `self` as the `String` value corresponding to `field` within `instance`.
    
@@ -204,7 +214,7 @@ extension String {
     }
     instance[keyPath: path] = self
   }
-  
+
   /**
    Set `self` as a value for an optional `String` field in `instance`.
    - Tag: String-assignOptionalStringTo
@@ -219,7 +229,7 @@ extension String {
     }
     instance[keyPath: path] = self
   }
-  
+
   func assignUIntTo<InstanceType, FieldType>(
 		_ instance: inout InstanceType,
 		for field: FieldType)
@@ -234,7 +244,7 @@ extension String {
     }
     instance[keyPath: path] = uInt
   }
-  
+
   /**
    Set `self` as a value for an optional `UInt` field in `instance`.
    - Tag: String-assignOptionalUIntTo
@@ -253,7 +263,7 @@ extension String {
     }
     instance[keyPath: path] = uInt
   }
-  
+
   /**
    Set `self` as a value for a `URL` field in `instance`.
    - Tag: String-assignURLValueTo
@@ -272,7 +282,7 @@ extension String {
     }
     instance[keyPath: path] = url
   }
-  
+
   /**
    Set `self` as a value for an optional `URL` field in `instance`.
    - Tag: String-assignOptionalURLTo
@@ -291,7 +301,7 @@ extension String {
     }
     instance[keyPath: path] = url
   }
-  
+
   /**
    Set `self` as a value for an optional `TimeZone` field in `instance`.
    - Tag: String-assignTimeZoneTo
@@ -310,7 +320,7 @@ extension String {
     }
     instance[keyPath: path] = timeZone
   }
-  
+
   /**
    - Tag: String-assignOptionalTimeZoneTo
    */
@@ -328,7 +338,7 @@ extension String {
     }
     instance[keyPath: path] = timeZone
   }
-  
+
   /**
    Set `self` as a value for an optional `URL` field in `instance`.
    - Tag: String-assignOptionalCGColorTo
@@ -347,14 +357,14 @@ extension String {
     }
     instance[keyPath: path] = color
   }
-  
+
   /**
    - Tag: String-assignOptionalCLLocationDegreesTo
    */
   func assignOptionalCLLocationDegreesTo<InstanceType, FieldType>(
-    _ instance: inout InstanceType,
-		for field: FieldType)
-  throws where FieldType: KeyPathVending {
+		_ instance: inout InstanceType,
+		for field: FieldType
+	) throws where FieldType: KeyPathVending {
     guard let path = field.path
 						as? WritableKeyPath<InstanceType, CLLocationDegrees?>
 		else {
@@ -366,11 +376,11 @@ extension String {
     }
     instance[keyPath: path] = locationDegrees
   }
-  
+
   func assignLocaleTo<InstanceType, FieldType>(
-    _ instance: inout InstanceType,
-		for field: FieldType)
-  throws where FieldType: KeyPathVending {
+		_ instance: inout InstanceType,
+		for field: FieldType
+	) throws where FieldType: KeyPathVending {
     guard let path = field.path as? WritableKeyPath<InstanceType, Locale?>
 		else {
       throw TransitAssignError.invalidPath
@@ -378,7 +388,7 @@ extension String {
     let locale: Locale? = Locale(identifier: "en")
     instance[keyPath: path] = locale
   }
-  
+
   // Remember to test passing an optional to a non-optional value assign.
   /**
    - Tag: String-assignRouteTypeTo
@@ -397,14 +407,14 @@ extension String {
     }
     instance[keyPath: path] = routeType
   }
-  
+
   /**
    - Tag: String-assignOptionalPickupDropOffPolicyTo
    */
   func assignOptionalPickupDropOffPolicyTo<InstanceType, FieldType>(
-    _ instance: inout InstanceType,
-		for field: FieldType)
-  throws where FieldType: KeyPathVending {
+		_ instance: inout InstanceType,
+		for field: FieldType
+	) throws where FieldType: KeyPathVending {
     guard let path = field.path
 						as? WritableKeyPath<InstanceType, PickupDropOffPolicy?>
 		else {

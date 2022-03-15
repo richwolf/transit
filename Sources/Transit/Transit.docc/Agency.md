@@ -24,4 +24,3 @@ GTFS Field Name   | Swift Property Name | Swift Type
 ## Topics
 
 ### Create an Agency
-

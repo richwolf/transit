@@ -1,38 +1,40 @@
 //
-//  StopTime.swift
+// StopTime.swift
 //
+
+// swiftlint:disable todo
 
 import Foundation
 
 // MARK: StopTimeField
 
-///  All possible fields that may appear within a `StopTime` record.
+/// All possible fields that may appear within a `StopTime` record.
 public enum StopTimeField: String, Hashable, KeyPathVending {
-  ///  Trip ID field.
+  /// Trip ID field.
   case tripID = "trip_id"
-  ///  Trip arrival field.
+  /// Trip arrival field.
   case arrival = "arrival_time"
-  ///  Trip departure field.
+  /// Trip departure field.
   case departure = "departure_time"
-  ///  Stop ID field.
+  /// Stop ID field.
   case stopID = "stop_id"
-  ///  Stop sequence number field.
+  /// Stop sequence number field.
   case stopSequenceNumber = "stop_sequence"
-  ///  Stop heading sign field.
+  /// Stop heading sign field.
   case stopHeadingSign = "stop_headsign"
-  ///  Stop pickup type field.
+  /// Stop pickup type field.
   case pickupType = "pickup_type"
-  ///  Stop drop off type field.
+  /// Stop drop off type field.
   case dropOffType = "drop_off_type"
-  ///  Stop continuous pickup field.
+  /// Stop continuous pickup field.
   case continuousPickup = "continuous_pickup"
-  ///  Stop continuous drop off field.
+  /// Stop continuous drop off field.
   case continuousDropOff = "continuous_drop_off"
-  ///  Stop distance traveled for shape field.
+  /// Stop distance traveled for shape field.
   case distanceTraveledForShape = "shape_dist_traveled"
-  ///  Stop time point type field.
+  /// Stop time point type field.
   case timePointType = "timepoint"
-  
+
   internal var path: AnyKeyPath {
     switch self {
     case .tripID: return \StopTime.tripID
@@ -51,7 +53,9 @@ public enum StopTimeField: String, Hashable, KeyPathVending {
   }
 }
 
-///  A representation of a single StopTime record.
+// MARK: - StopTime
+
+/// A representation of a single StopTime record.
 public struct StopTime: Identifiable {
   public var id = UUID()
   public var tripID: TransitID = ""
@@ -66,8 +70,9 @@ public struct StopTime: Identifiable {
   public var continuousDropOff: Int?
   public var distanceTraveledForShape: Double?
   public var timePointType: Int?
-  
-  public init(tripID: TransitID = "",
+
+  public init(
+		tripID: TransitID = "",
 		arrival: Date? = nil,
 		departure: Date? = nil,
 		stopID: TransitID = "",
@@ -78,8 +83,8 @@ public struct StopTime: Identifiable {
 		continuousPickup: Int? = nil,
 		continuousDropOff: Int? = nil,
 		distanceTraveledForShape: Double? = nil,
-		timePointType: Int? = nil)
-	{
+		timePointType: Int? = nil
+	) {
     self.tripID = tripID
     self.arrival = arrival
     self.departure = departure
@@ -93,8 +98,11 @@ public struct StopTime: Identifiable {
     self.distanceTraveledForShape = distanceTraveledForShape
     self.timePointType = timePointType
   }
-  
-  init(from record: String, using headers: [StopTimeField]) throws {
+
+  init(
+		from record: String,
+		using headers: [StopTimeField]
+	) throws {
     do {
       let fields = try record.readRecord()
       if fields.count != headers.count {
@@ -142,7 +150,7 @@ public struct StopTimes: Identifiable {
   public let id = UUID()
   public var headerFields = [StopTimeField]()
   fileprivate var stopTimes = [StopTime]()
-  
+
   subscript(index: Int) -> StopTime {
     get {
       return stopTimes[index]
@@ -151,30 +159,30 @@ public struct StopTimes: Identifiable {
       stopTimes[index] = newValue
     }
   }
-  
+
   mutating func add(_ stopTime: StopTime) {
     // TODO: Add to header fields supported by this collection
     self.stopTimes.append(stopTime)
   }
-  
+
   mutating func remove(_ stopTime: StopTime) {
   }
-  
+
   init<S: Sequence>(_ sequence: S)
   where S.Iterator.Element == StopTime {
     for stopTime in sequence {
       self.add(stopTime)
     }
   }
-  
+
   init(from url: URL) throws {
     do {
       let records = try String(contentsOf: url).splitRecords()
-      
+
       if records.count < 1 { return }
       let headerRecord = String(records[0])
       self.headerFields = try headerRecord.readHeader()
-      
+
       self.stopTimes.reserveCapacity(records.count - 1)
       for stopTimeRecord in records[1 ..< records.count] {
         let stopTime = try StopTime(from: String(stopTimeRecord),
@@ -188,8 +196,8 @@ public struct StopTimes: Identifiable {
 }
 
 extension StopTimes: Sequence {
-  public typealias Iterator = IndexingIterator<Array<StopTime>>
-  
+  public typealias Iterator = IndexingIterator<[StopTime]>
+
   public func makeIterator() -> Iterator {
     return stopTimes.makeIterator()
   }
