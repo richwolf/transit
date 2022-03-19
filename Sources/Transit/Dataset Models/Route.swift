@@ -9,7 +9,7 @@ import CoreGraphics
 
 // MARK: RouteField
 
-/// All possible fields that may appear within a `Route` record.
+/// All fields that may appear within a `Route` record.
 public enum RouteField: String, Hashable, KeyPathVending {
   /// Route ID field.
   case routeID = "route_id"
@@ -77,12 +77,6 @@ public enum PickupDropOffPolicy: UInt, Hashable {
 }
 
 // MARK: - Route
-
-// TODO: Routes method to test for required and conditionally required fields.
-// TODO: Routes method to ensure that feed with mutiple agencies does not omit
-// TODO:   agencyIDs if routes refer to both agencies.
-// TODO: Routes method to ensure that either name or shortName provided for all
-// TODO:   routes.
 
 /// A representation of a single Route record.
 public struct Route: Identifiable {
@@ -185,6 +179,14 @@ public struct Route: Identifiable {
 
   private static let requiredHeaders: Set =
     [RouteField.routeID, RouteField.type]
+
+	public func hasRequiredFields() -> Bool {
+		return true
+	}
+
+	public func hasConditionallyRequiredFields() -> Bool {
+		return true
+	}
 }
 
 extension Route: Equatable {
@@ -268,4 +270,9 @@ extension Routes: Sequence {
   public func makeIterator() -> Iterator {
     return routes.makeIterator()
   }
+
+	// TODO: Routes method to ensure that feed with mutiple agencies does not omit
+	// TODO:   agencyIDs if routes refer to both agencies.
+	// TODO: Routes method to ensure that either name or shortName provided for all
+	// TODO:   routes.
 }

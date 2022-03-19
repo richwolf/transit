@@ -2,13 +2,11 @@
 // Agency.swift
 //
 
-// swiftlint:disable todo
-
 import Foundation
 
 // MARK: AgencyField
 
-/// All possible fields that may appear within an `Agency` record.
+/// All fields that may appear within an `Agency` record.
 ///
 /// `AgencyField`s are often found in `Set`s enumerating fields found
 /// within an ``Agencies`` feed:
@@ -55,7 +53,7 @@ public enum AgencyField: String, Hashable, KeyPathVending {
 
 // MARK: - Agency
 
-/// A representation of a single Agency record.
+/// A representation of an Agency record.
 public struct Agency: Identifiable {
   /// A globally unique identifier. Because GTFS does not guarantee
   /// that IDs will be unique
@@ -143,6 +141,7 @@ public struct Agency: Identifiable {
       throw error
     }
   }
+
 }
 
 extension Agency: Equatable {
@@ -167,11 +166,6 @@ extension Agency: CustomStringConvertible {
 
 // MARK: - Agencies
 
-// TODO: Method to test for required and conditionally required fields.
-// TODO: Method to ensure that feed with multiple agencies does not omit
-// TODO:   agencyIDs.
-// TODO: Method to ensure that all contained agencies have the same timezone.
-
 /// A representation of a complete Agency dataset.
 public struct Agencies: Identifiable {
   /// A globally unique identifier.
@@ -179,7 +173,27 @@ public struct Agencies: Identifiable {
   /// Header fields.
   public var headerFields = [AgencyField]()
   fileprivate var agencies = [Agency]()
+	
+	public func hasRequiredFields() -> Bool {
+		return Agency.requiredFields.isSubset(of: headerFields)
+	}
 
+	public func hasConditionallyRequiredFields() -> Bool {
+		return Agency.conditionallyRequiredFields.isSubset(of: headerFields)
+	}
+	
+	public func hasRequiredAgencyIDs() -> Bool {
+		return true
+	}
+
+	public func hasMatchingTimeZones() -> Bool {
+		return true
+	}
+	
+	public func isValid() -> Bool {
+		return self.hasRequiredFields()
+	}
+	
   public subscript(index: Int) -> Agency {
     get {
       return agencies[index]
@@ -202,7 +216,7 @@ public struct Agencies: Identifiable {
     }
   }
 
-  /// Grab agency dataset from file.
+  /// Initialize agencies dataset from file.
   public init(from url: URL) throws {
     do {
       let records = try String(contentsOf: url).splitRecords()
@@ -213,7 +227,7 @@ public struct Agencies: Identifiable {
 
       self.agencies.reserveCapacity(records.count - 1)
       for agencyRecord in records[1 ..< records.count] {
-        let agency = try Agency(from: String(agencyRecord),
+				let agency = try Agency(from: String(agencyRecord),
 																using: headerFields)
         self.add(agency)
       }

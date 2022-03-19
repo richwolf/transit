@@ -2,13 +2,11 @@
 // StopTime.swift
 //
 
-// swiftlint:disable todo
-
 import Foundation
 
 // MARK: StopTimeField
 
-/// All possible fields that may appear within a `StopTime` record.
+/// All fields that may appear within a `StopTime` record.
 public enum StopTimeField: String, Hashable, KeyPathVending {
   /// Trip ID field.
   case tripID = "trip_id"

@@ -2,13 +2,11 @@
 //  Trip.swift
 //
 
-// swiftlint:disable todo
-
 import Foundation
 
 // MARK: TripField
 
-/// All possible fields that may appear within a `Trip` record.
+/// All fields that may appear within a `Trip` record.
 public enum TripField: String, Hashable, KeyPathVending {
   /// Route ID field.
   case routeID = "route_id"
