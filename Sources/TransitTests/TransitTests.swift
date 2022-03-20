@@ -6,7 +6,6 @@ import XCTest
 @testable import Transit
 
 final class TransitTests: XCTestCase {
-  var agencyFileURL: URL?
 
   override func setUp() {
     super.setUp()

@@ -7,11 +7,13 @@ import XCTest
 
 final class RouteTests: XCTestCase {
 
-  var routesURL: URL?
+  var routeFileURL: URL?
 
-  override func setUp() {
-    super.setUp()
-  }
+	override func setUp() {
+		super.setUp()
+		self.routeFileURL =
+			Bundle.module.url(forResource: "route", withExtension: "txt")
+	}
 
   func test_keyPath() {
     XCTAssertEqual(RouteField.routeID.path, \Route.routeID)
@@ -27,4 +29,25 @@ final class RouteTests: XCTestCase {
     XCTAssertEqual(RouteField.pickupPolicy.path, \Route.pickupPolicy)
     XCTAssertEqual(RouteField.dropOffPolicy.path, \Route.dropOffPolicy)
   }
+	
+	func test_initWithNoArguments() {
+		let route = Route()
+		XCTAssertEqual(route.routeID, "Unidentified route")
+		XCTAssertNil(route.agencyID)
+		XCTAssertNil(route.name)
+		XCTAssertNil(route.shortName)
+		XCTAssertNil(route.details)
+		XCTAssertEqual(route.type, .bus)
+
+		/*
+		XCTAssertNil(agency.agencyID)
+		XCTAssertEqual(agency.name, "")
+		XCTAssertEqual(agency.url, URL(string: "https://unnamed.com")!)
+		XCTAssertEqual(agency.timeZone, TimeZone(identifier: "UTC")!)
+		XCTAssertNil(agency.locale)
+		XCTAssertNil(agency.phone)
+		XCTAssertNil(agency.fareURL)
+		XCTAssertNil(agency.email)
+		 */
+	}
 }
