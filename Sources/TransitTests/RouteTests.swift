@@ -38,16 +38,11 @@ final class RouteTests: XCTestCase {
 		XCTAssertNil(route.shortName)
 		XCTAssertNil(route.details)
 		XCTAssertEqual(route.type, .bus)
-
-		/*
-		XCTAssertNil(agency.agencyID)
-		XCTAssertEqual(agency.name, "")
-		XCTAssertEqual(agency.url, URL(string: "https://unnamed.com")!)
-		XCTAssertEqual(agency.timeZone, TimeZone(identifier: "UTC")!)
-		XCTAssertNil(agency.locale)
-		XCTAssertNil(agency.phone)
-		XCTAssertNil(agency.fareURL)
-		XCTAssertNil(agency.email)
-		 */
+		XCTAssertNil(route.url)
+		XCTAssertNil(route.color)
+		XCTAssertNil(route.textColor)
+		XCTAssertNil(route.sortOrder)
+		XCTAssertNil(route.pickupPolicy)
+		XCTAssertNil(route.dropOffPolicy)
 	}
 }

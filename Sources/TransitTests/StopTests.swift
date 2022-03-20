@@ -32,14 +32,20 @@ final class StopTests: XCTestCase {
 	}
 	
 	func test_initWithNoArguments() {
-		let agency = Agency()
-		XCTAssertNil(agency.agencyID)
-		XCTAssertEqual(agency.name, "")
-		XCTAssertEqual(agency.url, URL(string: "https://unnamed.com")!)
-		XCTAssertEqual(agency.timeZone, TimeZone(identifier: "UTC")!)
-		XCTAssertNil(agency.locale)
-		XCTAssertNil(agency.phone)
-		XCTAssertNil(agency.fareURL)
-		XCTAssertNil(agency.email)
+		let stop = Stop()
+		XCTAssertEqual(stop.stopID, "Unidentified stop")
+		XCTAssertNil(stop.code)
+		XCTAssertNil(stop.name)
+		XCTAssertNil(stop.details)
+		XCTAssertNil(stop.latitude)
+		XCTAssertNil(stop.longitude)
+		XCTAssertNil(stop.zoneID)
+		XCTAssertNil(stop.url)
+		XCTAssertNil(stop.locationType)
+		XCTAssertNil(stop.parentStationID)
+		XCTAssertNil(stop.timeZone)
+		XCTAssertNil(stop.accessibility)
+		XCTAssertNil(stop.levelID)
+		XCTAssertNil(stop.platformCode)
 	}
 }

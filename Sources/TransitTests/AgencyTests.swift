@@ -26,12 +26,6 @@ final class AgencyTests: XCTestCase {
     XCTAssertEqual(AgencyField.email.path, \Agency.email)
   }
 
-  // Init tests yet to implement:
-  // Test when passed some arguments
-  // Test when passed all arguments
-  // Init with a string that is not a URL
-  // Init with a crazy timezone
-
   func test_initWithNoArguments() {
     let agency = Agency()
     XCTAssertNil(agency.agencyID)
@@ -45,12 +39,14 @@ final class AgencyTests: XCTestCase {
   }
 
   func test_initWithSomeArguments() {
-    let agency = Agency(name: "Chicago Transit Authority",
+    let agency = Agency(
+			name: "Chicago Transit Authority",
       url: URL(string: "http://transitchicago.com")!,
       timeZone: TimeZone(identifier: "America/Chicago")!,
       locale: Locale(identifier: "en"),
       phone: "1-888-YOURCTA",
-      fareURL: URL(string: "http://www.transitchicago.com/fares")!)
+      fareURL: URL(string: "http://www.transitchicago.com/fares")!
+		)
     XCTAssertNil(agency.agencyID)
     XCTAssertEqual(agency.name, "Chicago Transit Authority")
     XCTAssertEqual(agency.url, URL(string: "http://transitchicago.com")!)
@@ -61,30 +57,47 @@ final class AgencyTests: XCTestCase {
 									 URL(string: "http://www.transitchicago.com/fares")!)
     XCTAssertNil(agency.email)
   }
-
-  // Need to finish ...
+	
   func test_initWithAllArguments() {
-    let agency = Agency(agencyID: "Chicago Transit Authority",
+    let agency = Agency(
+			agencyID: "Chicago Transit Authority",
       name: "Chicago Transit Authority",
       url: URL(string: "http://transitchicago.com")!,
       timeZone: TimeZone(identifier: "America/Chicago")!,
       locale: Locale(identifier: "en"),
       phone: "1-888-YOURCTA",
       fareURL: URL(string: "http://www.transitchicago.com/fares")!,
-      email: "cat@transitchicago.com")
+      email: "cta@transitchicago.com"
+		)
     XCTAssertEqual(agency.agencyID, "Chicago Transit Authority")
-    XCTAssertEqual(agency.name, "Chicago Transit Authority")
-  }
+		XCTAssertEqual(agency.name, "Chicago Transit Authority")
+		XCTAssertEqual(agency.url, URL(string: "http://transitchicago.com")!)
+		XCTAssertEqual(agency.timeZone, TimeZone(identifier: "America/Chicago")!)
+		XCTAssertEqual(agency.locale, Locale(identifier: "en"))
+		XCTAssertEqual(agency.phone, "1-888-YOURCTA")
+		XCTAssertEqual(agency.fareURL,
+									 URL(string: "http://www.transitchicago.com/fares")!)
+		XCTAssertEqual(agency.email, "cta@transitchicago.com")
+	}
 
-  // Should return nil
-  /*
+	// Init tests yet to implement:
+	// Init with a string that is not a URL
+	// Init with a crazy timezone
+	// Init with a crazy locale
   func test_initFromRecordWithNoHeaders() {
     let headers: [AgencyField] = []
-    let record = ""
-    let agency = try? Agency(from: record, using: headers)
+		let record =
+			"""
+			Chicago Transit Authority,\
+			http://transitchicago.com,\
+			America/Chicago,\
+			en,\
+			1-888-YOURCTA,\
+			http://www.transitchicago.com/fares
+			"""
+		let agency = try? Agency(from: record, using: headers)
     XCTAssertNil(agency)
   }
-	*/
 
   func test_initFromRecordWithSomeHeaders() {
     let headers: [AgencyField] = [
@@ -104,7 +117,8 @@ final class AgencyTests: XCTestCase {
       timeZone: TimeZone(identifier: "America/Chicago")!,
       locale: Locale(identifier: "en"),
       phone: "1-888-YOURCTA",
-      fareURL: URL(string: "http://www.transitchicago.com/fares")!)
+      fareURL: URL(string: "http://www.transitchicago.com/fares")!
+		)
     let actualAgency = try? Agency(from: record, using: headers)
     XCTAssertEqual(expectedAgency, actualAgency)
   }
@@ -129,9 +143,11 @@ final class AgencyTests: XCTestCase {
   }
 
   func test_customStringConvertible() {
-    let agency = Agency(name: "Chicago Transit Authority",
+    let agency = Agency(
+			name: "Chicago Transit Authority",
       url: URL(string: "http://transitchicago.com")!,
-      timeZone: TimeZone(identifier: "America/Chicago")!)
+      timeZone: TimeZone(identifier: "America/Chicago")!
+		)
     XCTAssertEqual(agency.description, "Agency: Chicago Transit Authority")
   }
 	
@@ -140,6 +156,4 @@ final class AgencyTests: XCTestCase {
 	
 	// Test agencies has conditionally required fields
 	// Test agencies doesn't have conditionally required fields
-	
-	
 }

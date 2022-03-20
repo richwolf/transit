@@ -109,7 +109,7 @@ public struct Stop: Identifiable {
 		timeZone: TimeZone? = nil,
 		accessibility: Accessibility? = nil,
 		levelID: TransitID? = nil,
-		platformCode: String?
+		platformCode: String? = nil
 	) {
     self.stopID = stopID
     self.code = code
