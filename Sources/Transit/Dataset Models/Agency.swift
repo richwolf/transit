@@ -145,16 +145,16 @@ public struct Agency: Identifiable {
 }
 
 extension Agency: Equatable {
-  public static func == (lhs: Agency, rhs: Agency) -> Bool {
+  public static func == (leftHand: Agency, rightHand: Agency) -> Bool {
     return
-      lhs.agencyID == rhs.agencyID &&
-      lhs.name == rhs.name &&
-      lhs.url == rhs.url &&
-      lhs.timeZone == rhs.timeZone &&
-      lhs.locale == rhs.locale &&
-      lhs.phone == rhs.phone &&
-      lhs.fareURL == rhs.fareURL &&
-      lhs.email == rhs.email
+			leftHand.agencyID == rightHand.agencyID &&
+			leftHand.name == rightHand.name &&
+			leftHand.url == rightHand.url &&
+			leftHand.timeZone == rightHand.timeZone &&
+			leftHand.locale == rightHand.locale &&
+			leftHand.phone == rightHand.phone &&
+			leftHand.fareURL == rightHand.fareURL &&
+			leftHand.email == rightHand.email
   }
 }
 
@@ -171,27 +171,35 @@ public struct Agencies: Identifiable {
   /// A globally unique identifier.
   public let id = UUID()
   /// Header fields.
-  public var headerFields = [AgencyField]()
-  fileprivate var agencies = [Agency]()
+	public var headerFields: [AgencyField] = []
 	
-	public func hasRequiredFields() -> Bool {
+	fileprivate var agencies: [Agency] = []
+	
+	public var hasRequiredFields: Bool {
 		return Agency.requiredFields.isSubset(of: headerFields)
 	}
 
-	public func hasConditionallyRequiredFields() -> Bool {
+	public var hasConditionallyRequiredFields: Bool {
 		return Agency.conditionallyRequiredFields.isSubset(of: headerFields)
 	}
 	
-	public func hasRequiredAgencyIDs() -> Bool {
+	public var hasRequiredAgencyIDs: Bool {
+		if agencies.count > 0 {
+			return agencies.allSatisfy { $0.agencyID != nil }
+		}
 		return true
 	}
 
-	public func hasMatchingTimeZones() -> Bool {
-		return true
-	}
+	public var hasMatchingTimeZones: Bool {
+		if agencies.count > 0 {
+			return agencies.dropFirst().allSatisfy {
+				$0.timeZone == agencies.first?.timeZone
+			}
+		}
+		return true	}
 	
-	public func isValid() -> Bool {
-		return self.hasRequiredFields()
+	public var isValid: Bool {
+		return hasRequiredFields && hasRequiredAgencyIDs && hasMatchingTimeZones
 	}
 	
   public subscript(index: Int) -> Agency {

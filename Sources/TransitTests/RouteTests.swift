@@ -45,4 +45,50 @@ final class RouteTests: XCTestCase {
 		XCTAssertNil(route.pickupPolicy)
 		XCTAssertNil(route.dropOffPolicy)
 	}
+	
+	func test_initWithSomeArguments() {
+		/*
+		let agency = Agency(
+			name: "Chicago Transit Authority",
+			url: URL(string: "http://transitchicago.com")!,
+			timeZone: TimeZone(identifier: "America/Chicago")!,
+			locale: Locale(identifier: "en"),
+			phone: "1-888-YOURCTA",
+			fareURL: URL(string: "http://www.transitchicago.com/fares")!
+		)
+		XCTAssertNil(agency.agencyID)
+		XCTAssertEqual(agency.name, "Chicago Transit Authority")
+		XCTAssertEqual(agency.url, URL(string: "http://transitchicago.com")!)
+		XCTAssertEqual(agency.timeZone, TimeZone(identifier: "America/Chicago")!)
+		XCTAssertEqual(agency.locale, Locale(identifier: "en"))
+		XCTAssertEqual(agency.phone, "1-888-YOURCTA")
+		XCTAssertEqual(agency.fareURL,
+									 URL(string: "http://www.transitchicago.com/fares")!)
+		XCTAssertNil(agency.email)
+		 */
+	}
+	
+	func test_initWithAllArguments() {
+		/*
+		let agency = Agency(
+			agencyID: "Chicago Transit Authority",
+			name: "Chicago Transit Authority",
+			url: URL(string: "http://transitchicago.com")!,
+			timeZone: TimeZone(identifier: "America/Chicago")!,
+			locale: Locale(identifier: "en"),
+			phone: "1-888-YOURCTA",
+			fareURL: URL(string: "http://www.transitchicago.com/fares")!,
+			email: "cta@transitchicago.com"
+		)
+		XCTAssertEqual(agency.agencyID, "Chicago Transit Authority")
+		XCTAssertEqual(agency.name, "Chicago Transit Authority")
+		XCTAssertEqual(agency.url, URL(string: "http://transitchicago.com")!)
+		XCTAssertEqual(agency.timeZone, TimeZone(identifier: "America/Chicago")!)
+		XCTAssertEqual(agency.locale, Locale(identifier: "en"))
+		XCTAssertEqual(agency.phone, "1-888-YOURCTA")
+		XCTAssertEqual(agency.fareURL,
+									 URL(string: "http://www.transitchicago.com/fares")!)
+		XCTAssertEqual(agency.email, "cta@transitchicago.com")
+		 */
+	}
 }

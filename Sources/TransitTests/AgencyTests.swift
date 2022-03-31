@@ -15,6 +15,8 @@ final class AgencyTests: XCTestCase {
       Bundle.module.url(forResource: "agency", withExtension: "txt")
   }
 
+	// MARK: - AgencyField Tests
+	
   func test_keyPath() {
     XCTAssertEqual(AgencyField.agencyID.path, \Agency.agencyID)
     XCTAssertEqual(AgencyField.name.path, \Agency.name)
@@ -26,6 +28,8 @@ final class AgencyTests: XCTestCase {
     XCTAssertEqual(AgencyField.email.path, \Agency.email)
   }
 
+	// MARK: - Agency Tests
+	
   func test_initWithNoArguments() {
     let agency = Agency()
     XCTAssertNil(agency.agencyID)
@@ -79,11 +83,7 @@ final class AgencyTests: XCTestCase {
 									 URL(string: "http://www.transitchicago.com/fares")!)
 		XCTAssertEqual(agency.email, "cta@transitchicago.com")
 	}
-
-	// Init tests yet to implement:
-	// Init with a string that is not a URL
-	// Init with a crazy timezone
-	// Init with a crazy locale
+	
   func test_initFromRecordWithNoHeaders() {
     let headers: [AgencyField] = []
 		let record =
@@ -101,7 +101,8 @@ final class AgencyTests: XCTestCase {
 
   func test_initFromRecordWithSomeHeaders() {
     let headers: [AgencyField] = [
-      .name, .url, .timeZone, .locale, .phone, .fareURL]
+      .name, .url, .timeZone, .locale, .phone, .fareURL
+		]
     let record =
       """
       Chicago Transit Authority,\
@@ -125,7 +126,8 @@ final class AgencyTests: XCTestCase {
 
   func test_initFromRecordWithMissingHeaders() {
 		let headers: [AgencyField] = [
-			.name, .url, .timeZone, .locale]
+			.name, .url, .timeZone, .locale
+		]
 		let record =
 			"""
 			Chicago Transit Authority,\
@@ -138,8 +140,31 @@ final class AgencyTests: XCTestCase {
 		let agency = try? Agency(from: record, using: headers)
 		XCTAssertNil(agency)
   }
-
+	
+	// Finish this!
   func test_initFromRecordWithAllHeaders() {
+		let headers: [AgencyField] = [
+			.name, .url, .timeZone, .locale, .phone, .fareURL
+		]
+		let record =
+			"""
+			Chicago Transit Authority,\
+			http://transitchicago.com,\
+			America/Chicago,\
+			en,\
+			1-888-YOURCTA,\
+			http://www.transitchicago.com/fares
+			"""
+		let expectedAgency = Agency(
+			name: "Chicago Transit Authority",
+			url: URL(string: "http://transitchicago.com")!,
+			timeZone: TimeZone(identifier: "America/Chicago")!,
+			locale: Locale(identifier: "en"),
+			phone: "1-888-YOURCTA",
+			fareURL: URL(string: "http://www.transitchicago.com/fares")!
+		)
+		let actualAgency = try? Agency(from: record, using: headers)
+		XCTAssertEqual(expectedAgency, actualAgency)
   }
 
   func test_customStringConvertible() {
@@ -151,9 +176,43 @@ final class AgencyTests: XCTestCase {
     XCTAssertEqual(agency.description, "Agency: Chicago Transit Authority")
   }
 	
+	// MARK: - Agencies Tests
+
 	// Test agencies has required fields
-	// Test agencies doesn't have required fields
+	func test_hasRequiredFields() {
+		let headers: [AgencyField] = [
+			.name, .url, .timeZone, .locale, .phone
+		]
+		var agencies = Agencies()
+		agencies.headerFields = headers
+		XCTAssertTrue(agencies.hasRequiredFields)
+	}
 	
-	// Test agencies has conditionally required fields
-	// Test agencies doesn't have conditionally required fields
+	func test_missingRequiredFields() {
+		let headers: [AgencyField] = [
+			.name, .url
+		]
+		var agencies = Agencies()
+		agencies.headerFields = headers
+		XCTAssertFalse(agencies.hasRequiredFields)
+	}
+	
+	func test_hasConditionallyRequiredFields() {
+		let headers: [AgencyField] = [
+			.agencyID
+		]
+		var agencies = Agencies()
+		agencies.headerFields = headers
+		XCTAssertTrue(agencies.hasConditionallyRequiredFields)
+	}
+	
+	func test_missingConditionallyRequiredFields() {
+		let headers: [AgencyField] = [
+			.name, .url
+		]
+		var agencies = Agencies()
+		agencies.headerFields = headers
+		XCTAssertFalse(agencies.hasRequiredFields)
+	}
+
 }
