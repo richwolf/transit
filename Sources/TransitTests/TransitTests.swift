@@ -27,9 +27,6 @@ final class TransitTests: XCTestCase {
     }
   }
 
-  func test_Wazzis() {
-    XCTAssert(true)
-  }
 }
 
 /*
