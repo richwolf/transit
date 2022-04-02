@@ -55,6 +55,7 @@ public enum AgencyField: String, Hashable, KeyPathVending {
 
 /// A representation of an Agency record.
 public struct Agency: Identifiable {
+	
   /// A globally unique identifier. Because GTFS does not guarantee
   /// that IDs will be unique
   public let id = UUID()
@@ -145,7 +146,8 @@ public struct Agency: Identifiable {
 }
 
 extension Agency: Equatable {
-  public static func == (leftHand: Agency, rightHand: Agency) -> Bool {
+  
+	public static func == (leftHand: Agency, rightHand: Agency) -> Bool {
     return
 			leftHand.agencyID == rightHand.agencyID &&
 			leftHand.name == rightHand.name &&
@@ -156,25 +158,34 @@ extension Agency: Equatable {
 			leftHand.fareURL == rightHand.fareURL &&
 			leftHand.email == rightHand.email
   }
+	
 }
 
 extension Agency: CustomStringConvertible {
-  public var description: String {
+  
+	public var description: String {
     return "Agency: \(self.name)"
   }
+	
 }
 
 // MARK: - Agencies
 
 /// A representation of a complete Agency dataset.
-public struct Agencies: Identifiable {
-  /// A globally unique identifier.
-  public let id = UUID()
-  /// Header fields.
-	public var headerFields: [AgencyField] = []
+public struct Agencies: Identifiable, RandomAccessCollection {
+	public var startIndex: Int = 0
+	
+	public var endIndex: Int = 0
+	
 	
 	fileprivate var agencies: [Agency] = []
 	
+	/// A globally unique identifier.
+  public let id = UUID()
+	
+  /// Header fields.
+	public var headerFields: [AgencyField] = []
+		
 	public var hasRequiredFields: Bool {
 		return Agency.requiredFields.isSubset(of: headerFields)
 	}
@@ -246,7 +257,9 @@ public struct Agencies: Identifiable {
 }
 
 extension Agencies: ExpressibleByArrayLiteral {
+	
   public init(arrayLiteral elements: Agency...) {
     self.init(elements)
   }
+	
 }

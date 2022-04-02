@@ -220,7 +220,12 @@ public struct Routes: Identifiable {
   public let id = UUID()
   public var headerFields = [RouteField]()
   fileprivate var routes = [Route]()
-
+	
+	// TODO: Routes method to ensure that feed with mutiple agencies does not omit
+	// TODO:   agencyIDs if routes refer to both agencies.
+	// TODO: Routes method to ensure that either name or shortName provided for all
+	// TODO:   routes.
+	
   subscript(index: Int) -> Route {
     get {
       return routes[index]
@@ -231,7 +236,6 @@ public struct Routes: Identifiable {
   }
 
   mutating func add(_ route: Route) {
-    // TODO: Add to header fields supported by this collection
     self.routes.append(route)
   }
 
@@ -265,14 +269,11 @@ public struct Routes: Identifiable {
 }
 
 extension Routes: Sequence {
-  public typealias Iterator = IndexingIterator<[Route]>
+
+	public typealias Iterator = IndexingIterator<[Route]>
 
   public func makeIterator() -> Iterator {
     return routes.makeIterator()
   }
 
-	// TODO: Routes method to ensure that feed with mutiple agencies does not omit
-	// TODO:   agencyIDs if routes refer to both agencies.
-	// TODO: Routes method to ensure that either name or shortName provided for all
-	// TODO:   routes.
 }
