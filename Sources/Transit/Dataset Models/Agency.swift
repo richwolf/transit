@@ -177,8 +177,7 @@ public struct Agencies: Identifiable, RandomAccessCollection {
 	
 	public var endIndex: Int = 0
 	
-	
-	fileprivate var agencies: [Agency] = []
+	public var agencies: [Agency] = []
 	
 	/// A globally unique identifier.
   public let id = UUID()
