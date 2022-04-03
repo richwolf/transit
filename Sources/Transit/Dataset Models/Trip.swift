@@ -61,7 +61,7 @@ public enum Direction: UInt, Hashable {
 // MARK: - Trip
 
 /// A representation of a single Trip record.
-public struct Trip: Identifiable {
+public struct Trip: Hashable, Identifiable {
   public let id = UUID()
   public var routeID: TransitID = ""
   public var serviceID: TransitID = ""

@@ -54,7 +54,7 @@ public enum AgencyField: String, Hashable, KeyPathVending {
 // MARK: - Agency
 
 /// A representation of an Agency record.
-public struct Agency: Identifiable {
+public struct Agency: Hashable, Identifiable {
 	
   /// A globally unique identifier. Because GTFS does not guarantee
   /// that IDs will be unique

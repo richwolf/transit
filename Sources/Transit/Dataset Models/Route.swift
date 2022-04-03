@@ -79,7 +79,7 @@ public enum PickupDropOffPolicy: UInt, Hashable {
 // MARK: - Route
 
 /// A representation of a single Route record.
-public struct Route: Identifiable {
+public struct Route: Hashable, Identifiable {
   public let id = UUID()
   public var routeID: TransitID = ""
   public var agencyID: TransitID?

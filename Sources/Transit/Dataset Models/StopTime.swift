@@ -54,7 +54,7 @@ public enum StopTimeField: String, Hashable, KeyPathVending {
 // MARK: - StopTime
 
 /// A representation of a single StopTime record.
-public struct StopTime: Identifiable {
+public struct StopTime: Hashable, Identifiable {
   public var id = UUID()
   public var tripID: TransitID = ""
   public var arrival: Date?

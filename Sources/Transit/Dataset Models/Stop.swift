@@ -78,7 +78,7 @@ public enum Accessibility: UInt, Hashable {
 }
 
 /// A representation of a single Stop record.
-public struct Stop: Identifiable {
+public struct Stop: Hashable, Identifiable {
   public let id = UUID()
   public var stopID: TransitID = ""
   public var code: StopCode?
