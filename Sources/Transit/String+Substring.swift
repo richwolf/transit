@@ -179,17 +179,8 @@ extension String {
       } else {
         return nil
       }
-      // Might need to fix this?
-      // let components = [red, green, blue, alpha]
-      // return CGColor(colorSpace: CGColorSpace(name: CGColorSpace.sRGB)!,
-      //               components: components)
-			// if #available(iOS 13.0, *) {
-				return
-					CGColor(red: red, green: green, blue: blue, alpha: alpha)
-			// } else {
-			//	return
-			//		UIColor(red: red, green: green, blue: blue, alpha: alpha).cgColor
-			// }
+			return CGColor(colorSpace: CGColorSpaceCreateDeviceRGB(),
+										 components: [red, green, blue, alpha])
     }
     return nil
   }

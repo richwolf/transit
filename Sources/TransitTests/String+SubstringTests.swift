@@ -175,12 +175,8 @@ final class StringSplitRecordsTests: XCTestCase {
 // MARK: - String color tests
 final class StringColorTests: XCTestCase {
 
-	// if #available(iOS 13.0, *) {
-	let testColor = CGColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-	// } else {
-	//	return
-	// let testColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0).cgColor
-	// }
+	let testColor = CGColor(colorSpace: CGColorSpaceCreateDeviceRGB(),
+													components: [1.0, 1.0, 1.0, 1.0])
 
   func test_basic() {
     let colorString = "ffffffff"
