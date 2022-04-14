@@ -9,7 +9,21 @@ import CoreGraphics
 
 // MARK: RouteField
 
-/// All fields that may appear within a `Route` record.
+/// Describes the various fields found within a ``Route`` record or header.
+///
+/// `RouteField`s are generally members of `Set`s that enumerate
+/// the fields found within a ``Route`` record or header. The following,
+/// for example, returns the `Set` of route fields found within
+/// the `myRoutes` feed header:
+/// ```swift
+///   let fields = myRoutes.headerFields
+/// ```
+///
+/// Should you need it, use `rawValue` to obtain the GTFS agency field name
+/// associated with an `RouteField` value as a `String`:
+/// ```swift
+///   let gtfsField = RouteField.details.rawValue  //  Returns "route_desc"
+/// ```
 public enum RouteField: String, Hashable, KeyPathVending {
   /// Route ID field.
   case routeID = "route_id"

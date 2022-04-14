@@ -6,16 +6,18 @@ import Foundation
 
 // MARK: AgencyField
 
-/// All fields that may appear within an `Agency` record.
+/// Describes the various fields found within an ``Agency`` record or header.
 ///
-/// `AgencyField`s are often found in `Set`s enumerating fields found
-/// within an ``Agencies`` feed:
+/// `AgencyField`s are generally members of `Set`s that enumerate
+/// the fields found within an ``Agency`` record or header. The following,
+/// for example, returns the `Set` of agency fields found within
+/// the `myAgencies` feed header:
 /// ```swift
-///   let fields = myAgencies.headerFields  // Returns a Set of AgencyFields
+///   let fields = myAgencies.headerFields
 /// ```
 ///
-/// Should you need it, you can use `rawValue` to obtain the GTFS field name
-/// for this enumeration:
+/// Should you need it, use `rawValue` to obtain the GTFS agency field name
+/// associated with an `AgencyField` value as a `String`:
 /// ```swift
 ///   let gtfsField = AgencyField.locale.rawValue  //  Returns "agency_lang"
 /// ```
@@ -79,14 +81,16 @@ public struct Agency: Hashable, Identifiable {
   /// Agency email address.
   public var email: String?
 
-  /// A set enumerating the required fields in an ``Agency`` record.
+  /// A `Set` that enumerates the fields that must appear within an ``Agency``
+	/// record.
   public static let requiredFields: Set<AgencyField>
     = [.name, .url, .timeZone]
-  /// A set enumerating the conditionally required fields in an ``Agency``
-	/// record.
+  /// A `Set` that enumerates the fields that may be conditionally required
+	/// to appear within an ``Agency`` record.
   public static let conditionallyRequiredFields: Set<AgencyField>
     = [.agencyID]
-  /// A set enumerating the optional fields in an ``Agency`` record.
+  /// A `Set` that enumerates the fields that may optionally appear within an
+	/// ``Agency`` record.
   public static let optionalFields: Set<AgencyField>
     = [.locale, .phone, .fareURL, .email]
 
