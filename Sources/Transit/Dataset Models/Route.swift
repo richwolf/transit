@@ -19,7 +19,7 @@ import CoreGraphics
 ///   let fields = myRoutes.headerFields
 /// ```
 ///
-/// Should you need it, use `rawValue` to obtain the GTFS agency field name
+/// Should you need it, use `rawValue` to obtain the GTFS route field name
 /// associated with an `RouteField` value as a `String`:
 /// ```swift
 ///   let gtfsField = RouteField.details.rawValue  //  Returns "route_desc"

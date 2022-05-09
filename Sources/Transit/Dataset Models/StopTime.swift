@@ -6,7 +6,21 @@ import Foundation
 
 // MARK: StopTimeField
 
-/// All fields that may appear within a `StopTime` record.
+/// Describes the various fields found within a ``Route`` record or header.
+///
+/// `StopTimeField`s are generally members of `Set`s that enumerate
+/// the fields found within a ``StopTime`` record or header. The following,
+/// for example, returns the `Set` of route fields found within
+/// the `myStopTimes` feed header:
+/// ```swift
+///   let fields = myStopTimes.headerFields
+/// ```
+///
+/// Should you need it, use `rawValue` to obtain the GTFS stop time field name
+/// associated with an `StopTimeField` value as a `String`:
+/// ```swift
+///   let gtfsField = StopTimeField.details.rawValue  //  Returns "route_desc"
+/// ```
 public enum StopTimeField: String, Hashable, KeyPathVending {
   /// Trip ID field.
   case tripID = "trip_id"

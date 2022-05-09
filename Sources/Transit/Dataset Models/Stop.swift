@@ -7,7 +7,21 @@ import CoreLocation
 
 // MARK: StopField
 
-/// All fields that may appear within a `Stop` record.
+/// Describes the various fields found within a ``Stop`` record or header.
+///
+/// `StopField`s are generally members of `Set`s that enumerate
+/// the fields found within a ``Stop`` record or header. The following,
+/// for example, returns the `Set` of route fields found within
+/// the `myStops` feed header:
+/// ```swift
+///   let fields = myStops.headerFields
+/// ```
+///
+/// Should you need it, use `rawValue` to obtain the GTFS stop field name
+/// associated with an `StopField` value as a `String`:
+/// ```swift
+///   let gtfsField = RouteField.details.rawValue  //  Returns "route_desc"
+/// ```
 public enum StopField: String, Hashable, KeyPathVending {
   /// Stop ID field.
   case stopID = "stop_id"
