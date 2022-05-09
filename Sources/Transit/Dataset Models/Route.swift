@@ -233,7 +233,7 @@ extension Route: CustomStringConvertible {
 public struct Routes: Identifiable {
   public let id = UUID()
   public var headerFields = [RouteField]()
-  fileprivate var routes = [Route]()
+	public var routes: [Route] = []
 	
 	// TODO: Routes method to ensure that feed with mutiple agencies does not omit
 	// TODO:   agencyIDs if routes refer to both agencies.
