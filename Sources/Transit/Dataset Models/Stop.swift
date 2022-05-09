@@ -228,7 +228,7 @@ extension Stop: CustomStringConvertible {
 public struct Stops: Identifiable {
   public let id = UUID()
   public var headerFields = [StopField]()
-  fileprivate var stops = [Stop]()
+  public var stops = [Stop]()
 
   subscript(index: Int) -> Stop {
     get {
