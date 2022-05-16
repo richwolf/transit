@@ -49,7 +49,9 @@ public enum RouteField: String, Hashable, KeyPathVending {
   case pickupPolicy = "continuous_pickup"
   /// Route drop off policy field.
   case dropOffPolicy = "continuous_drop_off"
-
+	///
+	case skip = "route_skip"
+	
   internal var path: AnyKeyPath {
     switch self {
     case .routeID: return \Route.routeID
@@ -64,6 +66,7 @@ public enum RouteField: String, Hashable, KeyPathVending {
     case .sortOrder: return \Route.sortOrder
     case .pickupPolicy: return \Route.pickupPolicy
     case .dropOffPolicy: return \Route.dropOffPolicy
+		case .skip: return \Route.skip
     }
   }
 }
@@ -107,6 +110,7 @@ public struct Route: Hashable, Identifiable {
   public var sortOrder: UInt?
   public var pickupPolicy: PickupDropOffPolicy?
   public var dropOffPolicy: PickupDropOffPolicy?
+	public var skip: String? = nil
 
   public static let requiredFields: Set<RouteField>
     = [.routeID, .type]
@@ -167,6 +171,8 @@ public struct Route: Hashable, Identifiable {
           try field.assignRouteTypeTo(&self, for: header)
         case .pickupPolicy, .dropOffPolicy:
           try field.assignOptionalPickupDropOffPolicyTo(&self, for: header)
+				case .skip:
+					continue
         }
       }
     } catch let error {
