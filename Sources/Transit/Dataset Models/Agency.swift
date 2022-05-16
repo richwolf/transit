@@ -38,6 +38,8 @@ public enum AgencyField: String, Hashable, KeyPathVending {
   case fareURL = "agency_fare_url"
   /// Agency email address field.
   case email = "agency_email"
+	///
+	case skip = "agency_skip"
 
   internal var path: AnyKeyPath {
     switch self {
@@ -49,6 +51,7 @@ public enum AgencyField: String, Hashable, KeyPathVending {
     case .phone: return \Agency.phone
     case .fareURL: return \Agency.fareURL
     case .email: return \Agency.email
+		case .skip: return \Agency.skip
     }
   }
 }
@@ -80,6 +83,8 @@ public struct Agency: Hashable, Identifiable {
   public var fareURL: URL?
   /// Agency email address.
   public var email: String?
+	
+	public var skip: String? = nil
 
   /// A `Set` that enumerates the fields that must appear within an ``Agency``
 	/// record.
@@ -140,6 +145,8 @@ public struct Agency: Hashable, Identifiable {
           try field.assignLocaleTo(&self, for: header)
         case .timeZone:
           try field.assignTimeZoneTo(&self, for: header)
+				case .skip:
+					continue
         }
       }
     } catch let error {
@@ -170,6 +177,14 @@ extension Agency: CustomStringConvertible {
 	public var description: String {
     return "Agency: \(self.name)"
   }
+	
+}
+
+extension Agency: CustomDebugStringConvertible {
+	
+	public var debugDescription: String {
+		return "Agency"
+	}
 	
 }
 
