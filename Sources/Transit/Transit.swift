@@ -84,14 +84,14 @@ public struct Feed: Identifiable {
       let agencyFileURL = url.appendingPathComponent("agency.txt")
       let routesFileURL = url.appendingPathComponent("routes.txt")
       let stopsFileURL = url.appendingPathComponent("stops.txt")
-      let tripsFileURL = url.appendingPathComponent("trips.txt")
-      let stopTimesFileURL = url.appendingPathComponent("stop_times.txt")
+      //let tripsFileURL = url.appendingPathComponent("trips.txt")
+      //let stopTimesFileURL = url.appendingPathComponent("stop_times.txt")
 
       self.agencies = try Agencies(from: agencyFileURL)
       self.routes = try Routes(from: routesFileURL)
       self.stops = try Stops(from: stopsFileURL)
-      self.trips = try Trips(from: tripsFileURL)
-      self.stopTimes = try StopTimes(from: stopTimesFileURL)
+      //self.trips = try Trips(from: tripsFileURL)
+      //self.stopTimes = try StopTimes(from: stopTimesFileURL)
     } catch {
       return
     }

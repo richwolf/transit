@@ -46,7 +46,9 @@ public enum StopTimeField: String, Hashable, KeyPathVending {
   case distanceTraveledForShape = "shape_dist_traveled"
   /// Stop time point type field.
   case timePointType = "timepoint"
-
+	/// Used when a nonstandard field is found within a GTFS feed.
+	case nonstandard = "nonstandard"
+	
   internal var path: AnyKeyPath {
     switch self {
     case .tripID: return \StopTime.tripID
@@ -61,6 +63,7 @@ public enum StopTimeField: String, Hashable, KeyPathVending {
     case .continuousDropOff: return \StopTime.continuousDropOff
     case .distanceTraveledForShape: return \StopTime.distanceTraveledForShape
     case .timePointType: return \StopTime.timePointType
+		case .nonstandard: return \StopTime.nonstandard
     }
   }
 }
@@ -82,6 +85,7 @@ public struct StopTime: Hashable, Identifiable {
   public var continuousDropOff: Int?
   public var distanceTraveledForShape: Double?
   public var timePointType: Int?
+	public var nonstandard: String? = nil
 
   public init(
 		tripID: TransitID = "",
@@ -132,7 +136,9 @@ public struct StopTime: Hashable, Identifiable {
         case .arrival, .departure, .pickupType, .dropOffType,
              .continuousPickup, .continuousDropOff,
              .distanceTraveledForShape, .timePointType:
-          break
+          continue
+				case .nonstandard:
+					continue
         }
       }
     } catch let error {

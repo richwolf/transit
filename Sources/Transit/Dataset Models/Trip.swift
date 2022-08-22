@@ -30,7 +30,9 @@ public enum TripField: String, Hashable, KeyPathVending {
   case bikesAllowed = "bikes_allowed"
   // case scheduledTripID = "schd_trip_id" // This is not in GTFS??
   // case dir = "direction" // This is not in GTFS??
-
+	/// Used when a nonstandard field is found within a GTFS feed.
+	case nonstandard = "nonstandard"
+	
   internal var path: AnyKeyPath {
     switch self {
     case .routeID: return \Trip.routeID
@@ -46,6 +48,7 @@ public enum TripField: String, Hashable, KeyPathVending {
 		// This is not in GTFS??
     // case .scheduledTripID: return \Trip.scheduledTripID
     // case .dir: return \Trip.dir
+		case .nonstandard: return \Trip.nonstandard
     }
   }
 }
@@ -75,7 +78,8 @@ public struct Trip: Hashable, Identifiable {
   public var bikesAllowed: String? // Fix!
   // public var scheduledTripID: TransitID? // This is not in GTFS??
   // public var dir: String? // This is not in GTFS??
-
+	public var nonstandard: String? = nil
+	
   public static let requiredFields: Set =
     [TripField.routeID, TripField.serviceID, TripField.tripID]
 
@@ -112,6 +116,8 @@ public struct Trip: Hashable, Identifiable {
         case .headSign, .shortName, .direction, .blockID, /*.dir,*/
              .shapeID, .isAccessible, .bikesAllowed /*, .scheduledTripID */:
           try field.assignOptionalStringTo(&self, for: header)
+				case .nonstandard:
+					continue
         }
       }
     } catch let error {

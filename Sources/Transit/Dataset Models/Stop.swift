@@ -51,6 +51,8 @@ public enum StopField: String, Hashable, KeyPathVending {
   case levelID = "level_id"
   /// Stop platform code field.
   case platformCode = "platform_code"
+	/// Used when a nonstandard field is found within a GTFS feed.
+	case nonstandard = "nonstandard"
 
   internal var path: AnyKeyPath {
     switch self {
@@ -68,6 +70,7 @@ public enum StopField: String, Hashable, KeyPathVending {
     case .accessibility: return \Stop.accessibility
     case .levelID: return \Stop.levelID
     case .platformCode: return \Stop.platformCode
+		case .nonstandard: return \Stop.nonstandard
     }
   }
 }
@@ -108,6 +111,7 @@ public struct Stop: Hashable, Identifiable {
   public var accessibility: Accessibility?
   public var levelID: TransitID?
   public var platformCode: String?
+	public var nonstandard: String? = nil
 
   public init(
 		stopID: TransitID = "Unidentified stop",
@@ -168,6 +172,8 @@ public struct Stop: Hashable, Identifiable {
           break
         case .accessibility:
           break
+				case .nonstandard:
+					continue
         }
       }
     } catch let error {
@@ -258,13 +264,14 @@ public struct Stops: Identifiable {
     do {
       let records = try String(contentsOf: url).splitRecords()
 
-      if records.count < 1 { return }
+      if records.count <= 1 { return }
       let headerRecord = String(records[0])
       self.headerFields = try headerRecord.readHeader()
 
       self.stops.reserveCapacity(records.count - 1)
       for stopRecord in records[1 ..< records.count] {
         let stop = try Stop(from: String(stopRecord), using: headerFields)
+				print(stop)
         self.add(stop)
       }
     } catch let error {

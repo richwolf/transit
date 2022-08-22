@@ -11,33 +11,38 @@
 import Foundation
 import CoreGraphics
 import CoreLocation
-// import UIKit
 
 // MARK: Substring
 
 extension Substring {
 
   /**
-   Returns the next GTFS field found within `self`.
+   Scans for, then returns, the next GTFS field found within `self`.
    
-   `nextField` scans characters within `self` for a GTFS field until either a
-	 delimiting comma is found or there are no more characters available to
-	 scan. If a comma is contained within the field, then the field must be
-	 escaped by enclosing it within quotation marks (`"`). `nextfield` mutates
-	 `self` upon return so that `self` will begin at the character immediately
-	 following the extracted field (excluding the comma delimiter).
-   - Precondition: `self` must not be empty.
+   `nextField` scans characters within `self` for a GTFS field. It will
+	 scan characters until either a delimiting comma is found (which delimits
+	 the target field from any subsequent fields in `self`) or there are no
+	 more characters available to scan in `self` (i.e.,`self` is the final field
+	 in the substring). If a comma is embedded within the text of the target
+	 field, then the field must be enclosed within a pair
+	 of escaping double-quotation marks (and there must be no leading or
+	 trailing spaces before, or after, those quotation marks). `nextfield`
+	 mutates `self`, so upon return, `self` will begin at the
+	 character immediately following the extracted field (excluding any comma
+	 delimiter separating the target field from subsequent fields). If self contains no characters, `nextField` assumes it is
+	 the final field within the substring and returns an empty string as the
+	 field value.
    - Returns: A `String` containing the next GTFS field found within `self`.
-   - Throws: `TransitParseError.emptySubstring` will be thrown if `self`
-   contains no characters.`TransitParseError.quoteExpected` will be thrown
-   if a quoted field is not terminated correctly.
-	 `TransitParseError.commaExpected` will be thrown if a comma delimiter does
-	 not immediately follow a quoted field (except for the final field).
+   - Throws: `TransitParseError.quoteExpected` will be thrown if a quoted
+	 field is not terminated correctly. `TransitParseError.commaExpected` will
+	 be thrown if a comma delimiter does not immediately follow a quoted field (except for the final field).
    - Tag: Substring-nextField
    */
   mutating func nextField() throws -> String {
-    guard !self.isEmpty else { throw TransitError.emptySubstring }
-    switch self[startIndex] {
+		
+		guard !self.isEmpty else { return "" }
+		
+		switch self[startIndex] {
     case "\"":
       removeFirst()
       guard let nextQuote = firstIndex(of: "\"") else {
@@ -50,6 +55,9 @@ extension Substring {
         if comma != "," { throw TransitError.commaExpected }
       }
       return String(field)
+		case ",":
+			removeFirst()
+			return String("")
     default:
       if let nextComma = firstIndex(of: ",") {
         let field = prefix(upTo: nextComma)
@@ -71,7 +79,7 @@ extension String {
   /**
    Returns all GTFS fields contained within `self`.
    
-   `readRecord` scans `self` for contained GTFS fields and returns them as an
+   `readRecord` scans `self` for GTFS fields and returns those fields as an
    array of `String`s. Fields are delimited by commas. If a comma is contained
    within a field, then the field must be escaped by enclosing it within
 	 quotation marks (`"`).
@@ -90,6 +98,13 @@ extension String {
       while !remainder.isEmpty {
         try result.append(remainder.nextField())
       }
+			// In the case that the record ends with a comma, then there is
+			// an extra field that was not detected by `nextField` and we
+			// add it as an empty string
+			if self.last == "," {
+				result.append("")
+			}
+					
     } catch let error {
       throw error
     }
@@ -116,11 +131,12 @@ extension String {
   public func readHeader<FieldType: RawRepresentable>() throws -> [FieldType]
 	where FieldType.RawValue == String {
     let components = try self.readRecord()
-    return try components.map {
-      guard let headerField = FieldType(rawValue: $0) else {
-        throw TransitError.invalidFieldType
+		return components.map {
+			if let headerField = FieldType(rawValue: $0) {
+				return headerField
+			} else {
+				return FieldType(rawValue: "nonstandard")!
       }
-      return headerField
     }
   }
 
@@ -158,6 +174,7 @@ extension String {
    */
   var color: CGColor? {
     var hexString = self
+		guard !hexString.isEmpty else { return nil }
     if hexString.hasPrefix("#") {
       let start = self.index(hexString.startIndex, offsetBy: 1)
       hexString = String(self[start...])
@@ -218,6 +235,10 @@ extension String {
 		else {
       throw TransitAssignError.invalidPath
     }
+		guard self.count > 0 else {
+			instance[keyPath: path] = nil
+			return
+		}
     instance[keyPath: path] = self
   }
 
@@ -229,7 +250,8 @@ extension String {
 		else {
       throw TransitAssignError.invalidPath
     }
-    guard let uInt = UInt(self)
+		let trimmed = self.trimmingCharacters(in: .whitespaces)
+    guard let uInt = UInt(trimmed)
 		else {
       throw TransitAssignError.invalidValue
     }
@@ -248,6 +270,11 @@ extension String {
 		else {
       throw TransitAssignError.invalidPath
     }
+		let trimmed = self.trimmingCharacters(in: .whitespaces)
+		guard trimmed.count > 0 else {
+			instance[keyPath: path] = nil
+			return
+		}
     guard let uInt = UInt(self)
 		else {
       throw TransitAssignError.invalidValue
@@ -267,7 +294,8 @@ extension String {
 		else {
       throw TransitAssignError.invalidPath
     }
-    guard let url = URL(string: self)
+		let trimmed = self.trimmingCharacters(in: .whitespaces)
+    guard let url = URL(string: trimmed)
 		else {
       throw TransitAssignError.invalidValue
     }
@@ -286,7 +314,12 @@ extension String {
 		else {
       throw TransitAssignError.invalidPath
     }
-    guard let url = URL(string: self)
+		let trimmed = self.trimmingCharacters(in: .whitespaces)
+		guard trimmed.count > 0 else {
+			instance[keyPath: path] = nil
+			return
+		}
+    guard let url = URL(string: trimmed)
 		else {
       throw TransitAssignError.invalidValue
     }
@@ -305,7 +338,8 @@ extension String {
 		else {
       throw TransitAssignError.invalidPath
     }
-    guard let timeZone = TimeZone(identifier: self)
+		let trimmed = self.trimmingCharacters(in: .whitespaces)
+    guard let timeZone = TimeZone(identifier: trimmed)
 		else {
       throw TransitAssignError.invalidValue
     }
@@ -323,6 +357,11 @@ extension String {
 		else {
       throw TransitAssignError.invalidPath
     }
+		let trimmed = self.trimmingCharacters(in: .whitespaces)
+		guard trimmed.count > 0 else {
+			instance[keyPath: path] = nil
+			return
+		}
     guard let timeZone = TimeZone(identifier: self)
 		else {
       throw TransitAssignError.invalidValue
@@ -342,7 +381,12 @@ extension String {
 		else {
       throw TransitAssignError.invalidPath
     }
-    guard let color = self.color
+		let trimmed = self.trimmingCharacters(in: .whitespaces)
+		guard trimmed.count > 0 else {
+			instance[keyPath: path] = nil
+			return
+		}
+    guard let color = trimmed.color
 		else {
       throw TransitAssignError.invalidValue
     }
@@ -361,7 +405,12 @@ extension String {
 		else {
       throw TransitAssignError.invalidPath
     }
-    guard let locationDegrees = Double(self)
+		let trimmed = self.trimmingCharacters(in: .whitespaces)
+		guard trimmed.count > 0 else {
+			instance[keyPath: path] = nil
+			return
+		}
+    guard let locationDegrees = Double(trimmed)
 		else {
       throw TransitAssignError.invalidValue
     }
@@ -376,7 +425,8 @@ extension String {
 		else {
       throw TransitAssignError.invalidPath
     }
-    let locale: Locale? = Locale(identifier: "en")
+		let trimmed = self.trimmingCharacters(in: .whitespaces)
+    let locale: Locale? = Locale(identifier: trimmed)
     instance[keyPath: path] = locale
   }
 
@@ -392,7 +442,8 @@ extension String {
 		else {
       throw TransitAssignError.invalidPath
     }
-    guard let routeType = Route.routeTypeFrom(string: self)
+		let trimmed = self.trimmingCharacters(in: .whitespaces)
+    guard let routeType = Route.routeTypeFrom(string: trimmed)
 		else {
       throw TransitAssignError.invalidValue
     }
@@ -411,8 +462,13 @@ extension String {
 		else {
       throw TransitAssignError.invalidPath
     }
+		let trimmed = self.trimmingCharacters(in: .whitespaces)
+		guard trimmed.count > 0 else {
+			instance[keyPath: path] = nil
+			return
+		}
     guard let pickupDropOffPolicy =
-						Route.pickupDropOffPolicyFrom(string: self)
+						Route.pickupDropOffPolicyFrom(string: trimmed)
 		else {
       throw TransitAssignError.invalidValue
     }

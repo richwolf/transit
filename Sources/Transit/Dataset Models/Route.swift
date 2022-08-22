@@ -49,8 +49,8 @@ public enum RouteField: String, Hashable, KeyPathVending {
   case pickupPolicy = "continuous_pickup"
   /// Route drop off policy field.
   case dropOffPolicy = "continuous_drop_off"
-	///
-	case skip = "route_skip"
+	/// Used when a nonstandard field is found within a GTFS feed.
+	case nonstandard = "nonstandard"
 	
   internal var path: AnyKeyPath {
     switch self {
@@ -66,7 +66,7 @@ public enum RouteField: String, Hashable, KeyPathVending {
     case .sortOrder: return \Route.sortOrder
     case .pickupPolicy: return \Route.pickupPolicy
     case .dropOffPolicy: return \Route.dropOffPolicy
-		case .skip: return \Route.skip
+		case .nonstandard: return \Route.nonstandard
     }
   }
 }
@@ -110,7 +110,7 @@ public struct Route: Hashable, Identifiable {
   public var sortOrder: UInt?
   public var pickupPolicy: PickupDropOffPolicy?
   public var dropOffPolicy: PickupDropOffPolicy?
-	public var skip: String? = nil
+	public var nonstandard: String? = nil
 
   public static let requiredFields: Set<RouteField>
     = [.routeID, .type]
@@ -171,7 +171,7 @@ public struct Route: Hashable, Identifiable {
           try field.assignRouteTypeTo(&self, for: header)
         case .pickupPolicy, .dropOffPolicy:
           try field.assignOptionalPickupDropOffPolicyTo(&self, for: header)
-				case .skip:
+				case .nonstandard:
 					continue
         }
       }
@@ -273,13 +273,14 @@ public struct Routes: Identifiable {
     do {
       let records = try String(contentsOf: url).splitRecords()
 
-      if records.count < 1 { return }
+      if records.count <= 1 { return }
       let headerRecord = String(records[0])
       self.headerFields = try headerRecord.readHeader()
 
       self.routes.reserveCapacity(records.count - 1)
       for routeRecord in records[1 ..< records.count] {
         let route = try Route(from: String(routeRecord), using: headerFields)
+				//print(route)
         self.add(route)
       }
     } catch let error {

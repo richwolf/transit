@@ -29,14 +29,7 @@ final class SubstringNextFieldTests: XCTestCase {
 
   func test_emptyFieldInRecord() {
     var record = "" as Substring
-    XCTAssertThrowsError(try record.nextField()) { error in
-			if let transitError = error as? TransitError {
-				XCTAssertEqual(transitError, TransitError.emptySubstring)
-				XCTAssertEqual(transitError.localizedDescription, "Substring is empty")
-			} else {
-				XCTFail("Could not cast transit error")
-			}
-    }
+		XCTAssertEqual(try? record.nextField(), "")
   }
 
   func test_quotedField() {
@@ -72,6 +65,7 @@ final class SubstringNextFieldTests: XCTestCase {
 										 "A comma was expected, but not found")
     }
   }
+	
 }
 
 // MARK: - String readRecord() tests
@@ -102,7 +96,22 @@ final class StringReadRecordTests: XCTestCase {
       let record = "one,\"tw,o\",three"
       XCTAssertEqual(try? record.readRecord(), ["one", "tw,o", "three"])
   }
-
+	
+	func test_A() {
+			let record = "one,two,three,"
+			XCTAssertEqual(try? record.readRecord(), ["one", "two", "three", ""])
+	}
+	
+	func test_B() {
+			let record = "one,two,,three"
+			XCTAssertEqual(try? record.readRecord(), ["one", "two", "", "three"])
+	}
+	
+	func test_C() {
+			let record = "one,two,,three,,"
+			XCTAssertEqual(try? record.readRecord(), ["one", "two", "", "three", "", ""])
+	}
+	
   //
 
   func test_recordContainsFieldWithUnbalancedQuotes() {
@@ -139,7 +148,7 @@ final class StringReadHeaderTests: XCTestCase {
     let header = ""
     XCTAssertEqual(try header.readHeader() as [AgencyField], [])
   }
-
+	/*
   func test_headerWithEmptyField() {
     let header = "agency_name,,agency_url,agency_timezone"
     XCTAssertThrowsError(try header.readHeader() as [AgencyField]) { error in
@@ -147,7 +156,7 @@ final class StringReadHeaderTests: XCTestCase {
       XCTAssertEqual(error.localizedDescription,
 										 "An invalid field type was found")
     }
-  }
+  }*/
 
   func test_headerWithTrailingComma() {
     let header = "\"agency_name,agency_url,agency_timezone"
